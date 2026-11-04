@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A local Zellij bar workbench for mixing styles, separators, and themes.">
+<title>Zellij Workbench · themes and bar forms</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23121412'/%3E%3Ctext x='3' y='23' font-family='monospace' font-size='23' fill='%23d8b783'%3E%5B%5D%3C/text%3E%3C/svg%3E">
+<style>
+@font-face{font-family:Term;src:url('assets/JetBrainsMonoNerdFont-Regular.ttf') format('truetype');font-weight:100 900;font-display:swap}
+:root{color-scheme:dark;--page:#121412;--panel:#191b18;--line:#30332b;--ink:#e4e5db;--muted:#a0a495;--accent:#d8b783;--mono:Term,'JetBrainsMono Nerd Font',monospace;--bg:#171511;--fg:#ded3bf;--a:#e0a269;--dim:#9a795a;--sub:#a09280;--branch:#9cbbc0;--warning:#e5c27f;--hot:#9cbbc0;--bar-font:12px}
+*{box-sizing:border-box}body{margin:0;background:var(--page);color:var(--ink);font:15px/1.6 system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}button,input,select{font:inherit}button,a,input,select{-webkit-tap-highlight-color:transparent}button,select{cursor:pointer}button{color:inherit}a{color:inherit}button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:5px}button{border:0;background:none}button:disabled{opacity:.4;cursor:default}button:hover{color:var(--accent)}.wrap{max-width:1440px;padding:0 48px;margin:auto}.eyebrow,.small-label,.count,.chip,.meta,.recipe-label{font:10px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase}.top{height:80px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:14px;font:12px var(--mono);letter-spacing:.07em}.brand-mark{color:var(--accent);font-size:23px;letter-spacing:-5px;padding-right:5px}.top-right{color:var(--muted);display:flex;gap:24px;align-items:center}.top-right a{text-decoration:none;font-size:12px}.eyebrow{color:var(--accent)}.intro{display:grid;grid-template-columns:1.2fr 1fr;align-items:end;gap:40px;padding:48px 0 32px}h1{font-size:clamp(38px,5vw,70px);letter-spacing:-.065em;font-weight:500;line-height:1.06;margin:15px 0 0}h1 em{font-family:Georgia,serif;font-weight:400;color:var(--accent)}.intro p{max-width:470px;margin:0;color:var(--muted);line-height:1.7;font-size:14px}.intro p strong{color:var(--ink);font-weight:500}.history{display:flex;align-items:center;gap:18px;padding:17px 0 25px;font-size:11px;color:var(--muted);flex-wrap:wrap}.history code{font:11px var(--mono);color:var(--a)}.history .arrow{color:#646959}.history b{color:var(--ink);font-weight:500}.controls{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);padding:15px 20px}.control{display:flex;align-items:center;gap:12px}.small-label{color:var(--muted);font-size:9px}.control select,.design-select{color:var(--ink);background:#20231e;border:1px solid #3b4035;border-radius:3px;padding:6px 25px 6px 9px;font:11px var(--mono)}.segments{display:flex;gap:2px}.segments button{font:10px var(--mono);color:var(--muted);padding:7px 9px;border-radius:2px;min-height:30px}.segments button[aria-pressed=true]{background:var(--accent);color:#161813}.check{display:flex;align-items:center;gap:8px;font:11px var(--mono);color:var(--muted);cursor:pointer}.check input{accent-color:var(--accent);width:14px;height:14px;margin:0}.workbench{margin-top:22px;border:1px solid #414537;border-radius:7px;overflow:hidden}.workbench-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 18px;background:#20231d;border-bottom:1px solid #373b30}.workbench-title{display:flex;align-items:center;gap:13px;font:11px var(--mono)}.live-dot{height:6px;width:6px;background:var(--accent);display:inline-block;box-shadow:0 0 9px #d8b78330}.workbench-top .control{gap:7px}.design-select{max-width:220px}.nav-button{font:15px var(--mono);padding:3px 8px}.terminal{background:var(--bg);color:var(--fg);transition:background .15s,color .15s}.terminal-body{height:218px;display:grid;grid-template-columns:1.2fr 1fr;overflow:hidden;font:11px/1.8 var(--mono)}.terminal-pane{padding:16px 24px;overflow:hidden;white-space:nowrap}.terminal-pane+.terminal-pane{border-left:1px solid color-mix(in srgb,var(--sub) 20%,transparent)}.pane-title{display:flex;justify-content:space-between;color:var(--sub);margin-bottom:16px;font-size:10px}.code-line{color:var(--sub)}.line-num{display:inline-block;width:30px;opacity:.5}.code-key{color:var(--a)}.code-str{color:var(--branch)}.code-fade{opacity:.4}.term-prompt{color:var(--a)}.test-output{color:var(--sub);font-size:10px}.test-output span{color:var(--branch)}.cursor-block{display:inline-block;width:6px;height:12px;background:var(--a);vertical-align:middle}.blank-row{height:18px;background:var(--bg)}.bar-scroll{overflow-x:auto;scrollbar-width:thin;scrollbar-color:#4c4c42 transparent}.bar{height:27px;display:flex;align-items:center;gap:12px;padding:0 12px;background:var(--bg);color:var(--fg);font:var(--bar-font)/1 var(--mono);white-space:nowrap;min-width:fit-content}.bar-left{display:flex;align-items:center;gap:13px}.mode,.token{display:inline-flex;align-items:center;white-space:pre;font:inherit;line-height:1.5;letter-spacing:0;border:0;padding:0}.mode{color:var(--hot);flex-shrink:0}.branch{color:var(--branch);font-style:italic;max-width:16ch;overflow:hidden;text-overflow:ellipsis;display:block}.tabs{display:flex;align-items:center;gap:10px;flex-shrink:0}.token{color:var(--dim);cursor:pointer;position:relative}.token:hover{color:var(--a)}.token.active{color:var(--a)}.token:focus-visible{outline-offset:1px;outline-color:var(--a)}.clock{margin-left:auto;padding-left:14px;color:var(--sub);display:flex;align-items:center;gap:7px;font-size:.92em}.clock .clock-glyph{color:var(--sub)}.fill{background:var(--a);color:var(--active-text);display:inline-block;font-weight:bold}.mode .fill{background:var(--hot);color:var(--mode-text)}.edge{color:var(--a)}.mode .edge{color:var(--hot)}.token.active:hover{filter:brightness(1.15)}.bar.row2{height:43px;align-items:flex-end;padding-bottom:4px}.stack{display:inline-block;white-space:pre;line-height:1.15;text-align:left}.bar.tab-baseline .tabs{gap:12px}.bar.tab-stencil .tabs{gap:0;background:var(--a)}.bar.tab-stencil .token{padding:0 9px;min-height:20px;color:var(--bg)}.bar.tab-stencil .token.active{background:var(--bg);color:var(--a);margin:2px 3px;min-height:16px;line-height:16px;padding:0 6px;font-weight:bold}.bar.mode-stencil .mode{color:var(--mode-text);background:var(--hot);padding:1px 6px}.bar.tab-stitch .token.active{color:var(--a)}.bar.mode-circuit,.bar.tab-circuit{gap:0}.bar.mode-circuit .bar-left{gap:0}.bar.tab-circuit .tabs{gap:0}.bar.mode-circuit .branch{margin-right:8px}.bar.mode-circuit .wire,.bar.tab-circuit .wire{color:var(--dim)}.bar.tab-tickets .tabs{gap:8px}.bar.tab-braille .token.active{font-weight:bold}.workbench-foot{display:flex;justify-content:space-between;gap:16px;align-items:center;border-top:1px solid #363a2f;padding:11px 18px;color:var(--muted);font-size:11px;background:#1a1d17}.workbench-foot strong{color:var(--accent);font-weight:500}.workbench-foot .terminal-note{font:10px var(--mono);text-align:right}.section-head{display:flex;align-items:center;justify-content:space-between;gap:20px;margin:48px 0 20px}.section-head h2{font-size:23px;font-weight:500;letter-spacing:-.04em;margin:0}.section-head h2 span{font:11px var(--mono);color:var(--muted);margin-left:10px;letter-spacing:0}.filter-group{display:flex;gap:18px;align-items:center}.filter{padding:3px 0;font-size:11px;color:var(--muted);border-bottom:1px solid transparent}.filter[aria-pressed=true]{color:var(--accent);border-color:var(--accent)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.concept{border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--panel);min-width:0}.concept.is-selected{border-color:#827356}.card-head{padding:20px 21px 15px;display:flex;justify-content:space-between;gap:12px;align-items:start}.card-name{display:flex;align-items:baseline;gap:12px}.count{color:#7b806e;font-size:10px}.card-name h3{font-size:18px;letter-spacing:-.03em;font-weight:500;margin:0}.chip{font-size:8px;letter-spacing:.03em;color:var(--muted);border:1px solid #3b4033;padding:3px 5px;white-space:nowrap;margin-top:2px}.chip.pick{color:var(--accent);border-color:#6c5d42}.mini-terminal{background:var(--bg);margin:0 12px;border:1px solid color-mix(in srgb,var(--sub) 15%,transparent);border-radius:3px;overflow:hidden}.mini-output{height:63px;padding:12px 15px;font:9px/1.7 var(--mono);color:var(--sub);opacity:.36;pointer-events:none;white-space:nowrap;overflow:hidden}.mini-output .mini-command{color:var(--fg)}.mini-terminal .blank-row{height:8px}.mini-terminal .bar{height:29px;gap:10px;font-size:10px;padding:0 10px}.mini-terminal .bar-left{gap:9px}.mini-terminal .tabs{gap:8px}.mini-terminal .clock{padding-left:8px}.mini-terminal .bar.mode-circuit,.mini-terminal .bar.mode-circuit .bar-left,.mini-terminal .bar.tab-circuit .tabs{gap:0}.mini-terminal .bar.tab-stencil .tabs{gap:0}.mini-terminal .bar.tab-stencil .token{padding-right:5px;padding-left:5px;min-height:18px}.mini-terminal .bar.tab-stencil .token.active{min-height:14px;line-height:14px;padding:0 4px}.mini-terminal .bar.row2{height:40px}.card-copy{padding:15px 21px 10px;margin:0;font-size:12px;line-height:1.65;color:var(--muted);min-height:66px}.card-bottom{padding:7px 21px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px}.meta{font-size:8px;color:#969c88;letter-spacing:.035em}.card-actions{display:flex;gap:14px}.card-actions button{font-size:11px;padding:3px 0}.recipe-toggle{color:var(--muted)}.preview-button{color:var(--accent)}.recipe{border-top:1px solid var(--line);padding:16px 21px;background:#151713;font-size:11px;color:var(--muted)}.recipe[hidden]{display:none}.recipe-label{font-size:8px;color:var(--accent)}.recipe code{display:block;white-space:pre-wrap;overflow-wrap:anywhere;font:11px/1.7 var(--mono);margin:9px 0;color:var(--ink)}.recipe p{margin:8px 0 0;line-height:1.6}.recipe .copy{border:1px solid var(--line);padding:5px 9px;font-size:10px;margin-top:12px}.source-section{margin:40px 0 0;border-top:1px solid var(--line);padding:26px 0 34px;display:grid;grid-template-columns:1fr 1fr;gap:50px}.source-section h2{font-size:14px;font-weight:500;margin:0 0 9px;color:var(--ink)}.source-section p{font-size:11px;color:var(--muted);margin:0 0 12px;line-height:1.8}.source-section code{font:10px var(--mono);color:var(--accent);overflow-wrap:anywhere}.source-section ul{padding-left:16px;margin:0;color:var(--muted);font-size:11px;line-height:2}footer{padding:17px 0 26px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:18px;color:#969b89;font:9px var(--mono);letter-spacing:.03em}.empty{grid-column:1/-1;color:var(--muted);padding:30px}.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--page);padding:10px 18px;font-size:12px;z-index:5;border-radius:3px}.toast[hidden]{display:none}.width-limited .workbench .bar-scroll{max-width:740px;border-right:1px dashed var(--dim)}.width-limited .workbench .terminal{background:color-mix(in srgb,var(--bg) 92%,var(--sub))}.width-limited .workbench .terminal-body,.width-limited .workbench .blank-row{max-width:740px;background:var(--bg)}.overflow-hint{display:none;color:var(--sub);font:9px var(--mono);padding:0 12px 6px;background:var(--bg)}.has-overflow .overflow-hint{display:block}.baseline-label{font:9px var(--mono);color:var(--muted);margin-left:auto}html{scroll-behavior:smooth;scroll-padding-top:20px}[hidden]{display:none!important}@media(min-width:1450px){:root{--bar-font:13px}.mini-terminal .bar{font-size:11px}.mini-terminal .bar-left{gap:12px}}@media(max-width:1050px){.wrap{padding:0 28px}.intro{grid-template-columns:1fr 1fr}.controls{gap:14px 20px}.control{gap:8px}.grid{gap:16px}.mini-terminal .bar{font-size:10px}.card-head,.card-copy,.card-bottom{padding-left:16px;padding-right:16px}.chip{font-size:7px}.card-name{gap:9px}.terminal-body{grid-template-columns:1.2fr 1fr}.terminal-pane{padding:16px}.history{gap:12px}}@media(max-width:760px){.wrap{padding:0 18px}.top{height:65px}.top-right .eyebrow{display:none}.intro{grid-template-columns:1fr;gap:22px;padding-top:32px}h1{font-size:49px}.intro p{max-width:500px;font-size:13px}.history{font-size:10px;gap:10px}.history code{font-size:10px}.baseline-label{display:none}.controls{padding:13px;gap:16px}.control{flex-wrap:wrap}.workbench-top{padding:10px 12px;flex-wrap:wrap}.workbench-title{font-size:10px}.workbench-top .design-select{font-size:10px;max-width:170px}.terminal-body{height:180px;grid-template-columns:1fr}.terminal-pane+.terminal-pane{display:none}.workbench-foot{padding:10px 12px;align-items:start}.workbench-foot .terminal-note{font-size:8px;max-width:120px}.grid{grid-template-columns:1fr}.section-head{margin-top:34px;flex-wrap:wrap;gap:14px}.section-head h2{font-size:21px}.filter-group{gap:20px}.source-section{grid-template-columns:1fr;gap:18px}.mini-terminal .bar{font-size:11px}.mini-terminal .bar-left{gap:11px}.card-copy{min-height:0}.card-head{padding-top:17px}.card-bottom{padding-top:10px}.chip{font-size:8px}footer{font-size:8px;flex-wrap:wrap}.workbench-top .nav-button{padding:3px 4px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+/* Powerline glyph bounds differ between browser and terminal renderers. Draw
+   the Slant triangles in one cell, with exactly the fill's line-box height. */
+.bar.tab-slant .token.active > .edge,.bar.tab-slantbraille .token.active > .edge,.bar.mode-slant .mode > .edge{display:block;flex:none;width:1ch;height:1.5em;overflow:hidden;text-indent:-9999px;background:currentColor}
+.bar.tab-slant .token.active > .edge:first-child,.bar.tab-slantbraille .token.active > .edge:first-child,.bar.mode-slant .mode > .edge:first-child{clip-path:polygon(100% 0,100% 100%,0 100%)}
+.bar.tab-slant .token.active > .edge:last-child,.bar.tab-slantbraille .token.active > .edge:last-child,.bar.mode-slant .mode > .edge:last-child{clip-path:polygon(0 0,100% 0,0 100%)}
+</style>
+<style>
+:root{--glass-opacity:65%;--surface:color-mix(in srgb,var(--bg) var(--glass-opacity),transparent);--wallpaper:url('assets/desert-night.webp')}
+.workbench{background:var(--wallpaper) center 67%/cover}.terminal{background:var(--surface);backdrop-filter:blur(7px)}.mini-terminal{background:linear-gradient(var(--surface),var(--surface)),var(--wallpaper);background-size:cover;background-position:center 68%}.bar,.blank-row,.overflow-hint{background:transparent}.mini-output{opacity:.5}.width-limited .workbench .terminal{background:var(--surface)}.width-limited .workbench .terminal-body,.width-limited .workbench .blank-row{background:transparent}.controls{justify-content:flex-start;gap:14px 24px}.glass-range{accent-color:var(--accent);width:80px;cursor:pointer}.glass-value{font:10px var(--mono);color:var(--accent);min-width:28px}.glass-note{padding:12px 2px 0;color:var(--muted);font-size:11px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}.glass-note strong{color:var(--accent);font-weight:500}.glass-key{font:9px var(--mono);color:var(--muted);display:inline-flex;gap:6px;align-items:center}.glass-key i{font-style:normal;color:var(--accent)}.glass-type{display:block;margin-top:5px;color:#c1af8e;font-size:8px}.glass-type.opaque{color:#d09483}.filter-group{gap:16px}.meta{line-height:1.7}.recipe .glass-advice{color:var(--accent);border-top:1px solid var(--line);padding-top:10px;margin-top:12px}.chip.fresh{color:#adc4b9;border-color:#4c6557}.bar.mode-comb .mode,.bar.tab-comb .token.active{font-weight:bold}@media(max-width:760px){.controls{gap:13px 18px}.glass-range{width:70px}.filter-group{gap:16px;flex-wrap:wrap}.glass-note{font-size:10px}.section-head h2 span{font-size:10px}.card-bottom{align-items:start}.card-actions{padding-top:2px;flex-shrink:0}}
+/* Powerline glyph bounds differ between browser and terminal renderers. Draw
+   the Slant triangles in one cell, with exactly the fill's line-box height. */
+.bar.tab-slant .token.active > .edge,.bar.tab-slantbraille .token.active > .edge,.bar.mode-slant .mode > .edge{display:block;flex:none;width:1ch;height:1.5em;overflow:hidden;text-indent:-9999px;background:currentColor}
+.bar.tab-slant .token.active > .edge:first-child,.bar.tab-slantbraille .token.active > .edge:first-child,.bar.mode-slant .mode > .edge:first-child{clip-path:polygon(100% 0,100% 100%,0 100%)}
+.bar.tab-slant .token.active > .edge:last-child,.bar.tab-slantbraille .token.active > .edge:last-child,.bar.mode-slant .mode > .edge:last-child{clip-path:polygon(0 0,100% 0,0 100%)}
+</style>
+<style>
+.mode-hatchhalf .mode{--cap:var(--hot)}.tab-hatchhalf .token.active{--cap:var(--a)}.half-outer{color:color-mix(in srgb,var(--cap) 25%,var(--bg));background:transparent}.half-inner{color:color-mix(in srgb,var(--cap) 75%,var(--bg));background:color-mix(in srgb,var(--cap) 50%,var(--bg))}
+.bar.mode-braille .bar-left{gap:0}.bar.mode-braille .mode{margin-right:1ch}.bar.mode-braille .branch{margin-right:1ch}
+
+.color-lab-panel,.layout-export{margin-top:24px;border:1px solid var(--line);border-radius:4px;background:var(--panel);padding:22px}.color-lab-panel .section-head{margin:0 0 18px;align-items:start}.lab-intro{margin:8px 0 0;color:var(--muted);font-size:12px}.reset-colors,.export-copy{padding:8px 11px;border:1px solid #6c5d42;border-radius:3px;color:var(--accent);font:10px var(--mono);white-space:nowrap}.reset-colors:hover,.export-copy:hover{background:#27261f}.composition-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:20px}.compose-control{display:grid;gap:7px;color:var(--muted);font:9px var(--mono);letter-spacing:.06em;text-transform:uppercase}.compose-control input,.compose-control select{width:100%;min-width:0;color:var(--ink);background:#20231e;border:1px solid #3b4035;border-radius:3px;padding:8px;font:10px var(--mono)}.color-role-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.color-role{display:flex;align-items:center;justify-content:space-between;gap:12px;min-width:0;padding:10px 12px;border:1px solid var(--line);background:#151713;color:var(--ink);font-size:11px}.color-role span{min-width:0}.color-role small{display:block;margin-top:4px;color:var(--muted);font:9px var(--mono)}.color-role code{color:var(--accent);font-size:9px}.color-role input{width:38px;height:31px;flex:none;padding:2px;border:1px solid #555a4c;border-radius:3px;background:transparent;cursor:pointer}.branch-swatches{display:flex;align-items:start;justify-content:space-between;gap:15px;margin-top:18px;padding-top:15px;border-top:1px solid var(--line);color:var(--muted);font-size:10px}.branch-swatches strong{display:block;color:var(--ink);font-size:11px;font-weight:500}.branch-swatches span{display:block;margin-top:4px}.branch-swatches #branch-swatches-list{display:flex;flex-wrap:wrap;gap:7px;justify-content:flex-end}.branch-choice{display:flex;align-items:center;gap:6px;padding:5px 7px;border:1px solid var(--line);color:var(--muted);font:9px var(--mono)}.branch-choice:hover{border-color:var(--accent);color:var(--ink)}.branch-choice i{width:12px;height:12px;border:1px solid #ffffff55;border-radius:50%;background:var(--swatch)}.branch-choice code{color:var(--sub);font-size:8px}.layout-export{background:#151713}.export-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px}.export-head h2{font-size:16px;font-weight:500}.layout-export pre{max-height:520px;overflow:auto;margin:0;padding:14px;border:1px solid var(--line);color:var(--ink);background:#10120f;font:10px/1.6 var(--mono);tab-size:4}.export-note{margin:12px 0 0;color:var(--muted);font-size:10px;line-height:1.6}.bar-left{gap:0!important}.tabs,.mini-terminal .tabs,.bar.tab-baseline .tabs,.bar.tab-braille.between-tabs .tabs{gap:0!important}.joiner{display:inline-flex;align-items:center;justify-content:center;white-space:pre;flex:none}.joiner-mode{color:var(--modeSeparatorColor)}.joiner-branch{color:var(--branchSeparatorColor)}.joiner-tab{color:var(--tabSeparatorColor)}.bar.mode-plain .mode,.bar.mode-slantbraille .mode{color:var(--hot)}.bar.mode-braille .mode,.bar.mode-braille .branch,.bar.mode-circuit .branch{margin-right:0!important}@media(max-width:950px){.composition-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.color-role-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.branch-swatches{flex-direction:column}.branch-swatches #branch-swatches-list{justify-content:flex-start}}@media(max-width:600px){.composition-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.color-role-grid{grid-template-columns:1fr}.color-lab-panel,.layout-export{padding:15px}.color-lab-panel .section-head{flex-direction:column}.export-head{align-items:start}.branch-choice span{display:none}.branch-swatches #branch-swatches-list{gap:5px}}
+
+/* Powerline glyph bounds differ between browser and terminal renderers. Draw
+   the Slant triangles in one cell, with exactly the fill's line-box height. */
+.bar.tab-slant .token.active > .edge,.bar.tab-slantbraille .token.active > .edge,.bar.mode-slant .mode > .edge{display:block;flex:none;width:1ch;height:1.5em;overflow:hidden;text-indent:-9999px;background:currentColor}
+.bar.tab-slant .token.active > .edge:first-child,.bar.tab-slantbraille .token.active > .edge:first-child,.bar.mode-slant .mode > .edge:first-child{clip-path:polygon(100% 0,100% 100%,0 100%)}
+.bar.tab-slant .token.active > .edge:last-child,.bar.tab-slantbraille .token.active > .edge:last-child,.bar.mode-slant .mode > .edge:last-child{clip-path:polygon(0 0,100% 0,0 100%)}
+</style>
+<style>
+.color-role .palette-color-select{width:100%;min-width:0;flex:none;color:var(--ink);background:#20231e;border:1px solid #3b4035;border-radius:3px;padding:6px;font:9px var(--mono)}
+.color-role:has(.palette-color-select:not([hidden])){flex-wrap:wrap}.color-role select[hidden],.color-role input[hidden]{display:none}.compose-control[hidden]{display:none}.compose-control input[aria-invalid="true"]{border-color:#e09070}.right-controls{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}.palette-hint{margin:7px 0 0;color:var(--muted);font-size:10px;line-height:1.55}.color-lab-panel .color-role-grid~.section-head{margin-top:24px}.terminal-palette-grid{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));gap:6px;margin-bottom:14px}.terminal-swatch{min-width:0;display:grid;gap:3px;font:8px var(--mono);color:var(--muted)}.terminal-swatch i{display:block;height:18px;border:1px solid #ffffff33;border-radius:2px}.terminal-swatch code{color:var(--ink)}@media(max-width:900px){.terminal-palette-grid{grid-template-columns:repeat(8,minmax(0,1fr))}}@media(max-width:600px){.terminal-palette-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}.palette-import{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}.palette-import .palette-hint{margin:0}.palette-choice-note{margin:0 0 10px;color:var(--muted);font-size:10px}
+/* Powerline glyph bounds differ between browser and terminal renderers. Draw
+   the Slant triangles in one cell, with exactly the fill's line-box height. */
+.bar.tab-slant .token.active > .edge,.bar.tab-slantbraille .token.active > .edge,.bar.mode-slant .mode > .edge{display:block;flex:none;width:1ch;height:1.5em;overflow:hidden;text-indent:-9999px;background:currentColor}
+.bar.tab-slant .token.active > .edge:first-child,.bar.tab-slantbraille .token.active > .edge:first-child,.bar.mode-slant .mode > .edge:first-child{clip-path:polygon(100% 0,100% 100%,0 100%)}
+.bar.tab-slant .token.active > .edge:last-child,.bar.tab-slantbraille .token.active > .edge:last-child,.bar.mode-slant .mode > .edge:last-child{clip-path:polygon(0 0,100% 0,0 100%)}
+</style>
+<style>
+.branch{--a:var(--branch);--cap:var(--branch);display:inline-flex;align-items:center;flex:none;max-width:none;overflow:visible;white-space:pre;line-height:1.5;font-style:normal;color:var(--branch)}
+.branch-plain{font-style:italic}.branch .fill,.branch .edge{font-style:normal}.branch .edge{color:var(--branch)}.branch-clock{font-size:inherit}
+.branch-stencil{background:var(--branch);color:var(--active-text);font-weight:bold;padding:0 1ch}
+.branch-brackets,.branch-cursor,.branch-braille,.branch-boxcar,,.branch-comb{font-weight:bold}
+.flag-notch{display:inline-block;line-height:1.5;color:var(--bg);background:var(--a)}.mode .flag-notch{background:var(--hot)}
+.branch-slant > .edge{display:block;flex:none;width:1ch;height:1.5em;overflow:hidden;text-indent:-9999px;background:currentColor}
+.branch-slant > .edge:first-child{clip-path:polygon(100% 0,100% 100%,0 100%)}.branch-slant > .edge:last-child{clip-path:polygon(0 0,100% 0,0 100%)}
+.mode-colors{margin:0 0 20px;border-top:1px solid var(--line);padding-top:12px}.mode-colors summary{cursor:pointer;color:var(--ink);font-size:12px}.mode-color-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:14px 0}.mode-color-grid input[type=color]{height:32px;padding:2px}.mode-color-value{font:9px var(--mono);color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><div class="brand"><span class="brand-mark" aria-hidden="true">[ ]</span>ZELLIJ / THEME WORKBENCH</div><div class="top-right"><span class="eyebrow">LOCAL APP · COLORS + BAR FORMS</span><a href="#color-lab">Color lab ↗</a></div></header>
+<main>
+<section class="intro"><div><div class="eyebrow">Six themes · twenty-three bar forms</div><h1>Build a <em>bar.</em></h1></div><p>Mix <strong>mode badges, active tabs, and separators</strong> using the style selectors. Start with Moonlit Sands, Outpost, Greek Noir, Everforest, Glacier, or Paper, then tune the Git branch color and export a zjstatus layout.</p></section>
+<div class="history"><span>THE TRAIL SO FAR</span><code> FLAG </code><span class="arrow">→</span><code> ROUNDED </code><span class="arrow">→</span><b>Something else.</b><span class="baseline-label">MONOSPACE · REAL GLYPHS · BOTTOM BAR</span></div>
+<section aria-label="Preview settings" class="controls">
+<div class="control"><label class="small-label" for="color-mode">Colors</label><select id="color-mode"><option value="agnostic">Theme agnostic · terminal palette</option><option value="specific">Specific theme · fixed colors</option></select></div>
+<div class="control"><label class="small-label" id="palette-label" for="palette">Preview theme</label><select id="palette"><option value="moonlit">Moonlit sands</option><option value="greek">Greek noir</option><option value="forest">Everforest</option><option value="ice">Glacier (sample)</option><option value="paper">Paper / light (sample)</option><option value="outpost">Outpost</option></select></div>
+<div class="control"><label for="preview-mode" class="small-label">Mode</label><select id="preview-mode"></select></div>
+<div class="control"><label class="small-label" for="glass">Opacity</label><input id="glass" class="glass-range" type="range" min="20" max="100" value="65" step="5"><output for="glass" id="glass-value" class="glass-value">65%</output></div>
+<div class="control"><label class="small-label" for="backdrop">Backdrop</label><select id="backdrop"><option value="desktop">Your desert night</option><option value="test">Bright glass test</option></select></div>
+<label class="check"><input id="crowded" type="checkbox">8 tabs</label><label class="check"><input id="narrow" type="checkbox">Narrow terminal</label><label class="check"><input id="baseline" type="checkbox">Current style</label>
+<label class="check"><input id="show-branch" type="checkbox" checked>Git branch</label>
+</section>
+<div class="glass-note"><span><strong>GLASS FIRST</strong> &nbsp; Foreground marks leave the window background open.</span><span class="glass-key"><i>⣿</i> Open ink</span><span class="glass-key"><i>▓</i> Solid accent center</span><span class="glass-key">Stencil is the opaque-cutout style.</span></div>
+<section class="workbench" id="workbench" aria-label="Full terminal preview">
+<div class="workbench-top"><div class="workbench-title"><span class="live-dot" aria-hidden="true"></span><span>LIVE COMPOSITION</span></div><div class="control"><button class="nav-button" id="prev" aria-label="Previous design">←</button><label class="small-label" for="design">Set both</label><select id="design" class="design-select"></select><button class="nav-button" id="next" aria-label="Next design">→</button></div></div>
+<div class="terminal"><div class="terminal-body"><div class="terminal-pane"><div class="pane-title"><span id="terminal-file">moonlit-sands-slant-braille.kdl</span><span>~/dotfiles</span></div><div class="code-line"><span class="line-num">01</span><span class="code-key">layout</span> {</div><div class="code-line"><span class="line-num">02</span>  default_tab_template {</div><div class="code-line"><span class="line-num">03</span>    children</div><div class="code-line"><span class="line-num">04</span>    pane size=<span class="code-str" id="terminal-pane-size">2</span> borderless=<span class="code-str">true</span> {</div><div class="code-line"><span class="line-num">05</span>      plugin location=<span class="code-str">"file:…/zjstatus.wasm"</span> {</div><div class="code-line code-fade"><span class="line-num">06</span>        // a little space to think</div></div><div class="terminal-pane"><div class="pane-title"><span>shell</span><span>illustrative terminal content</span></div><div><span class="term-prompt">~/dotfiles ❯</span> git status --short</div><div class="test-output"> M .config/zellij/layouts/moonlit-sands.kdl</div><br><div><span class="term-prompt">~/dotfiles ❯</span> printf 'room for something new\n'</div><div class="test-output">room for something new</div><div><span class="term-prompt">~/dotfiles ❯</span> <span class="cursor-block"></span></div></div></div><div class="blank-row"></div><div id="hero-bar"></div><div id="baseline-bar" hidden></div></div>
+<div class="workbench-foot"><span id="hero-description"></span><span class="terminal-note" id="workbench-hint">Click a tab to change the active tab in the preview.</span></div>
+</section>
+<section class="color-lab-panel" id="color-lab" aria-labelledby="color-lab-title">
+  <div class="section-head"><div><h2 id="color-lab-title">Compose the pieces <span>independent controls</span></h2><p class="lab-intro">Loaded theme: <strong id="theme-current">Moonlit Sands</strong>. The “Set both” control loads a starting style; change each part here to build your own mix.</p></div><button class="reset-colors" id="reset-colors" type="button">Reset colors to theme</button></div>
+  <div class="composition-grid">
+    <label class="compose-control"><span>Mode style</span><select id="mode-style"></select></label>
+    <label class="compose-control"><span>Mode → branch</span><select id="mode-separator"></select></label>
+    <label class="compose-control"><span>Git branch style</span><select id="branch-style"></select></label>
+    <label class="compose-control"><span>Branch → tabs</span><select id="branch-separator"></select></label>
+    <label class="compose-control"><span>Active tab style</span><select id="tab-style"></select></label>
+    <label class="compose-control"><span>Between tabs</span><select id="tab-separator"></select></label>
+  </div>
+  <details class="mode-colors"><summary>Mode colors</summary><p class="palette-hint">All modes follow NORMAL by default. NORMAL uses the foreground for a plain label and the accent for a badge. Override any mode below.</p><div id="mode-colors" class="mode-color-grid"></div><button id="reset-mode-colors" class="reset-colors" type="button">Reset mode colors</button></details>
+  <div class="palette-import"><button class="reset-colors" id="import-theme" type="button">Import Ghostty theme…</button><input id="theme-file" type="file" accept=".conf,.txt,text/plain" hidden><span id="palette-source" class="palette-hint"></span></div>
+  <p id="theme-import-error" class="palette-hint" role="alert" hidden></p>
+  <div id="terminal-palette" class="terminal-palette-grid" role="group" aria-label="Selected terminal theme palette"></div>
+  <p class="palette-choice-note" id="palette-choice-note" hidden></p>
+  <div class="color-role-grid" aria-label="Palette color roles">
+    <label class="color-role"><span>Terminal background<small>Open glass base · <code data-color-value="bg"></code></small></span><input type="color" data-color-role="bg" aria-label="Terminal background color"></label>
+    <label class="color-role"><span>Terminal foreground<small>Text and plain mode · <code data-color-value="fg"></code></small></span><input type="color" data-color-role="fg" aria-label="Terminal foreground color"></label>
+    <label class="color-role"><span>Accent fill<small>Default mode and active tabs · <code data-color-value="a"></code></small></span><input type="color" data-color-role="a" aria-label="Accent fill color"></label>
+    <label class="color-role"><span>Mode fill text<small>Text inside mode badges · <code data-color-value="modeText"></code></small></span><input type="color" data-color-role="modeText" aria-label="Mode badge text color"></label>
+    <label class="color-role"><span>Badge fill text<small>Active tabs and styled branches · <code data-color-value="activeText"></code></small></span><input type="color" data-color-role="activeText" aria-label="Active tab text color"></label>
+    <label class="color-role"><span>Git branch<small>Branch text, caps, and fill · <code data-color-value="branch"></code></small></span><input type="color" data-color-role="branch" aria-label="Git branch color"></label>
+    <label class="color-role"><span>Inactive tabs<small>Quiet labels · <code data-color-value="dim"></code></small></span><input type="color" data-color-role="dim" aria-label="Inactive tab color"></label>
+    <label class="color-role"><span>Secondary text<small>Right-hand content · <code data-color-value="sub"></code></small></span><input type="color" data-color-role="sub" aria-label="Secondary text color"></label>
+    <label class="color-role"><span>Warning color<small>Available palette role · <code data-color-value="warning"></code></small></span><input type="color" data-color-role="warning" aria-label="Mode warning color"></label>
+    <label class="color-role"><span>Mode → branch separator<small>Icon after the mode · <code data-color-value="modeSeparatorColor"></code></small></span><input type="color" data-color-role="modeSeparatorColor" aria-label="Mode → branch separator color"></label>
+    <label class="color-role"><span>Branch → tabs separator<small>Icon after the branch · <code data-color-value="branchSeparatorColor"></code></small></span><input type="color" data-color-role="branchSeparatorColor" aria-label="Branch → tabs separator color"></label>
+    <label class="color-role"><span>Between tabs separator<small>Icons between tab labels · <code data-color-value="tabSeparatorColor"></code></small></span><input type="color" data-color-role="tabSeparatorColor" aria-label="Between tabs separator color"></label>
+  </div>
+  <div class="branch-swatches"><div><strong>Quick branch colors</strong><span>Click any preset color to try it.</span></div><div id="branch-swatches-list"></div></div>
+  <div class="section-head"><div><h2>Bottom right <span>terminal status area</span></h2><p class="lab-intro">Choose the right-hand content. Git branch uses $branch; clock, session, and custom text use $muted.</p></div></div>
+  <div class="composition-grid right-controls">
+    <label class="compose-control"><span>Content</span><select id="right-content"><option value="clock">Clock</option><option value="branch">Git branch</option><option value="session">Session name</option><option value="custom">Custom text</option><option value="hidden">Hidden</option></select></label>
+    <label class="compose-control" data-right-clock><span>Clock format</span><select id="clock-format"><option value="%H:%M">Time · 17:42</option><option value="%H:%M:%S">Time with seconds · 17:42:08</option><option value="%I:%M %p">12-hour time · 05:42 PM</option><option value="%Y-%m-%d">Date · 2026-11-02</option><option value="%Y-%m-%d %H:%M">Date and time · 2026-11-02 17:42</option><option value="%a %H:%M">Weekday and time · Mon 17:42</option></select></label>
+    <label class="compose-control" data-right-clock><span>Timezone</span><input id="clock-timezone" type="text" placeholder="America/Denver" aria-describedby="right-note"></label>
+    <label class="compose-control" data-right-clock><span>Clock icon (optional)</span><input id="clock-icon" type="text" maxlength="16"></label>
+    <label class="compose-control" id="right-text-control" hidden><span id="right-text-label">Custom text</span><input id="right-text" type="text" maxlength="200"></label>
+  </div>
+  <p class="palette-hint" id="right-note">The preview samples the selected timezone when settings change.</p>
+</section>
+<section class="layout-export" aria-labelledby="export-title">
+  <div class="export-head"><div><div class="eyebrow">Copy-ready preview</div><h2 id="export-title">moonlit-sands-slant-braille.kdl</h2></div><button class="export-copy" id="copy-layout" type="button">Copy KDL</button></div>
+  <pre><code id="layout-code"></code></pre>
+  <p class="export-note" id="export-note">The generated layout follows the selected composition and colors. Check multi-row designs in Zellij before using them as a daily layout.</p>
+  <p class="palette-hint" id="palette-hint">KDL writes fixed colors from the loaded theme. The preview reflects the selected theme.</p>
+</section>
+<section class="source-section" id="sources"><div><h2>Built from your actual layouts and glass settings.</h2><p>The reference is <code>~/.config/zellij/layouts/moonlit-sands.kdl</code>: amber <code>#e0a269</code>, subdued inactive tabs, a cyan branch, and a right-hand clock. Your active Ghostty theme supplies <code>#141d2d</code> as the default background and <code>background-opacity = 0.65</code>. The wallpaper is a local copy of your active <code>8-saguaro-pair.webp</code>.</p><ul><li><code>spiced.kdl</code> — old inset flag with a painted notch</li><li><code>spiced-moonlit-rounded-both.kdl</code> — foreground caps around a solid accent center</li><li><code>spiced-moonlit-dynamic.kdl</code> — terminal palette colors</li><li><code>greek-noir.kdl</code> — magenta fills and a red branch</li></ul></div><div><h2>Foreground ink is the useful constraint.</h2><p>The foreground textures use glyphs on the default background. They do not fake transparent holes by painting them dark. Hatch and the filled geometric designs retain solid accent centers; their outside edges can still open onto glass. Stencil is marked as an opaque-cutout reference.</p><p>The browser simulates glass; it is not a terminal screenshot. Check font alignment and default-background resets in zjstatus before installing a favorite. Boxcar needs two content rows. Crowded previews scroll; your KDL hides overlength content. Branch, clock, and terminal output are sample data. Glacier, Paper, and the bright test backdrop are exploratory.</p></div></section>
+</main>
+<footer><span>23 BAR FORMS / MIXABLE TAB SEPARATORS / SIX THEMES</span><span>LOCAL HTML · NO NETWORK DEPENDENCIES · YOUR DEFAULT LAYOUT IS UNCHANGED</span></footer>
+</div><div id="toast" class="toast" role="status" hidden></div>
+<script>
+'use strict';
+const designs = [
+ {id:'brackets',name:'Brackets',group:'quiet',pick:true,tag:'THE QUIET FAVORITE',desc:'Just square brackets. Focus reads like an insertion in your command line; no solid fill competes with the terminal.',short:'A little punctuation. A very clear focus.',recipe:'[ NORMAL ]   main   1 shell   [ 2 editor ]   3 tests',ingredients:'ASCII brackets, spaces, bold accent text. Use matching brackets for mode and active tab. Inactive tabs stay plain.',note:'One row. Simple literal text and the foreground/bold styles already present in your configs.'},
+ {id:'dovetail',name:'Dovetail',group:'geometric',tag:'SYMMETRIC / SOLID',desc:'Two outward points turn the selected tab into a small diamond. A more architectural relative of your old flag.',short:'Pointed at both ends. Balanced instead of directional.',recipe:' NORMAL    main   shell    editor    tests',ingredients:'Powerline  and  caps, with the center filled in the same accent. Both points face outward.',note:'One row. Requires Nerd Font glyphs, like your existing flag layout.'},
+ {id:'slant',name:'Slant',group:'geometric',pick:true,tag:'THE SHARP FAVORITE',desc:'Parallel diagonal cuts make a compact parallelogram. It has forward motion without a long arrow tail.',short:'A diagonal cut on each edge. Nothing extra.',recipe:' NORMAL    main   shell    editor    tests',ingredients:'Powerline triangle glyphs  and , with a solid center. Their diagonals run in parallel.',note:'One row. Glyph joins depend on the terminal font and line spacing; compare them at your actual font size.'},
+ {id:'stencil',name:'Stencil',group:'geometric',tag:'REVERSE / HIGH CONTRAST',desc:'A continuous accent band carries the tabs. The active tab is a dark cutout, like a punched label on a control panel.',short:'The gap in the color is the place you are.',recipe:' NORMAL    main    [ SHELL  ░ EDITOR ░  TESTS  LOGS ]',ingredients:'A shared accent background for the tab list; dark text for inactive tabs. Reverse foreground/background for the active tab.',note:'One row. Uses rectangular character backgrounds rather than special cap glyphs. The recipe above describes the color arrangement.'},
+ {id:'cursor',name:'Cursor',group:'quiet',tag:'PROMPT / ASCII',desc:'One chevron points at your current tab. The rest is typography and space. Especially good when you keep many tabs open.',short:'A familiar prompt becomes the focus marker.',recipe:'NORMAL │ main    1 shell    > 2 editor    3 tests',ingredients:'A literal > before the active tab and a │ divider after mode. No filled backgrounds.',note:'One row. Replace │ with | for a fully ASCII version. The branch can stay italic, as it is today.'},
+ {id:'stitch',name:'Stitch',group:'quiet',tag:'DOTTED / LIGHT',desc:'Dotted vertical stitches frame the active label. A soft boundary that looks tactile without becoming a pill.',short:'A dashed seam instead of a filled shape.',recipe:'┆ NORMAL ┆   main   1 shell   ┆ 2 editor ┆   3 tests',ingredients:'Box Drawing Light Triple Dash Vertical ┆ as the mode and active-tab boundaries. Accent text, default background.',note:'One row. A regular box-drawing glyph; no Nerd Font required for the outline.'},
+ {id:'circuit',name:'Circuit',group:'geometric',pick:true,tag:'THE LINEWORK FAVORITE',desc:'A thin wire connects the bar. The active tab interrupts the line between opposing junctions, like a component on a schematic.',short:'Everything sits on one continuous signal path.',recipe:'╶─ NORMAL ── main ── shell ──┤ editor ├── tests ─╴',ingredients:'Box-drawing ╶ ─ ┤ ├ ╴. Muted horizontal lines connect plain inactive tabs; brighter junctions enclose the active label.',note:'One row. Uses box-drawing characters and color changes. Keep the joining characters adjacent when translating to KDL.'},
+ {id:'hatch',name:'Hatch',group:'expressive',tag:'DITHER / RETRO',desc:'A short ramp of shaded blocks fades in and out of the label. Chunky, terminal-native texture with a late-night workstation feel.',short:'A tiny dithered gradient made of character cells.',recipe:'░▒▓ NORMAL ▓▒░  main  shell  ░▒▓ editor ▓▒░  tests',ingredients:'Light shade ░, medium shade ▒, and dark shade ▓ surrounding a solid center. The ramp is static texture.',note:'One row. Costs more columns than the quiet designs. Best with short tab names or a wide terminal.'},
+ {id:'tickets',name:'Tickets',group:'geometric',tag:'HALF BLOCK / PRINTED',desc:'Half-block end stops give each selected label the look of a tiny printed ticket. Square, tactile, and cleanly separated.',short:'A printed label with a little air around it.',recipe:'▐ NORMAL ▌   main   shell   ▐ editor ▌   tests',ingredients:'Right Half Block ▐ on the left and Left Half Block ▌ on the right, with a solid center. The outer half cells remain open.',note:'One row. Standard block elements rather than Powerline caps. Much less width overhead than Hatch.'},
+ {id:'braille',name:'Braille',group:'expressive',tag:'DOT MATRIX / COMPACT',desc:'A dot-matrix badge carries the focus. It feels like a tiny instrument display and leaves the text mostly untouched.',short:'The smallest possible piece of terminal texture.',recipe:'⣿ NORMAL   main    ⠂ shell    ⣿ editor    ⠂ tests',ingredients:'Braille ⣿ for both mode and the active tab (four dots tall, eight total), and ⠂ for inactive tabs. Color and weight reinforce the marker.',note:'One row. Markers indicate selection only. They are decorative, not an animation or background-job indicator.'},
+ {id:'boxcar',name:'Boxcar',group:'geometric',tag:'TWO ROWS / BOX DRAWING',desc:'The selected tab rises into a little squared enclosure. More structure and a stronger silhouette when one extra row is acceptable.',short:'A tab that literally stands above the rest.',recipe:'┌────────┐                 ┌──────────┐\n│ NORMAL │  main   shell   │ 2 editor │  tests',ingredients:'Two lines of box-drawing characters. The top border width is derived from the label length; the lower line holds the label and side walls.',note:'Two content rows. Your current pane size=2 includes one blank border row and one content row. This concept needs a different layout/renderer arrangement; it is not a drop-in tab format.'},
+];
+designs.push(
+ {id:'comb',name:'Comb',group:'expressive',fresh:true,tag:'NEW / VERTICAL DITHER',desc:'Hairline blocks widen toward the name, then taper away. A sideways take on the Hatch gradient that feels like grooves in a small instrument.',short:'A gradient of stroke widths instead of shaded blocks.',recipe:'▏▎▍ NORMAL ▍▎▏   main   shell   ▏▎▍ editor ▍▎▏',ingredients:'Left one-eighth block ▏, one-quarter block ▎, and three-eighths block ▍. These are narrow foreground strokes, not filled rectangular cells.',note:'One row. The repeated cell spacing is intentional. Check the rhythm at your Ghostty font size of 9.'},
+ {id:'scanline',name:'Scanline',group:'expressive',fresh:true,tag:'NEW / HORIZONTAL GRAIN',desc:'A little square of horizontal stripes replaces the dot badge. It has a CRT texture, but takes only one cell beside the selected label.',short:'One striped cell. Just enough texture to catch the eye.',recipe:'▤ NORMAL   main   shell   ▤ editor ▤   tests',ingredients:'Square With Horizontal Fill ▤. One before mode and one at either end of the active tab; the rest stays plain.',note:'One row. A regular geometric glyph, not a Powerline cap. Stripe weight depends on the font.'},
+);
+designs.push(
+ {id:'hatchhalf',name:'Hatch / half-cell',group:'expressive',pick:true,tag:'HALF-CELL / HATCH',desc:'The same filled Hatch label, with three gradient bands each half a cell wide. Two half-block characters pack the whole edge into two cells, including an open outer half.',short:'Half-width bands around the same solid label.',recipe:'▐▐ NORMAL ▌▌   main   shell   ▐▐ editor ▌▌',ingredients:'Right Half Block ▐ and Left Half Block ▌. Foreground and background colors carry adjacent shade bands inside one cell. The outer half-cell keeps the default glass background.',note:'One row. Three colored bands are each half a cell wide; the fourth half is open glass. Interior colors are opaque palette blends, not alpha. Actual layout: moonlit-sands-hatch-half.kdl.'},
+ {id:'hatchcompact',name:'Hatch / compact',group:'expressive',tag:'SHORT FADE / HATCH',desc:'Keep the same shade characters and solid center, but shorten the fade from three cells to two. The simplest reduction in width.',short:'One less shade cell at each end.',recipe:'░▓ NORMAL ▓░   main   shell   ░▓ editor ▓░',ingredients:'Light shade ░ and dark shade ▓. Only the middle shade is removed; colors, label padding, and inactive tabs stay as they are in the original Hatch KDL.',note:'One row. Two full-width shade cells per edge instead of three. Actual layout: moonlit-sands-hatch-compact.kdl.'}
+);
+designs.push({id:'slantbraille',name:'Slant + Braille divider',group:'geometric',pick:true,tag:'CUSTOM COMBINATION',desc:'An unfilled NORMAL label, a dense four-by-two Braille divider, and the Slant active-tab caps. The mode and tab separators can be changed independently.',short:'Plain mode · ⣿ divider · Slant active tab.',recipe:'NORMAL ⣿ main ┆ shell ┆  2 editor  ┆ tests',ingredients:'Plain foreground mode text, one ⣿ after the mode, Slant caps around the active tab, and Stitch between tabs.',note:'One row. Select this preset to load the combination, then adjust mode style, active tab style, each separator, and every palette role independently.'});
+designs.push(
+ {id:'flag',name:'Flag',group:'geometric',tag:'LAYOUT / POWERLINE',desc:'A solid label with a square left edge and a right-facing point, like the mode badge in spiced.kdl.',short:'A filled label with one forward point.',recipe:' NORMAL    main   shell    editor ',ingredients:'A solid character background and a foreground Powerline cap .',note:'One row. Uses the same filled-label text colors as the other badges.'},
+ {id:'flaginset',name:'Inset flag',group:'geometric',tag:'LAYOUT / INSET',desc:'The original active-tab flag: a painted notch on the left and a forward point on the right.',short:'The inset flag from spiced.kdl.',recipe:' NORMAL    main   shell    editor ',ingredients:'A background-colored  on the fill cuts the left notch; an accent  makes the right point.',note:'One row. The inset is painted with the background color, so it is opaque on glass.'},
+ {id:'baseline',name:'Rounded',group:'geometric',tag:'LAYOUT / ROUNDED',desc:'Round foreground caps surround a solid label, matching moonlit-sands.kdl.',short:'The rounded layout, available for every piece.',recipe:' NORMAL    main   shell    editor ',ingredients:'Foreground caps  and  around a matching solid center.',note:'One row. The outer corners keep the terminal default background.'}
+);
+const palettes={moonlit:{name:'Moonlit Sands',slug:'moonlit-sands',bg:'#141d2d',fg:'#e0a269',modeText:'#141d2d',activeText:'#141d2d',a:'#e0a269',dim:'#9a6e45',sub:'#8b7d71',branch:'#4b7172',warning:'#e5c27f'},greek:{name:'Greek Noir',slug:'greek-noir',bg:'#141d2d',fg:'#e0a269',modeText:'#141d2d',activeText:'#141d2d',a:'#8b6377',dim:'#9a6e45',sub:'#8b7d71',branch:'#ac5539',warning:'#e6b99d'},forest:{name:'Everforest',slug:'everforest',bg:'#2d353b',fg:'#d3c6aa',modeText:'#2d353b',activeText:'#2d353b',a:'#a7c080',dim:'#88967b',sub:'#9da99a',branch:'#7fbbb3',warning:'#dbbc7f'},ice:{name:'Glacier',slug:'glacier',bg:'#11191f',fg:'#d5e0e5',modeText:'#11191f',activeText:'#11191f',a:'#94cde2',dim:'#74919f',sub:'#819ca9',branch:'#9fbdac',warning:'#e5c58e'},paper:{name:'Paper',slug:'paper',bg:'#f1ecdf',fg:'#353b35',modeText:'#f1ecdf',activeText:'#f1ecdf',a:'#875025',dim:'#77705d',sub:'#6f705f',branch:'#356c70',warning:'#9b5a18'},outpost:{name:'Outpost',slug:'outpost',bg:'#14282d',fg:'#e8dfc4',modeText:'#14282d',activeText:'#14282d',a:'#86b8b5',dim:'#91afc5',sub:'#a1afa9',branch:'#91afc5',warning:'#d3ae78'}};
+// Slot assignments are independent of hex colors, even when two preview colors match.
+const colorRoleNames={bg:'background',fg:'foreground',modeText:'mode_text',activeText:'active_text',a:'accent',branch:'branch',dim:'dim',sub:'muted',warning:'warning',modeSeparatorColor:'mode_separator',branchSeparatorColor:'branch_separator',tabSeparatorColor:'tab_separator'};
+const defaultPaletteSlots={bg:0,fg:7,modeText:0,activeText:0,a:6,branch:4,dim:8,sub:8,warning:3,modeSeparatorColor:6,branchSeparatorColor:4,tabSeparatorColor:8};
+const ansiNames=['Black','Red','Green','Yellow','Blue','Magenta','Cyan','White','Bright black','Bright red','Bright green','Bright yellow','Bright blue','Bright magenta','Bright cyan','Bright white'];
+// Snapshot of the installed Omarchy Ghostty template and resolved theme colors.
+const terminalPalettes={
+ "moonlit": {
+  "slots": [
+   "#141d2d",
+   "#ac5539",
+   "#696e35",
+   "#8d662c",
+   "#4e6f91",
+   "#8b6377",
+   "#4b7172",
+   "#e0a269",
+   "#8b7d71",
+   "#cb6647",
+   "#7e8844",
+   "#a37a39",
+   "#6089b2",
+   "#a67892",
+   "#5d8e90",
+   "#eeba8a"
+  ],
+  "background": "#141d2d",
+  "foreground": "#e0a269",
+  "source": "Omarchy moonlit-sands/colors.toml \u2192 ghostty.conf template",
+  "kind": "omarchy"
+ },
+ "greek": {
+  "slots": [
+   "#171717",
+   "#aeab94",
+   "#f25623",
+   "#757864",
+   "#88a57d",
+   "#f56e0f",
+   "#7b837b",
+   "#ccd0cf",
+   "#7d837d",
+   "#aeab94",
+   "#f25623",
+   "#757864",
+   "#88a57d",
+   "#f56e0f",
+   "#7b837b",
+   "#bcbfbc"
+  ],
+  "background": "#171717",
+  "foreground": "#CCD0CF",
+  "source": "Omarchy greek-noir/colors.toml \u2192 ghostty.conf template",
+  "kind": "omarchy"
+ },
+ "forest": {
+  "slots": [
+   "#2d353b",
+   "#e67e80",
+   "#a7c080",
+   "#dbbc7f",
+   "#7fbbb3",
+   "#d699b6",
+   "#83c092",
+   "#d3c6aa",
+   "#475258",
+   "#e67e80",
+   "#a7c080",
+   "#dbbc7f",
+   "#7fbbb3",
+   "#d699b6",
+   "#83c092",
+   "#d3c6aa"
+  ],
+  "background": "#2d353b",
+  "foreground": "#d3c6aa",
+  "source": "Omarchy everforest/colors.toml \u2192 ghostty.conf template",
+  "kind": "omarchy"
+ },
+ "outpost": {
+  "slots": [
+   "#14282d",
+   "#d78f79",
+   "#a8b887",
+   "#dfc181",
+   "#91afc5",
+   "#b5a0ba",
+   "#86b8b5",
+   "#e8dfc4",
+   "#a1afa9",
+   "#ecaa90",
+   "#c0cf9d",
+   "#f1d79a",
+   "#aecbe0",
+   "#cfbad2",
+   "#a4d1ca",
+   "#fff2d5"
+  ],
+  "background": "#14282d",
+  "foreground": "#e8dfc4",
+  "source": "Omarchy outpost/colors.toml \u2192 ghostty.conf template",
+  "kind": "omarchy"
+ },
+ "ice": {
+  "slots": [
+   "#11191f",
+   "#cc8585",
+   "#9fbdac",
+   "#e5c58e",
+   "#749fb5",
+   "#b69fc2",
+   "#94cde2",
+   "#d5e0e5",
+   "#74919f",
+   "#e6a2a2",
+   "#bcdbc9",
+   "#f5daa6",
+   "#99c2d8",
+   "#d2bbdf",
+   "#b6e5f1",
+   "#f1f7fa"
+  ],
+  "background": "#11191f",
+  "foreground": "#d5e0e5",
+  "source": "Workbench sample palette \u00b7 no matching Ghostty theme",
+  "kind": "sample"
+ },
+ "paper": {
+  "slots": [
+   "#f1ecdf",
+   "#a85b4f",
+   "#6b8051",
+   "#9b5a18",
+   "#356c70",
+   "#8c657f",
+   "#477d82",
+   "#353b35",
+   "#77705d",
+   "#bf7466",
+   "#879b69",
+   "#bd7c36",
+   "#568d91",
+   "#ab839e",
+   "#6b9da1",
+   "#171c17"
+  ],
+  "background": "#f1ecdf",
+  "foreground": "#353b35",
+  "source": "Workbench sample palette \u00b7 no matching Ghostty theme",
+  "kind": "sample"
+ }
+};
+function terminalPalette(){return state.palette==='imported'?state.importedTheme:terminalPalettes[state.palette]}
+function previewSlots(){return terminalPalette().slots}
+function slotLabel(slot){
+ const p=terminalPalette(),names=p.kind==='omarchy'?['background','red','green','yellow','blue','magenta','cyan','foreground','muted','bright_red','bright_green','bright_yellow','bright_blue','bright_magenta','bright_cyan','bright_foreground']:ansiNames;
+ return `palette${slot} · ${names[slot]} · ${p.slots[slot].toUpperCase()}`;
+}
+const tabs=['shell','editor','tests','logs','docs','server','scratch','review'];
+const modeDefinitions=[['normal','NORMAL'],['locked','LOCKED'],['pane','PANE'],['tab','TAB'],['scroll','SCROLL'],['resize','RESIZE'],['move','MOVE'],['session','SESSION'],['tmux','TMUX'],['enter_search','ENTER SEARCH'],['search','SEARCH'],['rename_tab','RENAME TAB'],['rename_pane','RENAME PANE'],['prompt','PROMPT']];
+const state={modeColorOverrides:{},branchDesign:'plain',design:'slantbraille',modeDesign:'plain',tabDesign:'slant',modeSeparator:'braille',branchSeparator:'space',tabSeparator:'stitch',mode:'NORMAL',active:1,crowded:false,palette:'moonlit',paletteOverrides:{},themeAgnostic:true,paletteSlots:{...defaultPaletteSlots},importedTheme:null,showBranch:true,glass:65,backdrop:'desktop',narrow:false,baseline:false,rightContent:'clock',clockFormat:'%H:%M',clockTimezone:Intl.DateTimeFormat().resolvedOptions().timeZone||'UTC',clockIcon:'◷',rightText:'My workspace',previewSession:'workbench'};
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const settingsStorageKey='zellij-workbench-settings-v1';
+function saveSettings(){try{localStorage.setItem(settingsStorageKey,JSON.stringify(state))}catch{}}
+function applyBackdrop(value){document.documentElement.style.setProperty('--wallpaper',value==='test'?'linear-gradient(125deg,#b38b60 0%,#809b8f 30%,#5b7c8e 55%,#c59a78 78%,#a7ad8c 100%)':"url('assets/desert-night.webp')")}
+function restoreSettings(){let saved;try{saved=JSON.parse(localStorage.getItem(settingsStorageKey)||'null')}catch{return}if(!saved||typeof saved!=='object'||Array.isArray(saved))return;const componentStyles=new Set(['plain',...designs.filter(d=>d.id!=='slantbraille').map(d=>d.id)]),separators=new Set(tabSeparatorOptions.map(([id])=>id)),colorRoles=Object.keys(colorRoleNames);if(designs.some(d=>d.id===saved.design)||saved.design==='custom')state.design=saved.design;if(componentStyles.has(saved.modeDesign))state.modeDesign=saved.modeDesign;if(componentStyles.has(saved.tabDesign))state.tabDesign=saved.tabDesign;if(componentStyles.has(saved.branchDesign))state.branchDesign=saved.branchDesign;restoreModeColors(saved.modeColorOverrides);if(separators.has(saved.modeSeparator))state.modeSeparator=saved.modeSeparator;if(separators.has(saved.branchSeparator))state.branchSeparator=saved.branchSeparator;if(separators.has(saved.tabSeparator))state.tabSeparator=saved.tabSeparator;if(modeDefinitions.some(([,label])=>label===saved.mode))state.mode=saved.mode;if(typeof saved.crowded==='boolean')state.crowded=saved.crowded;if(Number.isInteger(saved.active)&&saved.active>=0&&saved.active<tabs.length)state.active=saved.active;if(!state.crowded&&state.active>3)state.active=1;if(validImportedTheme(saved.importedTheme)){state.importedTheme=saved.importedTheme;installImportedPalette()}if(Object.hasOwn(palettes,saved.palette))state.palette=saved.palette;if(saved.paletteOverrides&&typeof saved.paletteOverrides==='object'&&!Array.isArray(saved.paletteOverrides))colorRoles.forEach(role=>{const value=saved.paletteOverrides[role];if(typeof value==='string'&&/^#[\da-f]{6}$/i.test(value))state.paletteOverrides[role]=value.toLowerCase()});if(saved.paletteSlots&&typeof saved.paletteSlots==='object')colorRoles.forEach(role=>{const slot=saved.paletteSlots[role];if(Number.isInteger(slot)&&slot>=0&&slot<=15)state.paletteSlots[role]=slot});['themeAgnostic','showBranch','narrow','baseline'].forEach(key=>{if(typeof saved[key]==='boolean')state[key]=saved[key]});if(Number.isFinite(Number(saved.glass)))state.glass=Math.min(100,Math.max(20,Math.round(Number(saved.glass)/5)*5));if(['desktop','test'].includes(saved.backdrop))state.backdrop=saved.backdrop;if(['clock','branch','session','custom','hidden'].includes(saved.rightContent))state.rightContent=saved.rightContent;if(clockFormats.includes(saved.clockFormat))state.clockFormat=saved.clockFormat;if(validTimezone(saved.clockTimezone))state.clockTimezone=new Intl.DateTimeFormat('en',{timeZone:saved.clockTimezone}).resolvedOptions().timeZone;['clockIcon','rightText','previewSession'].forEach(key=>{if(typeof saved[key]==='string')state[key]=saved[key].slice(0,key==='clockIcon'?16:200)});$('#palette').value=state.palette;$('#color-mode').value=state.themeAgnostic?'agnostic':'specific';$('#glass').value=state.glass;$('#glass-value').value=state.glass+'%';$('#glass').setAttribute('aria-valuetext',state.glass+'% background opacity');document.documentElement.style.setProperty('--glass-opacity',state.glass+'%');$('#backdrop').value=state.backdrop;applyBackdrop(state.backdrop);$('#crowded').checked=state.crowded;$('#narrow').checked=state.narrow;document.body.classList.toggle('width-limited',state.narrow);$('#baseline').checked=state.baseline;$('#baseline-bar').hidden=!state.baseline;$('#show-branch').checked=state.showBranch;$('#preview-mode').value=state.mode}
+const edge=s=>`<span class="edge" aria-hidden="true">${s}</span>`;
+const filled=(text,left='',right='')=>`${edge(left)}<span class="fill"> ${esc(text)} </span>${edge(right)}`;
+function tokenShape(id,text,active,mode=false){
+ if(!active&&!mode){if(id==='circuit')return `<span class="wire">──</span> ${esc(text)} `;if(id==='boxcar')return `<span class="stack">${' '.repeat(text.length)}\n${esc(text)}</span>`;return esc(text)}
+ switch(id){
+ case 'brackets':return `[ ${esc(text)} ]`;
+ case 'flag':return filled(text,'','');
+ case 'flaginset':return `<span class="flag-notch" aria-hidden="true"></span><span class="fill"> ${esc(text)} </span>${edge('')}`;
+ case 'dovetail':return filled(text,'','');
+ case 'slant':return filled(text,'','');
+ case 'slantbraille':return mode?esc(text):filled(text,'','');
+ case 'stencil':return esc(text);
+ case 'cursor':return mode?`${esc(text)} <span class="wire">│</span>`:`&gt; ${esc(text)}`;
+ case 'stitch':return `┆ ${esc(text)} ┆`;
+ case 'circuit':return mode?`╶─ ${esc(text)} ── `:`${edge('──┤')} ${esc(text)} ${edge('├──')}`;
+ case 'hatch':return filled(text,'░▒▓','▓▒░');
+ case 'hatchhalf':return `<span class="half-outer">▐</span><span class="half-inner">▐</span><span class="fill"> ${esc(text)} </span><span class="half-inner">▌</span><span class="half-outer">▌</span>`;
+ case 'hatchcompact':return filled(text,'░▓','▓░');
+ case 'tickets':return filled(text,'▐','▌');
+ case 'braille':return `⣿ ${esc(text)}`;
+ case 'boxcar':return `<span class="stack">┌${'─'.repeat(text.length+2)}┐\n│ ${esc(text)} │</span>`;
+ case 'comb':return `▏▎▍ ${esc(text)} ▍▎▏`;
+ case 'scanline':return mode?`▤ ${esc(text)}`:`▤ ${esc(text)} ▤`;
+ case 'baseline':return filled(text,'','');
+ default:return esc(text);
+ }
+}
+const separatorGlyphs={none:'',space:'',braille:'⣿','braille-dot':'⠂',stitch:'┆','middle-dot':'·',diamond:'◆','outline-diamond':'◇','inset-diamond':'◈','diamond-suit':'♦','four-star':'✦',star:'✧','small-square':'▪','hollow-square':'▫',line:'│',cross:'×'};
+const tabSeparatorOptions=[['space','Space'],['none','None'],['stitch','Stitch · ┆'],['braille','Braille block · ⣿'],['braille-dot','Braille speck · ⠂'],['middle-dot','Middle dot · ·'],['diamond','Solid diamond · ◆'],['outline-diamond','Outline diamond · ◇'],['inset-diamond','Inset diamond · ◈'],['diamond-suit','Diamond suit · ♦'],['four-star','Four-point star · ✦'],['star','Outline star · ✧'],['small-square','Small square · ▪'],['hollow-square','Hollow square · ▫'],['line','Fine line · │'],['cross','Tiny cross · ×']];
+function separatorMarkup(value,kind){if(value==='none')return '';const glyph=separatorGlyphs[value];return `<span class="joiner joiner-${kind}" aria-hidden="true">${value==='space'?'\u00a0':` ${glyph} `}</span>`}
+function branchMarkup(){return `<span class="branch branch-${state.branchDesign}" title="Sample branch: main">${tokenShape(state.branchDesign,'main',true)}</span>`}
+function branchNeedsTwoRows(){return state.showBranch&&state.branchDesign==='boxcar'}
+function needsTwoRows(){return state.modeDesign==='boxcar'||state.tabDesign==='boxcar'||branchNeedsTwoRows()}
+function branchOnLeft(){return state.showBranch&&state.rightContent!=='branch'}
+function makeBar(modeId,tabId=modeId,hero=false){
+ const items=tabs.slice(0,state.crowded?8:4),modeText=state.mode;
+ const modeShape=modeId==='plain'?esc(modeText):tokenShape(modeId,modeText,true,true),modeToken=`<span class="mode">${modeShape}</span>`,modeJoin=separatorMarkup(state.modeSeparator,'mode');
+ const branch=branchOnLeft()?`${branchMarkup()}${separatorMarkup(state.branchSeparator,'branch')}`:'';
+ const between=separatorMarkup(state.tabSeparator,'tab');
+ const joined=items.map((name,i)=>{const label=tabId==='baseline'?name:`${i+1} ${name}`,shape=tokenShape(tabId,label,i===state.active),item=`<button class="token ${i===state.active?'active':''}" data-tab="${i}" aria-pressed="${i===state.active}" aria-label="Focus tab ${i+1}: ${name}">${shape}</button>`;return i<items.length-1?item+between:item}).join('');
+ const cls=[...new Set(['bar','mode-'+modeId,'tab-'+tabId,modeId===tabId?modeId:'',(modeId==='boxcar'||tabId==='boxcar'||branchNeedsTwoRows())?'row2':''])].filter(Boolean).join(' '),label=`${modeId==='plain'?'Plain mode':designs.find(d=>d.id===modeId)?.name||modeId} mode with ${designs.find(d=>d.id===tabId)?.name||tabId} tabs`;
+ return `<div class="bar-scroll" tabindex="0" aria-label="${esc(label)}${hero?' full preview':''}; scroll horizontally if needed"><div class="${cls}"><div class="bar-left">${modeToken}${modeJoin}${branch}<div class="tabs" role="group" aria-label="Sample tabs">${joined}</div></div>${rightMarkup()}</div></div><div class="overflow-hint">↔ Scroll to see all tabs</div>`;
+}
+function currentPalette(){
+ const p={...palettes[state.palette],...state.paletteOverrides};
+ p.modeSeparatorColor??=p.a;p.branchSeparatorColor??=p.branch;p.tabSeparatorColor??=p.dim;
+ if(state.themeAgnostic){const slots=previewSlots();Object.entries(state.paletteSlots).forEach(([role,slot])=>p[role]=slots[slot])}return p;
+}
+function setPalette(){const p=currentPalette();Object.entries(p).filter(([k])=>Object.hasOwn(colorRoleNames,k)).forEach(([k,v])=>document.documentElement.style.setProperty(k==='modeText'?'--mode-text':k==='activeText'?'--active-text':'--'+k,v));document.documentElement.style.setProperty('--hot',modePreviewColor(modeDefinitions.find(([,label])=>label===state.mode)[0]))}
+function renderHero(){$('#hero-bar').innerHTML=makeBar(state.modeDesign,state.tabDesign,true);$('#baseline-bar').innerHTML='<div style="padding:9px 12px 3px;color:var(--sub);font:9px var(--mono)">CURRENT ROUNDED STYLE / REFERENCE</div>'+makeBar('baseline','baseline',true);$('#hero-description').innerHTML=`<strong>Mode:</strong> ${esc(styleName(state.modeDesign))} &nbsp; <strong>Branch:</strong> ${esc(styleName(state.branchDesign))} &nbsp; <strong>Active tab:</strong> ${esc(styleName(state.tabDesign))}`;$('#design').value=state.design;syncCompositionControls();$('#workbench-hint').textContent=state.crowded?'Crowded study: scroll the bar to reach all eight tabs.':'Mix mode, branch, tab, and separator styles below.';updateOverflow()}
+function updateOverflow(){requestAnimationFrame(()=>$$('.bar-scroll').forEach(el=>el.parentElement.classList.toggle('has-overflow',el.scrollWidth>el.clientWidth+2)))}
+function render(){setPalette();syncColorInputs();syncModeControls();syncRightControls();renderHero();renderBranchSwatches();renderLayout();saveSettings()}
+function selectDesign(id,scroll=false){state.design=id;if(id==='slantbraille'){state.modeDesign='plain';state.tabDesign='slant';state.modeSeparator='braille';state.branchSeparator='space';state.tabSeparator='stitch'}else{state.modeDesign=id;state.tabDesign=id;state.modeSeparator='space';state.branchSeparator='space';state.tabSeparator='space'}render();if(scroll)$('#workbench').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'})}
+function styleName(id){return id==='plain'?'Plain':designs.find(d=>d.id===id)?.name||id}
+function syncCompositionControls(){[['mode-style',state.modeDesign],['branch-style',state.branchDesign],['tab-style',state.tabDesign],['mode-separator',state.modeSeparator],['branch-separator',state.branchSeparator],['tab-separator',state.tabSeparator]].forEach(([id,value])=>{const el=$('#'+id);if(el)el.value=value})}
+function paletteColorOptions(){return Array.from({length:16},(_,slot)=>`<option value="${slot}">${esc(slotLabel(slot))}</option>`).join('')}
+function syncColorInputs(){
+ const p=currentPalette();
+ $$('[data-color-role]').forEach(el=>{
+  const role=el.dataset.colorRole;el.value=p[role];el.hidden=state.themeAgnostic;
+  let select=el.parentElement.querySelector('.palette-color-select');
+  if(!select){select=document.createElement('select');select.className='palette-color-select';select.dataset.themeColorRole=role;select.setAttribute('aria-label',`${el.getAttribute('aria-label')} terminal palette slot`);el.insertAdjacentElement('afterend',select)}
+  select.hidden=!state.themeAgnostic;select.innerHTML=paletteColorOptions();select.value=String(state.paletteSlots[role]);
+ });
+ $('#color-mode').value=state.themeAgnostic?'agnostic':'specific';
+ $('#palette-label').textContent=state.themeAgnostic?'Preview theme':'Theme';
+ $('#reset-colors').textContent=state.themeAgnostic?'Reset palette assignments':'Reset colors to theme';
+ $('#palette-choice-note').textContent=state.themeAgnostic?'Each role exports its selected palette0–palette15 index. Options show the selected theme’s slot name and hex value. $names below are Workbench roles assigned to slots; they are not terminal color names.':'Choose fixed hex colors for each role. These colors are saved separately from terminal palette assignments.';
+ $('#palette-choice-note').hidden=false;
+ $$('[data-color-value]').forEach(el=>{const role=el.dataset.colorValue;el.textContent='$'+colorRoleNames[role]+' = '+(state.themeAgnostic?'palette'+state.paletteSlots[role]+' · '+p[role].toUpperCase():p[role].toUpperCase())});
+ $('#terminal-palette').innerHTML=previewSlots().map((color,slot)=>`<div class="terminal-swatch" title="${esc(slotLabel(slot))}"><i style="background:${color}" aria-hidden="true"></i><code>palette${slot}</code><small>${color.toUpperCase()}</small></div>`).join('');$('#theme-current').textContent=palettes[state.palette].name;$('#palette-source').textContent='Terminal palette: '+terminalPalette().source+'.';
+}
+function restoreModeColors(saved){
+ if(!saved||typeof saved!=='object'||Array.isArray(saved))return;
+ for(const [key] of modeDefinitions){const value=saved[key];if(!value||typeof value!=='object')continue;const entry={};if(Number.isInteger(value.slot)&&value.slot>=0&&value.slot<16)entry.slot=value.slot;if(typeof value.hex==='string'&&/^#[\da-f]{6}$/i.test(value.hex))entry.hex=value.hex.toLowerCase();if(Object.keys(entry).length)state.modeColorOverrides[key]=entry}
+}
+function modeBaseRole(){return state.modeDesign==='plain'?'fg':'a'}
+function modeExportColor(key){
+ const field=state.themeAgnostic?'slot':'hex',base=state.themeAgnostic?state.paletteSlots[modeBaseRole()]:currentPalette()[modeBaseRole()];
+ return String(state.modeColorOverrides[key]?.[field]??state.modeColorOverrides.normal?.[field]??base);
+}
+function modePreviewColor(key){return state.themeAgnostic?previewSlots()[Number(modeExportColor(key))]:modeExportColor(key)}
+function syncModeControls(){
+ $('#preview-mode').value=state.mode;
+ const field=state.themeAgnostic?'slot':'hex',root=$('#mode-colors');
+ if(!root.children.length)root.innerHTML=modeDefinitions.map(([key,label])=>`<label class="compose-control"><span>${label}</span><select data-mode-color="${key}" aria-label="${label} mode color"></select><input type="color" data-mode-hex="${key}" aria-label="${label} mode custom color"><small class="mode-color-value"></small></label>`).join('');
+ for(const [key] of modeDefinitions){
+  const value=state.modeColorOverrides[key]?.[field],color=modePreviewColor(key),inherit=key==='normal'?'Use '+(state.modeDesign==='plain'?'foreground':'accent')+' color':'Same as NORMAL';
+  const select=$(`[data-mode-color="${key}"]`),input=$(`[data-mode-hex="${key}"]`);
+  const options='<option value="inherit">'+inherit+'</option>'+(state.themeAgnostic?paletteColorOptions():'<option value="custom">Custom color</option>');
+  if(select.innerHTML!==options)select.innerHTML=options;
+  select.value=value===undefined?'inherit':state.themeAgnostic?String(value):'custom';
+  input.hidden=state.themeAgnostic||value===undefined;input.value=color;
+  input.nextElementSibling.textContent=(state.themeAgnostic?'palette'+modeExportColor(key)+' · ':'')+color.toUpperCase();
+ }
+}
+$('#mode-colors').addEventListener('change',e=>{
+ const key=e.target.dataset.modeColor;if(!key)return;const field=state.themeAgnostic?'slot':'hex',value=e.target.value;
+ const entry=state.modeColorOverrides[key]??={};if(value==='inherit')delete entry[field];else entry[field]=state.themeAgnostic?Number(value):modePreviewColor(key);render();
+});
+$('#mode-colors').addEventListener('input',e=>{const key=e.target.dataset.modeHex;if(!key)return;(state.modeColorOverrides[key]??={}).hex=e.target.value;render()});
+$('#reset-mode-colors').addEventListener('click',()=>{const field=state.themeAgnostic?'slot':'hex';Object.values(state.modeColorOverrides).forEach(entry=>delete entry[field]);render()});
+function renderBranchSwatches(){
+ const root=$('#branch-swatches-list'),panel=root.closest('.branch-swatches');panel.hidden=state.themeAgnostic;
+ root.innerHTML=state.themeAgnostic?'':Object.values(palettes).map(p=>`<button class="branch-choice" type="button" data-branch-color="${p.branch}" aria-label="Use ${esc(p.name)} branch color ${p.branch}" title="${esc(p.name)}: ${p.branch}"><i style="--swatch:${p.branch}"></i><span>${esc(p.name)}</span><code>${p.branch}</code></button>`).join('');
+}
+function validImportedTheme(value){return value&&typeof value==='object'&&value.kind==='imported'&&typeof value.name==='string'&&value.name.length<=100&&!/[\x00-\x1f\x7f]/.test(value.name)&&typeof value.source==='string'&&value.source.length<=200&&/^#[\da-f]{6}$/i.test(value.background)&&/^#[\da-f]{6}$/i.test(value.foreground)&&Array.isArray(value.slots)&&value.slots.length===16&&value.slots.every(color=>typeof color==='string'&&/^#[\da-f]{6}$/i.test(color))}
+function parseGhosttyTheme(text,name){
+ const slots=Array(16).fill(null);let background=null,foreground=null;
+ for(const line of text.split(/\r?\n/)){
+  const match=line.match(/^\s*(palette|background|foreground)\s*=\s*(?:(\d+)\s*=\s*)?["']?(#?[\da-f]{6})["']?\s*(?:#.*)?$/i);
+  if(!match)continue;const [,key,index,raw]=match,color='#'+raw.replace(/^#/,'').toLowerCase();
+  if(key.toLowerCase()==='palette'){if(index!==undefined&&Number(index)<16)slots[Number(index)]=color}else if(key.toLowerCase()==='background')background=color;else foreground=color;
+ }
+ if(!background||!foreground||slots.some(color=>!color))throw new Error('Choose a Ghostty config with background, foreground, and all palette0–palette15 values. Included config files and named colors are not resolved.');
+ const cleanName=name.replace(/[\x00-\x1f\x7f]/g,' ').slice(0,100);return {name:cleanName,slots,background,foreground,kind:'imported',source:('Imported '+cleanName).slice(0,200)};
+}
+function installImportedPalette(){
+ const p=state.importedTheme;
+ palettes.imported={name:p.name,slug:'imported-ghostty',bg:p.background,fg:p.foreground,modeText:p.background,activeText:p.background,a:p.slots[6],branch:p.slots[4],dim:p.slots[8],sub:p.slots[8],warning:p.slots[3]};
+ let option=$('#palette option[value="imported"]');if(!option){option=document.createElement('option');option.value='imported';$('#palette').append(option)}option.textContent='Imported: '+p.name;
+}
+$('#import-theme').addEventListener('click',()=>$('#theme-file').click());
+$('#theme-file').addEventListener('change',async e=>{
+ const file=e.target.files[0];if(!file)return;$('#theme-import-error').hidden=true;
+ try{if(file.size>1024*1024)throw new Error('Choose a theme file smaller than 1 MB.');const imported=parseGhosttyTheme(await file.text(),file.name);state.importedTheme=imported;installImportedPalette();state.palette='imported';state.paletteOverrides={};$('#palette').value='imported';render();toast('Loaded Ghostty palette from '+file.name)}catch(error){$('#theme-import-error').textContent=error.message;$('#theme-import-error').hidden=false}finally{e.target.value=''}
+});
+const clockFormats=['%H:%M','%H:%M:%S','%I:%M %p','%Y-%m-%d','%Y-%m-%d %H:%M','%a %H:%M'];
+function validTimezone(value){if(typeof value!=='string'||!value.trim())return false;try{new Intl.DateTimeFormat('en',{timeZone:value});return true}catch{return false}}
+function clockPreview(){
+ const date=new Date(),options={timeZone:state.clockTimezone,year:'numeric',month:'2-digit',day:'2-digit',weekday:'short',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'};
+ const parts=Object.fromEntries(new Intl.DateTimeFormat('en-US',options).formatToParts(date).map(({type,value})=>[type,value]));
+ const hour=Number(parts.hour),values={'%H':parts.hour,'%I':String(hour%12||12).padStart(2,'0'),'%M':parts.minute,'%S':parts.second,'%p':hour<12?'AM':'PM','%Y':parts.year,'%m':parts.month,'%d':parts.day,'%a':parts.weekday};
+ return state.clockFormat.replace(/%[HIMSpYmda]/g,token=>values[token]);
+}
+function rightMarkup(){
+ if(state.rightContent==='hidden')return '';
+ if(state.rightContent==='branch')return state.showBranch?`<span class="clock branch-clock">${branchMarkup()}</span>`:'';
+ const text=state.rightContent==='clock'?clockPreview():state.rightContent==='session'?state.previewSession:state.rightText;
+ const icon=state.rightContent==='clock'&&state.clockIcon?`<span class="clock-glyph" aria-hidden="true">${esc(state.clockIcon)}</span>`:'';
+ return `<span class="clock">${icon}<span>${esc(text)}</span></span>`;
+}
+function rightKdlFormat(){return state.rightContent==='hidden'?'':state.rightContent==='branch'?(state.showBranch?'{command_git_branch}':''):state.rightContent==='clock'?'{datetime}':state.rightContent==='session'?'#[fg=$muted]{session}':state.rightText?'#[fg=$muted]'+state.rightText:''}
+function syncRightControls(){
+ $('#right-content').value=state.rightContent;$('#clock-format').value=state.clockFormat;
+ $('#mode-separator').previousElementSibling.textContent=branchOnLeft()?'Mode → branch':'Mode → tabs';
+ $('#branch-separator').disabled=!branchOnLeft();
+ if(document.activeElement!==$('#clock-timezone'))$('#clock-timezone').value=state.clockTimezone;
+ $('#clock-icon').value=state.clockIcon;
+ $$('[data-right-clock]').forEach(el=>el.hidden=state.rightContent!=='clock');
+ const showText=['custom','session'].includes(state.rightContent);$('#right-text-control').hidden=!showText;
+ $('#right-text-label').textContent=state.rightContent==='session'?'Preview session name':'Custom text';
+ $('#right-text').value=state.rightContent==='session'?state.previewSession:state.rightText;
+ $('#right-note').textContent=state.rightContent==='branch'?(state.showBranch?'Git branch moves to the bottom right and uses $branch. The branch → tabs separator applies only on the left.':'Git branch is hidden. Turn on Git branch above the preview to show it here.'):state.rightContent==='clock'?'The preview samples the selected timezone when settings change. Use an IANA timezone such as America/Denver or UTC.':state.rightContent==='session'?'The preview uses this sample name. KDL displays the actual Zellij session name.':state.rightContent==='custom'?'Custom text appears at the bottom right.':'The right-hand status area is hidden.';
+}
+function kdlQuote(value){return JSON.stringify(value)}
+function kdlShape(id,label,fill,mode=false){
+ const fg=`#[fg=$${fill}]`,centerRole=mode?'mode_text':'active_text',center=`#[fg=$${centerRole},bg=$${fill},bold]`,filledShape=(left,right)=>`${fg}${left}${center} ${label} ${fg}${right}`;
+ switch(id){
+  case 'plain':return `#[fg=$${fill},bold]${label}`;
+  case 'brackets':return `#[fg=$${fill},bold][ ${label} ]`;
+  case 'flag':return filledShape('','');
+  case 'flaginset':return `#[fg=$background,bg=$${fill}]${center} ${label} ${fg}`;
+  case 'dovetail':return filledShape('','');
+  case 'slant':case 'slantbraille':return mode&&id==='slantbraille'?`#[fg=$${fill},bold]${label}`:filledShape('','');
+  case 'baseline':return filledShape('','');
+  case 'tickets':return filledShape('▐','▌');
+  case 'hatch':return `#[fg=$${fill}]░▒▓${center} ${label} ${fg}▓▒░`;
+  case 'hatchcompact':return `#[fg=$${fill}]░▓${center} ${label} ${fg}▓░`;
+  case 'hatchhalf':return `#[fg=$dim]▐#[fg=$${fill}]▐${center} ${label} ${fg}▌#[fg=$dim]▌`;
+  case 'stencil':return mode||fill==='branch'?`#[fg=$${centerRole},bg=$${fill},bold] ${label} `:`#[fg=$active_text,bg=$background,bold] ${label} `;
+  case 'cursor':return mode?`#[fg=$${fill},bold]${label} #[fg=$dim]│`:`#[fg=$${fill},bold]> ${label}`;
+  case 'stitch':return `#[fg=$${fill}]┆ ${label} ┆`;
+  case 'circuit':return mode?`#[fg=$${fill}]╶─ ${label} ──`:`#[fg=$${fill}]──┤ ${label} ├──`;
+  case 'braille':return `#[fg=$${fill},bold]⣿ ${label}`;
+  case 'boxcar':return `#[fg=$${fill},bold]┌${'─'.repeat(label==='{name}'?8:String(label).length+2)}┐\n│ ${label} │`;
+  case 'comb':return `#[fg=$${fill}]▏▎▍ ${label} ▍▎▏`;
+  case 'scanline':return `#[fg=$${fill}]▤ ${label}${mode?'':' ▤'}`;
+  default:return `#[fg=$${fill},bold]${label}`;
+ }
+}
+function kdlSeparator(value,kind){if(value==='none')return '';if(value==='space')return ' ';const glyph=separatorGlyphs[value]||'',role=kind+'_separator';return `#[fg=$${role}] ${glyph} `}
+function layoutText(){
+ const colors=state.themeAgnostic?Object.fromEntries(Object.entries(state.paletteSlots).map(([role,slot])=>[role,String(slot)])):currentPalette();
+ const modeLines=modeDefinitions.map(([key,label])=>`mode_${key} ${kdlQuote(kdlShape(state.modeDesign,label,'mode_'+key,true))}`);
+ const active=kdlShape(state.tabDesign,'{name}','accent',false);
+ let inactive='#[fg=$dim]{name}';if(state.tabDesign==='circuit')inactive='#[fg=$dim]── {name}';if(state.tabDesign==='stencil')inactive='#[fg=$background,bg=$accent] {name} ';
+ const formatLeft=`{mode}${kdlSeparator(state.modeSeparator,'mode')}${branchOnLeft()?'{command_git_branch}':''}{tabs}`;
+ const branchFormat=(state.branchDesign==='plain'?'#[fg=$branch,italic]{stdout}':kdlShape(state.branchDesign,'{stdout}','branch'))+(branchOnLeft()?kdlSeparator(state.branchSeparator,'branch'):'');
+ const branchCommand='git branch --show-current';
+ let tabSep=kdlSeparator(state.tabSeparator,'tab');if(state.tabDesign==='stencil')tabSep=state.tabSeparator==='none'?'':`#[fg=$tab_separator,bg=$accent] ${state.tabSeparator==='space'?'':separatorGlyphs[state.tabSeparator]||''} `;
+ const paneSize=needsTwoRows()?'3':'2';
+ const paletteComment=state.themeAgnostic?'// Theme agnostic: color values are terminal palette indices (0–15).':`// ${palettes[state.palette].name} colors with ${styleName(state.modeDesign)} mode and ${styleName(state.tabDesign)} active-tab styles.`;
+ const rows=[paletteComment,`// Generated by the local Zellij Workbench. Preview branch: ${state.showBranch?'main':'hidden'}.`,'','pane_frames false','','layout {','    default_tab_template {','        children',`        pane size=${paneSize} borderless=true {`,'            plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {',`                color_background ${kdlQuote(colors.bg)}`,`                color_foreground ${kdlQuote(colors.fg)}`,`                color_mode_text ${kdlQuote(colors.modeText)}`,`                color_active_text ${kdlQuote(colors.activeText)}`,`                color_accent ${kdlQuote(colors.a)}`,`                color_branch ${kdlQuote(colors.branch)}`,`                color_dim ${kdlQuote(colors.dim)}`,`                color_muted ${kdlQuote(colors.sub)}`,`                color_warning ${kdlQuote(colors.warning)}`,...['mode','branch','tab'].map(kind=>`                color_${kind}_separator ${kdlQuote(colors[kind+'SeparatorColor'])}`),'',`                format_left ${kdlQuote(formatLeft)}`,'                format_center ""',`                format_right ${kdlQuote(rightKdlFormat())}`,'                format_space ""','                format_hide_on_overlength "true"','                format_precedence "lcr"','','                border_enabled "true"','                border_char " "','                border_format "{char}"','                border_position "top"',...modeDefinitions.map(([key])=>`                color_mode_${key} ${kdlQuote(modeExportColor(key))}`),...modeLines.map(line=>'                '+line),'',...(state.showBranch?[`                command_git_branch_command ${kdlQuote(branchCommand)}`,'                command_git_branch_cwd "{focused_pane_cwd}"',`                command_git_branch_format ${kdlQuote(branchFormat)}`,'                command_git_branch_hideonemptystdout "true"','                command_git_branch_interval "5"','                command_git_branch_rendermode "static"','']:[]),`                tab_normal ${kdlQuote(inactive)}`,`                tab_normal_fullscreen ${kdlQuote(inactive+'{fullscreen_indicator}')}`,`                tab_normal_sync ${kdlQuote(inactive+'{sync_indicator}')}`,`                tab_active ${kdlQuote(active)}`,`                tab_active_fullscreen ${kdlQuote(active.replace('{name}','{name}{fullscreen_indicator}'))}`,`                tab_active_sync ${kdlQuote(active.replace('{name}','{name}{sync_indicator}'))}`,`                tab_separator ${kdlQuote(tabSep)}`,'',...(state.rightContent==='clock'?[`                datetime ${kdlQuote('#[fg=$muted,bold] '+(state.clockIcon?state.clockIcon+' ':'')+'{format} ')}`,`                datetime_format ${kdlQuote(state.clockFormat)}`,`                datetime_timezone ${kdlQuote(state.clockTimezone)}`]:[]),'            }','        }','    }','}',''];
+ return rows.join('\n');
+}
+function renderLayout(){
+ const code=$('#layout-code'),title=$('#export-title'),note=$('#export-note'),paletteHint=$('#palette-hint');if(!code)return;
+ const modeSlug=state.modeDesign==='plain'?'plain':state.modeDesign,tabSlug=state.tabDesign,custom=Object.keys(state.paletteOverrides).length?'custom-':'',hybrid=state.modeDesign==='plain'&&state.tabDesign==='slant'&&state.modeSeparator==='braille'&&state.tabSeparator==='stitch';
+ const prefix=state.themeAgnostic?'theme-agnostic-':`${custom}${palettes[state.palette].slug}-`;
+ const branchSlug=state.branchDesign==='plain'?'':`-${state.branchDesign}-branch`;
+ const filename=hybrid&&state.branchDesign==='plain'?`${prefix}slant-braille.kdl`:`${prefix}${modeSlug}-mode-${tabSlug}-tabs${branchSlug}.kdl`;
+ title.textContent=filename;$('#terminal-file').textContent=filename;$('#terminal-pane-size').textContent=needsTwoRows()?'3':'2';code.textContent=layoutText();
+ note.textContent=needsTwoRows()?'Boxcar needs two content rows; this export increases the status pane to size=3. Confirm the line layout in your Zellij font before using it.':state.tabDesign==='hatchhalf'?'Half-cell Hatch is represented with its two edge cells; browser shading uses palette blends that zjstatus does not calculate automatically.':'The generated layout follows the selected mode, branch and active-tab styles, mode colors, separators, and theme.';
+ paletteHint.textContent=state.themeAgnostic?'KDL follows your terminal palette using the assignments in Compose. '+palettes[state.palette].name+(terminalPalette().kind==='sample'?' is a Workbench sample palette.':terminalPalette().kind==='imported'?' previews the imported Ghostty colors.':' previews its bundled Ghostty palette snapshot.'):'KDL writes fixed colors from '+palettes[state.palette].name+'. Choose Theme agnostic above the preview to follow your terminal palette.';
+}
+function fallbackCopy(value){const area=document.createElement('textarea');area.value=value;area.style.cssText='position:fixed;opacity:0';document.body.append(area);area.select();const ok=document.execCommand('copy');area.remove();toast(ok?'KDL layout copied':'Copy unavailable; select the visible KDL.')}
+function copyLayout(){const value=layoutText();if(navigator.clipboard?.writeText){navigator.clipboard.writeText(value).then(()=>toast('KDL layout copied')).catch(()=>fallbackCopy(value))}else fallbackCopy(value)}
+
+$('#design').innerHTML=designs.map(d=>`<option value="${d.id}">${String(designs.indexOf(d)+1).padStart(2,'0')} / ${esc(d.name)}</option>`).join('')+'<option value="custom" disabled>Current mix</option>';
+const componentDesigns=designs.filter(d=>d.id!=='slantbraille');
+const componentOptionsMarkup='<option value="plain">Plain label</option>'+componentDesigns.map(d=>`<option value="${d.id}">${esc(d.name)}</option>`).join('');
+['mode','branch','tab'].forEach(kind=>$('#'+kind+'-style').innerHTML=componentOptionsMarkup);
+$('#preview-mode').innerHTML=modeDefinitions.map(([,label])=>`<option value="${label}">${label}</option>`).join('');
+const separatorOptionsMarkup=tabSeparatorOptions.map(([value,label])=>`<option value="${value}">${esc(label)}</option>`).join('');
+$('#mode-separator').innerHTML=separatorOptionsMarkup;
+$('#branch-separator').innerHTML=separatorOptionsMarkup;
+$('#tab-separator').innerHTML=separatorOptionsMarkup;
+restoreSettings();
+$('#design').addEventListener('change',e=>selectDesign(e.target.value));
+function cycleDesign(delta){const selected=designs.findIndex(d=>d.id===state.design),fallback=designs.findIndex(d=>d.id===state.tabDesign),index=selected>=0?selected:Math.max(0,fallback);selectDesign(designs[(index+delta+designs.length)%designs.length].id)}
+$('#prev').addEventListener('click',()=>cycleDesign(-1));
+$('#next').addEventListener('click',()=>cycleDesign(1));
+$('#palette').addEventListener('change',e=>{state.palette=e.target.value;if(!state.themeAgnostic)state.paletteOverrides={};render()});
+$('#mode-style').addEventListener('change',e=>{state.modeDesign=e.target.value;state.design='custom';render()});
+$('#branch-style').addEventListener('change',e=>{state.branchDesign=e.target.value;state.design='custom';render()});
+$('#tab-style').addEventListener('change',e=>{state.tabDesign=e.target.value;state.design='custom';render()});
+$('#mode-separator').addEventListener('change',e=>{state.modeSeparator=e.target.value;state.design='custom';render()});
+$('#branch-separator').addEventListener('change',e=>{state.branchSeparator=e.target.value;state.design='custom';render()});
+$('#tab-separator').addEventListener('change',e=>{state.tabSeparator=e.target.value;state.design='custom';render()});
+$$('[data-color-role]').forEach(input=>input.addEventListener('input',e=>{state.paletteOverrides[e.target.dataset.colorRole]=e.target.value;render()}));
+$('#color-lab').addEventListener('change',e=>{const select=e.target.closest('[data-theme-color-role]');if(!select||!select.value)return;state.paletteSlots[select.dataset.themeColorRole]=Number(select.value);render()});
+$('#reset-colors').addEventListener('click',()=>{if(state.themeAgnostic)state.paletteSlots={...defaultPaletteSlots};else state.paletteOverrides={};render();toast(state.themeAgnostic?'Reset terminal palette assignments':'Reset colors to '+palettes[state.palette].name)});
+$('#branch-swatches-list').addEventListener('click',e=>{const button=e.target.closest('[data-branch-color]');if(!button)return;state.paletteOverrides.branch=button.dataset.branchColor;render();toast('Branch color set to '+button.dataset.branchColor)});
+$('#right-content').addEventListener('change',e=>{state.rightContent=e.target.value;if(state.rightContent==='branch'){state.showBranch=true;$('#show-branch').checked=true}render()});
+$('#clock-format').addEventListener('change',e=>{state.clockFormat=e.target.value;render()});
+$('#clock-timezone').addEventListener('input',e=>{
+ const value=e.target.value.trim(),valid=validTimezone(value);e.target.setCustomValidity(valid?'':'Enter a valid IANA timezone, such as America/Denver or UTC.');e.target.setAttribute('aria-invalid',String(!valid));
+ if(valid){state.clockTimezone=new Intl.DateTimeFormat('en',{timeZone:value}).resolvedOptions().timeZone;render()}
+});
+$('#clock-timezone').addEventListener('change',e=>{if(!e.target.validity.valid)e.target.reportValidity()});
+$('#clock-icon').addEventListener('input',e=>{state.clockIcon=e.target.value;render()});
+$('#right-text').addEventListener('input',e=>{state[state.rightContent==='session'?'previewSession':'rightText']=e.target.value;render()});
+$('#copy-layout').addEventListener('click',copyLayout);
+$('#color-mode').addEventListener('change',e=>{state.themeAgnostic=e.target.value==='agnostic';render()});
+$('#glass').addEventListener('input',e=>{state.glass=Number(e.target.value);const value=state.glass+'%';document.documentElement.style.setProperty('--glass-opacity',value);$('#glass-value').value=value;$('#glass').setAttribute('aria-valuetext',value+' background opacity');saveSettings()});
+$('#backdrop').addEventListener('change',e=>{state.backdrop=e.target.value;applyBackdrop(state.backdrop);saveSettings()});
+$('#preview-mode').addEventListener('change',e=>{state.mode=e.target.value;render()});
+$('#crowded').addEventListener('change',e=>{state.crowded=e.target.checked;if(!state.crowded&&state.active>3)state.active=1;render()});
+$('#narrow').addEventListener('change',e=>{state.narrow=e.target.checked;document.body.classList.toggle('width-limited',state.narrow);updateOverflow();saveSettings()});
+$('#baseline').addEventListener('change',e=>{state.baseline=e.target.checked;$('#baseline-bar').hidden=!state.baseline;updateOverflow();saveSettings()});
+$('#show-branch').addEventListener('change',e=>{state.showBranch=e.target.checked;render()});
+
+let toastTimer;
+function toast(s){clearTimeout(toastTimer);$('#toast').textContent=s;$('#toast').hidden=false;toastTimer=setTimeout(()=>{$('#toast').hidden=true},2400)}
+document.addEventListener('click',e=>{const tab=e.target.closest('[data-tab]');if(!tab)return;const host=tab.closest('#baseline-bar')?'baseline-bar':'hero-bar',scrolls=$$('.bar-scroll').map(el=>el.scrollLeft);state.active=Number(tab.dataset.tab);renderHero();$$('.bar-scroll').forEach((el,i)=>{el.scrollLeft=scrolls[i]||0});$('#'+host+' [data-tab="'+state.active+'"]').focus({preventScroll:true});saveSettings()});
+window.addEventListener('resize',updateOverflow);document.fonts.ready.then(updateOverflow);render();
+</script>
+</body>
+</html>
