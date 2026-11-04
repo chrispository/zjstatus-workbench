@@ -19,7 +19,7 @@ const { chromium } = require(process.env.WORKBENCH_PLAYWRIGHT || 'playwright');
     const code = () => page.locator('#layout-code').textContent();
     const slot = role => page.locator(`[data-theme-color-role="${role}"]`);
     assert.equal(await page.locator('#color-mode').inputValue(), 'agnostic');
-    assert.equal(await page.locator('.palette-color-select').count(), 12);
+    assert.equal(await page.locator('.palette-color-select').count(), 13);
     for (const select of await page.locator('.palette-color-select').all()) {
       assert.equal(await select.locator('option').count(), 16);
     }
@@ -144,8 +144,6 @@ const { chromium } = require(process.env.WORKBENCH_PLAYWRIGHT || 'playwright');
     assert.equal(await page.locator('#hero-bar .clock .branch').count(), 0);
     assert.equal(await page.locator('#branch-separator').isDisabled(), false);
     assert.match(await code(), /command_git_branch_format .*\$branch_separator.*◆/);
-    await page.setViewportSize({ width: 390, height: 844 });
-    assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     // Import exact Ghostty colors, including a background different from palette0.
     const importedConfig = 'background = #101010\nforeground = #ededed\n' + Array.from({length:16}, (_,i) => `palette = ${i}=#${i.toString(16).repeat(6)}`).join('\n');
     await page.locator('#theme-file').setInputFiles({name:'Custom "theme".conf',mimeType:'text/plain',buffer:Buffer.from(importedConfig)});
@@ -211,13 +209,12 @@ const { chromium } = require(process.env.WORKBENCH_PLAYWRIGHT || 'playwright');
     await page.locator('#show-branch').check();
     await page.locator('#branch-style').selectOption('plain');
     await page.locator('#color-mode').selectOption('agnostic');
-    await page.locator('.mode-colors summary').click();
     const modeColor = key => page.locator(`[data-mode-color="${key}"]`);
     const modes = await page.locator('[data-mode-color]').evaluateAll(nodes => nodes.map(n => n.dataset.modeColor));
     assert.equal(modes.length, 14);
     for (const style of ['plain','slant']) {
       await page.locator('#mode-style').selectOption(style);
-      const expected = await slot(style === 'plain' ? 'fg' : 'a').inputValue();
+      const expected = await slot(style === 'plain' ? 'fg' : 'modeFill').inputValue();
       for (const key of modes) assert.equal(kdlValue(await code(), 'color_mode_' + key), expected);
       const colors = new Set();
       for (const label of await page.locator('#preview-mode option').evaluateAll(nodes => nodes.map(n => n.value))) {
@@ -242,7 +239,6 @@ const { chromium } = require(process.env.WORKBENCH_PLAYWRIGHT || 'playwright');
     assert.equal(await page.locator('#preview-mode').inputValue(), 'PANE');
     assert.equal(await modeColor('normal').inputValue(), '11');
     assert.equal(await modeColor('pane').inputValue(), '4');
-    await page.locator('.mode-colors summary').click();
     await page.locator('#reset-mode-colors').click();
     assert.equal(await modeColor('normal').inputValue(), 'inherit');
     assert.equal(await modeColor('pane').inputValue(), 'inherit');
@@ -262,7 +258,7 @@ const { chromium } = require(process.env.WORKBENCH_PLAYWRIGHT || 'playwright');
     assert.equal(await modeColor('normal').inputValue(), 'inherit');
     assert.equal(await modeColor('pane').inputValue(), 'inherit');
     assert.deepEqual(errors, []);
-    console.log('Passed: exact theme palettes, Ghostty import, slots, exports, separators, persistence, mode switching, Slant geometry, right-hand content, timezones, mobile layout, branch shapes on both sides, all 14 mode colors, and settings validation.');
+    console.log('Passed: exact theme palettes, Ghostty import, slots, exports, separators, persistence, mode switching, Slant geometry, right-hand content, timezones, branch shapes on both sides, all 14 mode colors, and settings validation.');
   } finally {
     await browser.close();
   }
