@@ -62,7 +62,9 @@ kbd{font:10px var(--mono);border:1px solid var(--line-2);border-bottom-width:2px
 .summary-chip{font:10px var(--mono);color:var(--muted);border:1px solid var(--line-2);border-radius:20px;padding:2px 9px;white-space:nowrap}
 .summary-chip b{color:var(--ink);font-weight:500}
 .summary-chip:hover{border-color:var(--accent);color:var(--accent)}
-.terminal{background:var(--surface);backdrop-filter:blur(7px);color:var(--fg);transition:background .15s,color .15s}
+.terminal{display:flex;flex-direction:column;background:var(--surface);backdrop-filter:blur(7px);color:var(--fg);transition:background .15s,color .15s}
+.terminal.bar-top #hero-bar{order:-1}
+.cols-readout{color:var(--faint)}
 .terminal-body{height:190px;display:grid;grid-template-columns:1.2fr 1fr;overflow:hidden;font:11px/1.8 var(--mono)}
 .terminal-pane{padding:16px 22px;overflow:hidden;white-space:nowrap}
 .terminal-pane+.terminal-pane{border-left:1px solid color-mix(in srgb,var(--sub) 20%,transparent)}
@@ -95,7 +97,7 @@ kbd{font:10px var(--mono);border:1px solid var(--line-2);border-bottom-width:2px
 
 /* Inspector */
 .inspector-nav{position:sticky;top:var(--appbar-h);z-index:10;display:flex;gap:2px;overflow-x:auto;padding:10px 18px;background:color-mix(in srgb,var(--page) 94%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);scrollbar-width:none}
-.inspector-nav a{flex:none;text-decoration:none;font:11px var(--mono);color:var(--muted);padding:5px 9px;border-radius:4px}
+.inspector-nav a{flex:none;text-decoration:none;font:11px var(--mono);color:var(--muted);padding:5px 7px;border-radius:4px}
 .inspector-nav a:hover{color:var(--ink);background:var(--panel-2)}
 .inspector-nav a.is-active{color:var(--accent-ink);background:var(--accent)}
 .panel{padding:24px 22px 26px;border-bottom:1px solid var(--line)}
@@ -118,7 +120,7 @@ kbd{font:10px var(--mono);border:1px solid var(--line-2);border-bottom-width:2px
 .filters{display:flex;gap:4px;flex-wrap:wrap}
 .filters button{font:10px var(--mono);color:var(--muted);padding:3px 8px;border-radius:20px;border:1px solid transparent}
 .filters button[aria-pressed=true]{color:var(--accent);border-color:#6c5d42}
-.piece-selects{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0 4px}
+.piece-selects{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin:12px 0 4px}
 .piece-selects .field{padding:8px;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
 .piece-selects .field.is-target{border-color:#6c5d42;background:#1e1d17}
 
@@ -193,6 +195,30 @@ kbd{font:10px var(--mono);border:1px solid var(--line-2);border-bottom-width:2px
 .mode-color-value{font:9px var(--mono);color:var(--muted);width:84px;text-align:right}
 .panel-foot{display:flex;justify-content:flex-end;margin-top:12px;gap:8px}
 
+/* Layout editor */
+.zone-editor{display:grid;gap:8px}
+.zone-row{display:grid;grid-template-columns:56px 1fr;gap:10px;align-items:start;padding:8px;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+.zone-row.drag-over{border-color:var(--accent);background:#1e1d17}
+.zone-row>.small-label{padding-top:6px}
+.zone-body{display:flex;flex-wrap:wrap;gap:5px;align-items:center;min-height:28px}
+.zone-list{display:contents;list-style:none;margin:0;padding:0}
+.zone-chip{display:inline-flex;align-items:center;gap:2px;padding:3px 4px 3px 6px;border:1px solid var(--line-2);border-radius:4px;background:var(--panel-2);font:10px var(--mono);cursor:grab;white-space:nowrap}
+.zone-chip.dragging{opacity:.35}
+.zone-chip .grip{color:var(--faint);margin-right:3px}
+.zone-chip button{width:17px;height:17px;border-radius:3px;color:var(--muted);font:10px/1 var(--mono)}
+.zone-chip button:hover:not(:disabled){color:var(--accent);background:#0f110e}
+.zone-body select{width:auto;padding:3px 6px;font-size:10px;color:var(--muted)}
+.zone-empty{color:var(--faint);font:10px var(--mono)}
+.check-row{display:flex;gap:8px 18px;flex-wrap:wrap;margin-top:10px}
+.note-off{font:9px var(--mono);color:var(--faint);text-transform:none;letter-spacing:0}
+.mode-label-input{width:74px}
+.mode-options{display:flex;align-items:center;gap:10px 18px;flex-wrap:wrap;margin-bottom:12px}
+.mode-options .segmented{flex:none}
+details.locks{position:relative}
+details.locks>summary{list-style:none;cursor:pointer}details.locks>summary::-webkit-details-marker{display:none}
+.locks-pop{position:absolute;top:36px;right:0;z-index:40;display:grid;gap:7px;min-width:170px;padding:10px 12px;background:var(--panel);border:1px solid var(--line-2);border-radius:6px;box-shadow:0 10px 30px #000a}
+.locks-pop p{margin:0;color:var(--faint);font-size:10px}
+
 /* About */
 .about p,.about li{color:var(--muted);font-size:12px;line-height:1.65}
 .about code{font:10.5px var(--mono);color:var(--accent);overflow-wrap:anywhere}
@@ -204,7 +230,7 @@ kbd{font:10px var(--mono);border:1px solid var(--line-2);border-bottom-width:2px
 .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--page);padding:9px 16px;font-size:12px;z-index:50;border-radius:5px;box-shadow:0 6px 30px #0008}
 
 .flash{animation:flash 1.2s ease-out}@keyframes flash{0%,40%{box-shadow:0 0 0 2px var(--accent)}100%{box-shadow:0 0 0 2px transparent}}
-#hero-bar [data-inspect]{cursor:pointer;border-radius:2px}#hero-bar [data-inspect]:hover{outline:1px dashed var(--accent);outline-offset:2px}
+#hero-bar [data-inspect]{cursor:pointer;border-radius:2px}#hero-bar .tabs[data-inspect]:hover{outline:0}#hero-bar [data-inspect]:hover{outline:1px dashed var(--accent);outline-offset:2px}
 /* ───────── Bar rendering (shared by preview and galleries) ───────── */
 .bar-scroll{overflow-x:auto;scrollbar-width:thin;scrollbar-color:#4c4c42 transparent}
 .bar{height:27px;display:flex;align-items:center;gap:12px;padding:0 12px;background:transparent;color:var(--fg);font:var(--bar-font)/1 var(--mono);white-space:nowrap;min-width:fit-content}
@@ -218,6 +244,21 @@ kbd{font:10px var(--mono);border:1px solid var(--line-2);border-bottom-width:2px
 .token.active:hover{filter:brightness(1.15)}
 .clock{margin-left:auto;padding-left:14px;color:var(--sub);display:flex;align-items:center;gap:7px;font-size:.92em}
 .clock .clock-glyph{color:var(--sub)}
+.bar-frame{font:var(--bar-font)/1 var(--mono);overflow:hidden}
+.bar-frame.fixed{width:calc(var(--cols) * 1ch + 24px)}
+.bar.zoned{position:relative;display:block;min-width:0}
+.bar.zoned .zone{position:absolute;top:0;bottom:0;display:flex;align-items:center;white-space:nowrap}
+.bar.zoned.row2 .zone{align-items:flex-end;padding-bottom:4px}
+.bar.gap-bg{background:var(--bg)}
+.bar.zoned .zone-left{left:12px}.bar.zoned .zone-center{left:50%;transform:translateX(-50%)}.bar.zoned .zone-right{right:12px}
+.border-row{height:18px;overflow:hidden;white-space:pre;color:var(--border);font:var(--bar-font)/18px var(--mono);padding:0 12px}
+.widget{--a:var(--sub);--cap:var(--sub);display:inline-flex;align-items:center;flex:none;white-space:pre;line-height:1.5;color:var(--sub)}
+.widget.widget-warn{--a:var(--warning);--cap:var(--warning);color:var(--warning)}
+.widget .edge{color:var(--a)}
+.widget-stencil{background:var(--a);color:var(--active-text);font-weight:bold;padding:0 1ch}
+.widget-brackets,.widget-cursor,.widget-braille,.widget-boxcar,.widget-comb{font-weight:bold}
+.token.shaped{--a:var(--dim);--cap:var(--dim)}
+.trunc{color:var(--dim);white-space:pre;flex:none}
 .fill{background:var(--a);color:var(--active-text);display:inline-block;font-weight:bold}
 .mode .fill{background:var(--hot);color:var(--mode-text)}
 .edge{color:var(--a)}.mode .edge{color:var(--hot)}
@@ -234,7 +275,7 @@ kbd{font:10px var(--mono);border:1px solid var(--line-2);border-bottom-width:2px
 .half-outer{color:color-mix(in srgb,var(--cap) 25%,var(--bg));background:transparent}
 .half-inner{color:color-mix(in srgb,var(--cap) 75%,var(--bg));background:color-mix(in srgb,var(--cap) 50%,var(--bg))}
 .joiner{display:inline-flex;align-items:center;justify-content:center;white-space:pre;flex:none}
-.joiner-mode{color:var(--modeSeparatorColor)}.joiner-branch{color:var(--branchSeparatorColor)}.joiner-tab{color:var(--tabSeparatorColor)}
+.joiner-mode{color:var(--modeSeparatorColor)}.joiner-branch{color:var(--branchSeparatorColor)}.joiner-tab{color:var(--tabSeparatorColor)}.joiner-widget{color:var(--widgetSeparatorColor)}
 .branch{--a:var(--branch);--cap:var(--branch);display:inline-flex;align-items:center;flex:none;white-space:pre;line-height:1.5;font-style:normal;color:var(--branch)}
 .branch-plain{font-style:italic}.branch .fill,.branch .edge{font-style:normal}.branch .edge{color:var(--branch)}.branch-clock{font-size:inherit}
 .branch-stencil{background:var(--branch);color:var(--active-text);font-weight:bold;padding:0 1ch}
@@ -242,9 +283,9 @@ kbd{font:10px var(--mono);border:1px solid var(--line-2);border-bottom-width:2px
 .flag-notch{display:inline-block;line-height:1.5;color:var(--bg);background:var(--a)}.mode .flag-notch{background:var(--hot)}
 /* Powerline glyph bounds differ between browser and terminal renderers. Draw
    the Slant triangles in one cell, with exactly the fill's line-box height. */
-.bar.tab-slant .token.active>.edge,.bar.tab-slantbraille .token.active>.edge,.bar.mode-slant .mode>.edge,.branch-slant>.edge{display:block;flex:none;width:1ch;height:1.5em;overflow:hidden;text-indent:-9999px;background:currentColor}
-.bar.tab-slant .token.active>.edge:first-child,.bar.tab-slantbraille .token.active>.edge:first-child,.bar.mode-slant .mode>.edge:first-child,.branch-slant>.edge:first-child{clip-path:polygon(100% 0,100% 100%,0 100%)}
-.bar.tab-slant .token.active>.edge:last-child,.bar.tab-slantbraille .token.active>.edge:last-child,.bar.mode-slant .mode>.edge:last-child,.branch-slant>.edge:last-child{clip-path:polygon(0 0,100% 0,0 100%)}
+.token.shaped-slant>.edge,.widget-slant>.edge,.bar.tab-slant .token.active>.edge,.bar.tab-slantbraille .token.active>.edge,.bar.mode-slant .mode>.edge,.branch-slant>.edge{display:block;flex:none;width:1ch;height:1.5em;overflow:hidden;text-indent:-9999px;background:currentColor}
+.token.shaped-slant>.edge:first-child,.widget-slant>.edge:first-child,.bar.tab-slant .token.active>.edge:first-child,.bar.tab-slantbraille .token.active>.edge:first-child,.bar.mode-slant .mode>.edge:first-child,.branch-slant>.edge:first-child{clip-path:polygon(100% 0,100% 100%,0 100%)}
+.token.shaped-slant>.edge:last-child,.widget-slant>.edge:last-child,.bar.tab-slant .token.active>.edge:last-child,.bar.tab-slantbraille .token.active>.edge:last-child,.bar.mode-slant .mode>.edge:last-child,.branch-slant>.edge:last-child{clip-path:polygon(0 0,100% 0,0 100%)}
 
 /* ───────── Responsive ───────── */
 @media(max-width:1180px){
@@ -286,27 +327,30 @@ kbd{font:10px var(--mono);border:1px solid var(--line-2);border-bottom-width:2px
 </head>
 <body>
 <header class="appbar" id="appbar">
- <div class="brand"><span class="brand-mark" aria-hidden="true">[ ]</span><span>ZJSTATUS <b>WORKBENCH</b></span><span class="ver">v2</span></div>
+ <div class="brand"><span class="brand-mark" aria-hidden="true">[ ]</span><span>ZJSTATUS <b>WORKBENCH</b></span><span class="ver">v3</span></div>
  <div class="appbar-group preset-nav"><button class="icon-btn" id="prev" type="button" aria-label="Previous preset" title="Previous preset ( [ )">←</button><label class="sr-only" for="design">Preset</label><select id="design" class="design-select"></select><button class="icon-btn" id="next" type="button" aria-label="Next preset" title="Next preset ( ] )">→</button></div>
  <div class="appbar-group"><label class="small-label" for="color-mode">Colors</label><select id="color-mode"><option value="agnostic">Terminal palette</option><option value="specific">Fixed hex colors</option></select><label class="small-label" id="palette-label" for="palette">Preview theme</label><select id="palette"><option value="moonlit">Moonlit Sands</option><option value="greek">Greek Noir</option><option value="forest">Everforest</option><option value="ice">Glacier (sample)</option><option value="paper">Paper / light (sample)</option><option value="outpost">Outpost</option></select></div>
- <div class="appbar-actions"><button class="btn" id="download-layout" type="button">↓ .kdl</button><button class="btn primary" id="copy-layout" type="button">Copy KDL</button></div>
+ <div class="appbar-actions"><button class="btn" id="shuffle" type="button" title="Shuffle unlocked settings ( R )">⚄ Shuffle</button><details class="locks" id="locks"><summary class="btn quiet" aria-label="Shuffle locks">Locks</summary><div class="locks-pop"><p>Shuffle leaves locked groups alone.</p><label class="check"><input type="checkbox" data-lock="shapes">Shapes</label><label class="check"><input type="checkbox" data-lock="separators">Separators</label><label class="check"><input type="checkbox" data-lock="colors">Colors</label><label class="check"><input type="checkbox" data-lock="layout">Layout and widgets</label><label class="check"><input type="checkbox" data-lock="modes">Mode labels</label></div></details><button class="btn" id="share-link" type="button">Share link</button><button class="btn" id="download-layout" type="button">↓ .kdl</button><button class="btn primary" id="copy-layout" type="button">Copy KDL</button></div>
 </header>
 <div class="shell">
 <main class="stage" id="stage">
  <section class="workbench" id="workbench" aria-label="Live terminal preview">
-  <div class="workbench-top"><span class="workbench-title"><span class="live-dot" aria-hidden="true"></span>LIVE PREVIEW</span><span class="peek-label" id="peek-label" aria-live="polite"></span><span class="hero-description" id="hero-description"></span></div>
-  <div class="terminal"><div class="terminal-body"><div class="terminal-pane"><div class="pane-title"><span id="terminal-file">layout.kdl</span><span>~/.config/zellij/layouts</span></div><div class="code-line"><span class="line-num">01</span><span class="code-key">layout</span> {</div><div class="code-line"><span class="line-num">02</span>  default_tab_template {</div><div class="code-line"><span class="line-num">03</span>    children</div><div class="code-line"><span class="line-num">04</span>    pane size=<span class="code-str" id="terminal-pane-size">2</span> borderless=<span class="code-str">true</span> {</div><div class="code-line"><span class="line-num">05</span>      plugin location=<span class="code-str">"file:…/zjstatus.wasm"</span> {</div><div class="code-line code-fade"><span class="line-num">06</span>        // the bar below</div></div><div class="terminal-pane"><div class="pane-title"><span>shell</span><span>sample output</span></div><div><span class="term-prompt">~/project ❯</span> git status --short</div><div class="test-output"> M src/main.rs</div><br><div><span class="term-prompt">~/project ❯</span> cargo test</div><div class="test-output">test result: ok. 42 passed</div><div><span class="term-prompt">~/project ❯</span> <span class="cursor-block"></span></div></div></div><div class="blank-row"></div><div id="hero-bar"></div></div>
+  <div class="workbench-top"><span class="workbench-title"><span class="live-dot" aria-hidden="true"></span>LIVE PREVIEW</span><span class="peek-label" id="peek-label" aria-live="polite"></span><span class="cols-readout" id="cols-readout"></span><span class="hero-description" id="hero-description"></span></div>
+  <div class="terminal"><div class="terminal-body"><div class="terminal-pane"><div class="pane-title"><span id="terminal-file">layout.kdl</span><span>~/.config/zellij/layouts</span></div><div class="code-line"><span class="line-num">01</span><span class="code-key">layout</span> {</div><div class="code-line"><span class="line-num">02</span>  default_tab_template {</div><div class="code-line"><span class="line-num">03</span>    children</div><div class="code-line"><span class="line-num">04</span>    pane size=<span class="code-str" id="terminal-pane-size">2</span> borderless=<span class="code-str">true</span> {</div><div class="code-line"><span class="line-num">05</span>      plugin location=<span class="code-str">"file:…/zjstatus.wasm"</span> {</div><div class="code-line code-fade"><span class="line-num">06</span>        // the bar below</div></div><div class="terminal-pane"><div class="pane-title"><span>shell</span><span>sample output</span></div><div><span class="term-prompt">~/project ❯</span> git status --short</div><div class="test-output"> M src/main.rs</div><br><div><span class="term-prompt">~/project ❯</span> cargo test</div><div class="test-output">test result: ok. 42 passed</div><div><span class="term-prompt">~/project ❯</span> <span class="cursor-block"></span></div></div></div><div id="hero-bar"></div></div>
  </section>
  <section class="stage-toolbar" aria-label="Preview settings">
   <div class="control"><label for="preview-mode" class="small-label">Mode</label><select id="preview-mode"></select></div>
   <div class="control"><label class="small-label" for="glass">Opacity</label><input id="glass" class="glass-range" type="range" min="20" max="100" value="65" step="5"><output for="glass" id="glass-value" class="glass-value">65%</output></div>
   <div class="control"><label class="small-label" for="backdrop">Backdrop</label><select id="backdrop"><option value="desktop">Desert night</option><option value="test">Bright gradient</option></select></div>
-  <label class="check"><input id="show-branch" type="checkbox" checked>Git branch</label>
-  <label class="check"><input id="crowded" type="checkbox">8 tabs</label>
+  <div class="control"><label class="small-label" for="preview-width">Width</label><select id="preview-width"><option value="fit">Fit preview</option><option value="80">80 columns</option><option value="100">100 columns</option><option value="120">120 columns</option><option value="160">160 columns</option></select></div>
+  <div class="control"><label class="small-label" for="tab-count">Tabs</label><select id="tab-count"><option value="4">4</option><option value="8">8</option><option value="12">12</option><option value="16">16</option></select></div>
+  <div class="control"><label class="small-label" for="tab-state">Active tab</label><select id="tab-state"><option value="normal">Normal</option><option value="fullscreen">Fullscreen</option><option value="sync">Sync panes</option><option value="floating">Floating panes</option></select></div>
+  <label class="check"><input id="in-repo" type="checkbox" checked>In a Git repo</label>
+  <label class="check"><input id="preview-notify" type="checkbox">Unread notification</label>
  </section>
  <p class="stage-hint" id="workbench-hint"></p>
  <section class="layout-export" id="export" aria-labelledby="export-title">
-  <div class="export-head"><div><div class="eyebrow">Generated layout</div><h2 id="export-title">layout.kdl</h2></div><div class="export-actions"><button class="btn" id="download-layout-2" type="button">Download</button><button class="btn primary" id="copy-layout-2" type="button">Copy KDL</button></div></div>
+  <div class="export-head"><div><div class="eyebrow">Generated layout</div><h2 id="export-title">layout.kdl</h2></div><div class="export-actions"><button class="btn quiet" id="import-kdl" type="button">Import KDL…</button><input id="kdl-file" type="file" accept=".kdl,.txt,text/plain" hidden><button class="btn" id="download-layout-2" type="button">Download</button><button class="btn primary" id="copy-layout-2" type="button">Copy KDL</button></div></div>
   <pre><code id="layout-code"></code></pre>
   <div class="export-notes"><p class="export-note" id="export-note"></p><p class="palette-hint" id="palette-hint"></p></div>
  </section>
@@ -314,7 +358,7 @@ kbd{font:10px var(--mono);border:1px solid var(--line-2);border-bottom-width:2px
 
 <aside class="inspector" id="inspector" aria-label="Bar settings">
  <nav class="inspector-nav" aria-label="Settings sections">
-  <a href="#sec-presets">Presets</a><a href="#sec-shapes">Shapes</a><a href="#sec-separators">Separators</a><a href="#sec-colors">Colors</a><a href="#sec-modes">Modes</a><a href="#sec-status">Right side</a><a href="#sec-about">About</a>
+  <a href="#sec-presets">Presets</a><a href="#sec-layout">Layout</a><a href="#sec-shapes">Shapes</a><a href="#sec-separators">Separators</a><a href="#sec-tabs">Tabs</a><a href="#sec-colors">Colors</a><a href="#sec-modes">Modes</a><a href="#sec-widgets">Widgets</a><a href="#sec-about">About</a>
  </nav>
 
  <section class="panel" id="sec-presets" aria-labelledby="presets-title">
@@ -322,13 +366,33 @@ kbd{font:10px var(--mono);border:1px solid var(--line-2);border-bottom-width:2px
   <div class="tile-grid preset-grid" id="preset-grid"></div>
  </section>
 
+ <section class="panel" id="sec-layout" aria-labelledby="layout-title">
+  <div class="panel-head"><div><h2 id="layout-title">Layout</h2><p class="panel-lede">Place widgets in the left, center, and right sections of the bar. Drag the chips, or use the arrows: ‹ › reorder, ˄ ˅ move between sections.</p></div></div>
+  <div class="zone-editor" id="zone-editor"></div>
+  <div class="sub-head"><h3>Bar</h3></div>
+  <div class="field-grid">
+   <label class="field"><span>Position</span><select id="bar-position"><option value="bottom">Bottom</option><option value="top">Top</option></select></label>
+   <label class="field"><span>Border</span><select id="border"><option value="auto">Toward panes</option><option value="top">Above the bar</option><option value="bottom">Below the bar</option><option value="off">None</option></select></label>
+   <label class="field"><span>Border line</span><select id="border-char"><option value=" ">Blank row</option><option value="─">Line ─</option><option value="━">Heavy ━</option><option value="▔">Upper ▔</option><option value="▁">Lower ▁</option><option value="┄">Dashed ┄</option><option value="┈">Dotted ┈</option><option value="·">Dots ·</option><option value="⠂">Specks ⠂</option></select></label>
+   <label class="field"><span>Gap fill</span><select id="gap-fill"><option value="none">Transparent</option><option value="background">Background color</option></select></label>
+  </div>
+  <div class="sub-head"><h3>When the bar is too wide</h3></div>
+  <div class="field-grid">
+   <label class="field"><span>Keep first</span><select id="precedence"><option value="lcr">Left, center, right</option><option value="lrc">Left, right, center</option><option value="clr">Center, left, right</option><option value="crl">Center, right, left</option><option value="rlc">Right, left, center</option><option value="rcl">Right, center, left</option></select></label>
+  </div>
+  <div class="check-row"><label class="check"><input id="hide-overlength" type="checkbox" checked>Hide sections that would overlap</label></div>
+  <p class="palette-hint" style="margin-top:8px">zjstatus hides whole sections, starting with the lowest priority, when they would collide. Set Width above the preview to test it.</p>
+ </section>
+
  <section class="panel" id="sec-shapes" aria-labelledby="shapes-title">
   <div class="panel-head"><div><h2 id="shapes-title">Shapes</h2><p class="panel-lede">Each piece of the bar takes any shape. Pick a piece, then browse the gallery. The tiles render in your current colors.</p></div></div>
-  <div class="segmented" role="group" aria-label="Piece to edit" id="piece-tabs"><button type="button" data-piece="mode" aria-pressed="true">Mode badge</button><button type="button" data-piece="branch" aria-pressed="false">Git branch</button><button type="button" data-piece="tab" aria-pressed="false">Active tab</button></div>
+  <div class="segmented" role="group" aria-label="Piece to edit" id="piece-tabs"><button type="button" data-piece="mode" aria-pressed="true">Mode badge</button><button type="button" data-piece="branch" aria-pressed="false">Git branch</button><button type="button" data-piece="tab" aria-pressed="false">Active tab</button><button type="button" data-piece="inactive" aria-pressed="false">Inactive tabs</button><button type="button" data-piece="widget" aria-pressed="false">Widgets</button></div>
   <div class="piece-selects">
    <label class="field" data-piece-field="mode"><span>Mode style</span><select id="mode-style"></select></label>
    <label class="field" data-piece-field="branch"><span>Git branch style</span><select id="branch-style"></select></label>
    <label class="field" data-piece-field="tab"><span>Active tab style</span><select id="tab-style"></select></label>
+   <label class="field" data-piece-field="inactive"><span>Inactive tab style</span><select id="inactive-style"></select></label>
+   <label class="field" data-piece-field="widget"><span>Widget</span><select id="widget-target"></select><select id="widget-style" aria-label="Widget style"></select></label>
   </div>
   <div class="sub-head"><h3 id="gallery-title">Mode badge gallery</h3><div class="filters" role="group" aria-label="Filter styles" id="style-filters"><button type="button" data-filter="all" aria-pressed="true">All</button><button type="button" data-filter="quiet" aria-pressed="false">Quiet</button><button type="button" data-filter="geometric" aria-pressed="false">Geometric</button><button type="button" data-filter="expressive" aria-pressed="false">Expressive</button></div></div>
   <div class="tile-grid" id="style-grid"></div>
@@ -336,10 +400,34 @@ kbd{font:10px var(--mono);border:1px solid var(--line-2);border-bottom-width:2px
  </section>
 
  <section class="panel" id="sec-separators" aria-labelledby="sep-title">
-  <div class="panel-head"><div><h2 id="sep-title">Separators</h2><p class="panel-lede">The glyphs between pieces. Each boundary has its own color role (see Colors → Separators).</p></div></div>
-  <div class="sep-block"><div class="sub-head"><h3><label for="mode-separator" id="mode-separator-label">Mode → branch</label></h3><select id="mode-separator"></select></div><div class="chip-grid" data-sep-chips="mode"></div></div>
-  <div class="sep-block"><div class="sub-head"><h3><label for="branch-separator">Branch → tabs</label></h3><select id="branch-separator"></select></div><div class="chip-grid" data-sep-chips="branch"></div></div>
+  <div class="panel-head"><div><h2 id="sep-title">Separators</h2><p class="panel-lede">The glyphs between neighbors in a section. A separator only appears when something follows it. The branch, swap layout, notification, and command widgets carry their separator with them, so it disappears when they do. Each kind has its own color role (see Colors → Separators).</p></div></div>
+  <div class="sep-block"><div class="sub-head"><h3><label for="mode-separator" id="mode-separator-label">After the mode badge</label></h3><select id="mode-separator"></select></div><div class="chip-grid" data-sep-chips="mode"></div></div>
+  <div class="sep-block"><div class="sub-head"><h3><label for="branch-separator">After the Git branch</label></h3><select id="branch-separator"></select></div><div class="chip-grid" data-sep-chips="branch"></div></div>
   <div class="sep-block"><div class="sub-head"><h3><label for="tab-separator">Between tabs</label></h3><select id="tab-separator"></select></div><div class="chip-grid" data-sep-chips="tab"></div></div>
+  <div class="sep-block"><div class="sub-head"><h3><label for="widget-separator">After tabs and widgets</label></h3><select id="widget-separator"></select></div><div class="chip-grid" data-sep-chips="widget"></div></div>
+ </section>
+
+ <section class="panel" id="sec-tabs" aria-labelledby="tabs-title">
+  <div class="panel-head"><div><h2 id="tabs-title">Tabs</h2><p class="panel-lede">How each tab is labeled, what marks a fullscreen, synced, or floating tab, and how many tabs fit before the list is cut short. Inactive tab shapes are under Shapes.</p></div></div>
+  <div class="field-grid">
+   <label class="field"><span>Label</span><select id="tab-label"><option value="{index} {name}">Index and name · 1 shell</option><option value="{name}">Name · shell</option><option value="{index}">Index · 1</option><option value="{index}:{name}">Colon · 1:shell</option><option value="{index}·{name}">Dot · 1·shell</option><option value="{index}. {name}">Period · 1. shell</option></select></label>
+   <label class="field"><span>Icon before label</span><input id="tab-icon" type="text" maxlength="8" placeholder="none"></label>
+  </div>
+  <div class="check-row"><label class="check"><input id="zero-index" type="checkbox">Count tabs from 0</label></div>
+  <div class="sub-head"><h3>Indicators</h3></div>
+  <div class="field-grid">
+   <label class="field"><span>Fullscreen</span><input type="text" data-indicator="fullscreen" maxlength="16"></label>
+   <label class="field"><span>Sync panes</span><input type="text" data-indicator="sync" maxlength="16"></label>
+   <label class="field"><span>Floating panes</span><input type="text" data-indicator="floating" maxlength="16"></label>
+  </div>
+  <p class="palette-hint" style="margin-top:8px">Appended to the tab label when that state is on. Use “Active tab” above the preview to see one.</p>
+  <div class="sub-head"><h3>Overflow</h3></div>
+  <div class="field-grid">
+   <label class="field"><span>Show at most</span><select id="display-count"><option value="0">All tabs</option><option value="3">3 tabs</option><option value="4">4 tabs</option><option value="5">5 tabs</option><option value="6">6 tabs</option><option value="8">8 tabs</option><option value="10">10 tabs</option></select></label>
+   <label class="field"><span>Hidden before</span><input id="trunc-start" type="text" maxlength="24"></label>
+   <label class="field"><span>Hidden after</span><input id="trunc-end" type="text" maxlength="24"></label>
+  </div>
+  <p class="palette-hint" style="margin-top:8px"><code>{count}</code> is the number of hidden tabs. zjstatus keeps the active tab in view. Raise Tabs above the preview to test.</p>
  </section>
 
  <section class="panel" id="sec-colors" aria-labelledby="colors-title">
@@ -352,21 +440,40 @@ kbd{font:10px var(--mono);border:1px solid var(--line-2);border-bottom-width:2px
  </section>
 
  <section class="panel" id="sec-modes" aria-labelledby="modes-title">
-  <div class="panel-head"><div><h2 id="modes-title">Mode colors<span class="count">14 modes</span></h2><p class="panel-lede">Every mode follows NORMAL unless you override it. NORMAL uses the foreground for a plain label and the accent for a badge. Click a badge to preview that mode.</p></div></div>
+  <div class="panel-head"><div><h2 id="modes-title">Modes<span class="count">14 modes</span></h2><p class="panel-lede">Labels and colors for each Zellij mode. Every mode follows NORMAL unless you override it. NORMAL uses the foreground for a plain label and the mode badge fill for a badge. Click a badge to preview that mode.</p></div></div>
+  <div class="mode-options"><div class="segmented" role="group" aria-label="Mode label style" id="mode-label-style"><button type="button" data-label-style="full" aria-pressed="true">NORMAL</button><button type="button" data-label-style="short" aria-pressed="false">NOR</button><button type="button" data-label-style="icon" aria-pressed="false">Icon</button><button type="button" data-label-style="custom" aria-pressed="false">Custom</button></div><label class="check"><input id="hide-normal" type="checkbox">Hide the badge in NORMAL</label></div>
   <div id="mode-colors" class="mode-list"></div>
   <div class="panel-foot"><button id="reset-mode-colors" class="btn quiet" type="button">Reset mode colors</button></div>
  </section>
 
- <section class="panel" id="sec-status" aria-labelledby="status-title">
-  <div class="panel-head"><div><h2 id="status-title">Right side</h2><p class="panel-lede">What sits at the bottom right. The Git branch uses <code>$branch</code>; clock, session, and custom text use <code>$muted</code>.</p></div></div>
+ <section class="panel" id="sec-widgets" aria-labelledby="widgets-title">
+  <div class="panel-head"><div><h2 id="widgets-title">Widgets</h2><p class="panel-lede">Settings for each widget. Add, remove, and arrange them under Layout; give each one a shape under Shapes → Widgets. Status widgets use <code>$muted</code>, notifications use <code>$warning</code>.</p></div></div>
+  <div class="sub-head"><h3>Clock <span class="note-off" data-off="clock"></span></h3></div>
   <div class="field-grid">
-   <label class="field"><span>Content</span><select id="right-content"><option value="clock">Clock</option><option value="branch">Git branch</option><option value="session">Session name</option><option value="custom">Custom text</option><option value="hidden">Hidden</option></select></label>
-   <label class="field" data-right-clock><span>Clock format</span><select id="clock-format"><option value="%H:%M">Time · 17:42</option><option value="%H:%M:%S">Time with seconds · 17:42:08</option><option value="%I:%M %p">12-hour · 05:42 PM</option><option value="%Y-%m-%d">Date · 2026-11-02</option><option value="%Y-%m-%d %H:%M">Date and time</option><option value="%a %H:%M">Weekday and time · Mon 17:42</option></select></label>
-   <label class="field" data-right-clock><span>Timezone</span><input id="clock-timezone" type="text" placeholder="America/Denver" aria-describedby="right-note"></label>
-   <label class="field" data-right-clock><span>Clock icon</span><input id="clock-icon" type="text" maxlength="16"></label>
-   <label class="field" id="right-text-control" hidden><span id="right-text-label">Custom text</span><input id="right-text" type="text" maxlength="200"></label>
+   <label class="field"><span>Format</span><select id="clock-format"><option value="%H:%M">Time · 17:42</option><option value="%H:%M:%S">Time with seconds · 17:42:08</option><option value="%I:%M %p">12-hour · 05:42 PM</option><option value="%Y-%m-%d">Date · 2026-11-02</option><option value="%Y-%m-%d %H:%M">Date and time</option><option value="%a %H:%M">Weekday and time · Mon 17:42</option><option value="%a %d %b">Weekday and date · Mon 02 Nov</option></select></label>
+   <label class="field"><span>Timezone</span><input id="clock-timezone" type="text" placeholder="America/Denver" aria-describedby="clock-note"></label>
+   <label class="field"><span>Icon</span><input id="clock-icon" type="text" maxlength="16"></label>
   </div>
-  <p class="palette-hint" id="right-note" style="margin-top:10px"></p>
+  <p class="palette-hint" id="clock-note" style="margin-top:8px">The preview samples the selected timezone when settings change. Use an IANA timezone such as America/Denver or UTC.</p>
+  <div class="sub-head"><h3>Git branch <span class="note-off" data-off="branch"></span></h3></div>
+  <div class="field-grid"><label class="field"><span>Icon</span><input id="branch-icon" type="text" maxlength="16" placeholder="none"></label></div>
+  <div class="check-row"><label class="check"><input id="branch-dirty" type="checkbox">Mark uncommitted changes · main*</label><label class="check"><input id="branch-ahead" type="checkbox">Ahead / behind upstream · ↑1 ↓2</label></div>
+  <p class="palette-hint" style="margin-top:8px">Runs in the focused pane's directory every 5 seconds and disappears outside a repository. The extras run a short <code>bash</code> script.</p>
+  <div class="sub-head"><h3>Session and text <span class="note-off" data-off="session text"></span></h3></div>
+  <div class="field-grid">
+   <label class="field"><span>Preview session name</span><input id="session-name" type="text" maxlength="200"></label>
+   <label class="field"><span>Custom text</span><input id="right-text" type="text" maxlength="200"></label>
+  </div>
+  <div class="sub-head"><h3>Custom command <span class="note-off" data-off="cmd"></span></h3></div>
+  <div class="field-grid">
+   <label class="field" style="grid-column:1/-1"><span>Command</span><input id="custom-command" type="text" maxlength="300" spellcheck="false"></label>
+   <label class="field"><span>Interval (seconds)</span><input id="custom-interval" type="text" inputmode="numeric" maxlength="5"></label>
+   <label class="field"><span>Preview output</span><input id="custom-preview" type="text" maxlength="80"></label>
+  </div>
+  <p class="palette-hint" style="margin-top:8px">zjstatus splits the command on spaces and honors quotes; it does not use a shell. Wrap pipes in <code>bash -c '…'</code>. Empty output hides the widget. An interval of 0 runs it once.</p>
+  <div class="sub-head"><h3>Icons</h3></div>
+  <div class="field-grid" id="widget-icons"></div>
+  <p class="palette-hint" style="margin-top:8px">Battery reads <code>/sys/class/power_supply</code> on Linux and <code>pmset</code> on macOS. Load reads <code>/proc/loadavg</code> or <code>sysctl</code>. Kube context needs <code>kubectl</code>. Each hides itself when it has no output.</p>
  </section>
 
  <section class="panel about" id="sec-about" aria-labelledby="about-title">
@@ -374,9 +481,9 @@ kbd{font:10px var(--mono);border:1px solid var(--line-2);border-bottom-width:2px
   <p>The Workbench generates a layout for <a href="https://github.com/dj95/zjstatus">zjstatus</a>, the configurable status bar plugin for <a href="https://zellij.dev">Zellij</a>. Install the plugin at <code>~/.config/zellij/plugins/zjstatus.wasm</code>, save the export to <code>~/.config/zellij/layouts/</code>, and start Zellij with <code>zellij --layout &lt;name&gt;</code>.</p>
   <p><strong>Terminal palette</strong> mode exports ANSI indices (0–15), so the bar follows whatever theme your terminal uses. <strong>Fixed hex colors</strong> mode exports exact colors.</p>
   <p><span class="glass-key"><i>⣿</i> foreground ink stays transparent</span><span class="glass-key"><i>▓</i> solid fills are opaque</span></p>
-  <p>The browser simulates a translucent terminal; it isn't a screenshot. Glyph joins depend on your font and line height, so check the result at your real font size. Boxcar needs two content rows. Settings are saved in this browser only.</p>
+  <p>The browser simulates a translucent terminal; it isn't a screenshot. Glyph joins depend on your font and line height, so check the result at your real font size. Boxcar needs two content rows. Settings are saved in this browser only; <strong>Share link</strong> puts them in a URL, and every export embeds them so <strong>Import KDL</strong> can restore the exact bar.</p>
   <h3 class="small-label" style="margin-top:16px">Keyboard</h3>
-  <div class="shortcut-list"><span><kbd>[</kbd> <kbd>]</kbd></span><span>Previous / next preset</span><span><kbd>M</kbd></span><span>Cycle the preview mode</span><span><kbd>C</kbd></span><span>Copy the KDL</span></div>
+  <div class="shortcut-list"><span><kbd>[</kbd> <kbd>]</kbd></span><span>Previous / next preset</span><span><kbd>M</kbd></span><span>Cycle the preview mode</span><span><kbd>C</kbd></span><span>Copy the KDL</span><span><kbd>R</kbd></span><span>Shuffle unlocked settings</span></div>
   <div class="panel-foot"><button class="btn quiet" id="reset-all" type="button">Reset everything</button></div>
  </section>
 </aside>
@@ -413,8 +520,8 @@ designs.push(
 );
 const palettes={moonlit:{name:'Moonlit Sands',slug:'moonlit-sands',bg:'#141d2d',fg:'#e0a269',modeText:'#141d2d',activeText:'#141d2d',a:'#e0a269',dim:'#9a6e45',sub:'#8b7d71',branch:'#4b7172',warning:'#e5c27f'},greek:{name:'Greek Noir',slug:'greek-noir',bg:'#141d2d',fg:'#e0a269',modeText:'#141d2d',activeText:'#141d2d',a:'#8b6377',dim:'#9a6e45',sub:'#8b7d71',branch:'#ac5539',warning:'#e6b99d'},forest:{name:'Everforest',slug:'everforest',bg:'#2d353b',fg:'#d3c6aa',modeText:'#2d353b',activeText:'#2d353b',a:'#a7c080',dim:'#88967b',sub:'#9da99a',branch:'#7fbbb3',warning:'#dbbc7f'},ice:{name:'Glacier',slug:'glacier',bg:'#11191f',fg:'#d5e0e5',modeText:'#11191f',activeText:'#11191f',a:'#94cde2',dim:'#74919f',sub:'#819ca9',branch:'#9fbdac',warning:'#e5c58e'},paper:{name:'Paper',slug:'paper',bg:'#f1ecdf',fg:'#353b35',modeText:'#f1ecdf',activeText:'#f1ecdf',a:'#875025',dim:'#77705d',sub:'#6f705f',branch:'#356c70',warning:'#9b5a18'},outpost:{name:'Outpost',slug:'outpost',bg:'#14282d',fg:'#e8dfc4',modeText:'#14282d',activeText:'#14282d',a:'#86b8b5',dim:'#91afc5',sub:'#a1afa9',branch:'#91afc5',warning:'#d3ae78'}};
 // Slot assignments are independent of hex colors, even when two preview colors match.
-const colorRoleNames={bg:'background',fg:'foreground',modeFill:'mode_fill',modeText:'mode_text',activeText:'active_text',a:'accent',branch:'branch',dim:'dim',sub:'muted',warning:'warning',modeSeparatorColor:'mode_separator',branchSeparatorColor:'branch_separator',tabSeparatorColor:'tab_separator'};
-const defaultPaletteSlots={bg:0,fg:7,modeFill:6,modeText:0,activeText:0,a:6,branch:4,dim:8,sub:8,warning:3,modeSeparatorColor:6,branchSeparatorColor:4,tabSeparatorColor:8};
+const colorRoleNames={bg:'background',fg:'foreground',modeFill:'mode_fill',modeText:'mode_text',activeText:'active_text',a:'accent',branch:'branch',dim:'dim',sub:'muted',warning:'warning',modeSeparatorColor:'mode_separator',branchSeparatorColor:'branch_separator',tabSeparatorColor:'tab_separator',widgetSeparatorColor:'widget_separator',border:'border'};
+const defaultPaletteSlots={bg:0,fg:7,modeFill:6,modeText:0,activeText:0,a:6,branch:4,dim:8,sub:8,warning:3,modeSeparatorColor:6,branchSeparatorColor:4,tabSeparatorColor:8,widgetSeparatorColor:8,border:8};
 const ansiNames=['Black','Red','Green','Yellow','Blue','Magenta','Cyan','White','Bright black','Bright red','Bright green','Bright yellow','Bright blue','Bright magenta','Bright cyan','Bright white'];
 // Snapshot of the installed Omarchy Ghostty template and resolved theme colors.
 const terminalPalettes={
@@ -569,15 +676,102 @@ function slotLabel(slot){
  const p=terminalPalette(),names=p.kind==='omarchy'?['background','red','green','yellow','blue','magenta','cyan','foreground','muted','bright_red','bright_green','bright_yellow','bright_blue','bright_magenta','bright_cyan','bright_foreground']:ansiNames;
  return `palette${slot} · ${names[slot]} · ${p.slots[slot].toUpperCase()}`;
 }
-const tabs=['shell','editor','tests','logs','docs','server','scratch','review'];
+const tabs=['shell','editor','tests','logs','docs','server','scratch','review','build','notes','deploy','music','mail','db','api','web'];
 const modeDefinitions=[['normal','NORMAL'],['locked','LOCKED'],['pane','PANE'],['tab','TAB'],['scroll','SCROLL'],['resize','RESIZE'],['move','MOVE'],['session','SESSION'],['tmux','TMUX'],['enter_search','ENTER SEARCH'],['search','SEARCH'],['rename_tab','RENAME TAB'],['rename_pane','RENAME PANE'],['prompt','PROMPT']];
-const state={modeColorOverrides:{},branchDesign:'plain',design:'slantbraille',modeDesign:'plain',tabDesign:'slant',modeSeparator:'braille',branchSeparator:'space',tabSeparator:'stitch',mode:'NORMAL',active:1,crowded:false,palette:'moonlit',paletteOverrides:{},themeAgnostic:true,paletteSlots:{...defaultPaletteSlots},importedTheme:null,showBranch:true,glass:65,backdrop:'desktop',rightContent:'clock',clockFormat:'%H:%M',clockTimezone:Intl.DateTimeFormat().resolvedOptions().timeZone||'UTC',clockIcon:'◷',rightText:'My workspace',previewSession:'workbench'};
+const modeLabelSets={
+ short:{normal:'NOR',locked:'LCK',pane:'PAN',tab:'TAB',scroll:'SCR',resize:'RSZ',move:'MOV',session:'SES',tmux:'TMX',enter_search:'ENT',search:'SRC',rename_tab:'REN',rename_pane:'RNP',prompt:'PRM'},
+ icon:{normal:'',locked:'',pane:'',tab:'',scroll:'↕',resize:'',move:'',session:'',tmux:'',enter_search:'',search:'',rename_tab:'',rename_pane:'',prompt:''}};
+// Widgets that can be placed in a section. "hideable" widgets carry their
+// trailing separator inside their own format so it vanishes with them.
+const widgetDefs={
+ mode:{name:'Mode badge'},
+ branch:{name:'Git branch',hideable:true},
+ tabs:{name:'Tabs'},
+ clock:{name:'Clock',status:true},
+ session:{name:'Session name',status:true,icon:''},
+ text:{name:'Custom text',status:true},
+ swap:{name:'Swap layout',status:true,hideable:true,icon:'',sample:'vertical'},
+ notify:{name:'Notifications',status:true,hideable:true,icon:'',fill:'warning',sample:'build finished'},
+ battery:{name:'Battery',status:true,hideable:true,icon:'',sample:'87%',interval:60,command:`bash -c 'c=$(cat /sys/class/power_supply/BAT*/capacity 2>/dev/null | head -n1); if [ -n "$c" ]; then echo "$c%"; else pmset -g batt 2>/dev/null | grep -Eo "[0-9]+%" | head -n1; fi'`},
+ load:{name:'Load average',status:true,hideable:true,icon:'',sample:'0.42',interval:10,command:`bash -c 'cut -d" " -f1 /proc/loadavg 2>/dev/null || sysctl -n vm.loadavg | cut -d" " -f2'`},
+ host:{name:'Hostname',status:true,hideable:true,icon:'',sample:'devbox',interval:0,command:'uname -n'},
+ kube:{name:'Kube context',status:true,hideable:true,icon:'\u{f10fe}',sample:'prod-eu',interval:15,command:`bash -c 'kubectl config current-context 2>/dev/null'`},
+ cmd:{name:'Custom command',status:true,hideable:true,icon:''}
+};
+const statusWidgets=Object.keys(widgetDefs).filter(id=>widgetDefs[id].status);
+const zoneNames=['left','center','right'];
+const tabLabelFormats=['{index} {name}','{name}','{index}','{index}:{name}','{index}·{name}','{index}. {name}'];
+const clockFormats=['%H:%M','%H:%M:%S','%I:%M %p','%Y-%m-%d','%Y-%m-%d %H:%M','%a %H:%M','%a %d %b'];
+const borderChars=[' ','─','━','▔','▁','┄','┈','·','⠂'];
+const state={modeColorOverrides:{},branchDesign:'plain',design:'slantbraille',modeDesign:'plain',tabDesign:'slant',inactiveDesign:'auto',widgetDesigns:{},widgetTarget:'clock',modeSeparator:'braille',branchSeparator:'space',tabSeparator:'stitch',widgetSeparator:'middle-dot',mode:'NORMAL',active:1,tabCount:4,tabState:'normal',previewWidth:'fit',palette:'moonlit',paletteOverrides:{},themeAgnostic:true,paletteSlots:{...defaultPaletteSlots},importedTheme:null,inRepo:true,previewNotify:false,glass:65,backdrop:'desktop',
+ zones:{left:['mode','branch','tabs'],center:[],right:['clock']},barPosition:'bottom',border:'auto',borderChar:' ',gapFill:'none',hideOnOverlength:true,precedence:'lcr',
+ tabLabel:'{index} {name}',tabIcon:'',zeroIndex:false,indicators:{fullscreen:' ',sync:' ',floating:' '},displayCount:0,truncStart:'← +{count} ',truncEnd:' +{count} →',
+ modeLabelStyle:'full',modeLabels:{},hideNormal:false,
+ clockFormat:'%H:%M',clockTimezone:Intl.DateTimeFormat().resolvedOptions().timeZone||'UTC',clockIcon:'◷',branchIcon:'',branchDirty:false,branchAheadBehind:false,widgetIcons:{},rightText:'My workspace',previewSession:'workbench',customCommand:'date +%s',customInterval:10,customPreview:'1762300000',shuffleLocks:{}};
+const defaultState=JSON.parse(JSON.stringify(state));
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const settingsStorageKey='zellij-workbench-settings-v1';
 function saveSettings(){try{localStorage.setItem(settingsStorageKey,JSON.stringify(state))}catch{}}
 function applyBackdrop(value){document.documentElement.style.setProperty('--wallpaper',value==='test'?'linear-gradient(125deg,#b38b60 0%,#809b8f 30%,#5b7c8e 55%,#c59a78 78%,#a7ad8c 100%)':"url('assets/desert-night.webp')")}
-function restoreSettings(){let saved;try{saved=JSON.parse(localStorage.getItem(settingsStorageKey)||'null')}catch{return}if(!saved||typeof saved!=='object'||Array.isArray(saved))return;const componentStyles=new Set(['plain',...designs.filter(d=>d.id!=='slantbraille').map(d=>d.id)]),separators=new Set(tabSeparatorOptions.map(([id])=>id)),colorRoles=Object.keys(colorRoleNames);if(designs.some(d=>d.id===saved.design)||saved.design==='custom')state.design=saved.design;if(componentStyles.has(saved.modeDesign))state.modeDesign=saved.modeDesign;if(componentStyles.has(saved.tabDesign))state.tabDesign=saved.tabDesign;if(componentStyles.has(saved.branchDesign))state.branchDesign=saved.branchDesign;restoreModeColors(saved.modeColorOverrides);if(separators.has(saved.modeSeparator))state.modeSeparator=saved.modeSeparator;if(separators.has(saved.branchSeparator))state.branchSeparator=saved.branchSeparator;if(separators.has(saved.tabSeparator))state.tabSeparator=saved.tabSeparator;if(modeDefinitions.some(([,label])=>label===saved.mode))state.mode=saved.mode;if(typeof saved.crowded==='boolean')state.crowded=saved.crowded;if(Number.isInteger(saved.active)&&saved.active>=0&&saved.active<tabs.length)state.active=saved.active;if(!state.crowded&&state.active>3)state.active=1;if(validImportedTheme(saved.importedTheme)){state.importedTheme=saved.importedTheme;installImportedPalette()}if(Object.hasOwn(palettes,saved.palette))state.palette=saved.palette;if(saved.paletteOverrides&&typeof saved.paletteOverrides==='object'&&!Array.isArray(saved.paletteOverrides))colorRoles.forEach(role=>{const value=saved.paletteOverrides[role];if(typeof value==='string'&&/^#[\da-f]{6}$/i.test(value))state.paletteOverrides[role]=value.toLowerCase()});if(saved.paletteSlots&&typeof saved.paletteSlots==='object')colorRoles.forEach(role=>{const slot=saved.paletteSlots[role];if(Number.isInteger(slot)&&slot>=0&&slot<=15)state.paletteSlots[role]=slot});['themeAgnostic','showBranch'].forEach(key=>{if(typeof saved[key]==='boolean')state[key]=saved[key]});if(Number.isFinite(Number(saved.glass)))state.glass=Math.min(100,Math.max(20,Math.round(Number(saved.glass)/5)*5));if(['desktop','test'].includes(saved.backdrop))state.backdrop=saved.backdrop;if(['clock','branch','session','custom','hidden'].includes(saved.rightContent))state.rightContent=saved.rightContent;if(clockFormats.includes(saved.clockFormat))state.clockFormat=saved.clockFormat;if(validTimezone(saved.clockTimezone))state.clockTimezone=new Intl.DateTimeFormat('en',{timeZone:saved.clockTimezone}).resolvedOptions().timeZone;['clockIcon','rightText','previewSession'].forEach(key=>{if(typeof saved[key]==='string')state[key]=saved[key].slice(0,key==='clockIcon'?16:200)});$('#palette').value=state.palette;$('#color-mode').value=state.themeAgnostic?'agnostic':'specific';$('#glass').value=state.glass;$('#glass-value').value=state.glass+'%';$('#glass').setAttribute('aria-valuetext',state.glass+'% background opacity');document.documentElement.style.setProperty('--glass-opacity',state.glass+'%');$('#backdrop').value=state.backdrop;applyBackdrop(state.backdrop);$('#crowded').checked=state.crowded;$('#show-branch').checked=state.showBranch;$('#preview-mode').value=state.mode}
+const isObj=v=>v&&typeof v==='object'&&!Array.isArray(v);
+const cleanText=(v,max)=>typeof v==='string'?v.replace(/[\x00-\x1f\x7f]/g,'').slice(0,max):null;
+function resetState(){const keep={importedTheme:state.importedTheme};Object.keys(state).forEach(k=>delete state[k]);Object.assign(state,JSON.parse(JSON.stringify(defaultState)),keep)}
+// Old (v1/v2) settings stored a single right-hand item and a branch on/off switch.
+function migrateZones(saved){
+ const branch=saved.showBranch!==false,right=saved.rightContent??'clock';
+ const left=['mode',...(branch&&right!=='branch'?['branch']:[]),'tabs'];
+ const r={clock:['clock'],branch:branch?['branch']:[],session:['session'],custom:['text'],hidden:[]}[right]??['clock'];
+ return {left,center:[],right:r};
+}
+function validZones(z){
+ if(!isObj(z))return null;const seen=new Set(),out={};
+ for(const name of zoneNames){const list=Array.isArray(z[name])?z[name]:[];out[name]=list.filter(id=>Object.hasOwn(widgetDefs,id)&&!seen.has(id)&&seen.add(id))}
+ return out;
+}
+// Apply a settings object from storage, a share link, or an imported layout. Everything is validated.
+function applySaved(saved){
+ if(!isObj(saved))return;
+ const componentStyles=new Set(['plain',...designs.filter(d=>d.id!=='slantbraille').map(d=>d.id)]),separators=new Set(tabSeparatorOptions.map(([id])=>id)),colorRoles=Object.keys(colorRoleNames);
+ if(designs.some(d=>d.id===saved.design)||saved.design==='custom')state.design=saved.design;
+ ['modeDesign','tabDesign','branchDesign'].forEach(k=>{if(componentStyles.has(saved[k]))state[k]=saved[k]});
+ if(saved.inactiveDesign==='auto'||inactiveStyleIds().includes(saved.inactiveDesign))state.inactiveDesign=saved.inactiveDesign;
+ if(isObj(saved.widgetDesigns))statusWidgets.forEach(id=>{if(componentStyles.has(saved.widgetDesigns[id]))state.widgetDesigns[id]=saved.widgetDesigns[id]});
+ if(statusWidgets.includes(saved.widgetTarget))state.widgetTarget=saved.widgetTarget;
+ restoreModeColors(saved.modeColorOverrides);
+ ['modeSeparator','branchSeparator','tabSeparator','widgetSeparator'].forEach(k=>{if(separators.has(saved[k]))state[k]=saved[k]});
+ if(modeDefinitions.some(([,label])=>label===saved.mode))state.mode=saved.mode;
+ if([4,8,12,16].includes(saved.tabCount))state.tabCount=saved.tabCount;else if(saved.crowded===true)state.tabCount=8;
+ if(Number.isInteger(saved.active)&&saved.active>=0)state.active=saved.active;if(state.active>=state.tabCount)state.active=1;
+ if(['normal','fullscreen','sync','floating'].includes(saved.tabState))state.tabState=saved.tabState;
+ if(['fit','80','100','120','160'].includes(String(saved.previewWidth)))state.previewWidth=String(saved.previewWidth);
+ if(validImportedTheme(saved.importedTheme)){state.importedTheme=saved.importedTheme;installImportedPalette()}
+ if(Object.hasOwn(palettes,saved.palette))state.palette=saved.palette;
+ if(isObj(saved.paletteOverrides))colorRoles.forEach(role=>{const value=saved.paletteOverrides[role];if(typeof value==='string'&&/^#[\da-f]{6}$/i.test(value))state.paletteOverrides[role]=value.toLowerCase()});
+ if(isObj(saved.paletteSlots))colorRoles.forEach(role=>{const slot=saved.paletteSlots[role];if(Number.isInteger(slot)&&slot>=0&&slot<=15)state.paletteSlots[role]=slot});
+ ['themeAgnostic','inRepo','previewNotify','hideOnOverlength','zeroIndex','hideNormal','branchDirty','branchAheadBehind'].forEach(key=>{if(typeof saved[key]==='boolean')state[key]=saved[key]});
+ if(Number.isFinite(Number(saved.glass)))state.glass=Math.min(100,Math.max(20,Math.round(Number(saved.glass)/5)*5));
+ if(['desktop','test'].includes(saved.backdrop))state.backdrop=saved.backdrop;
+ const zones=validZones(saved.zones)??(('rightContent' in saved||'showBranch' in saved)?migrateZones(saved):null);if(zones)state.zones=zones;
+ if(['bottom','top'].includes(saved.barPosition))state.barPosition=saved.barPosition;
+ if(['auto','top','bottom','off'].includes(saved.border))state.border=saved.border;
+ if(borderChars.includes(saved.borderChar))state.borderChar=saved.borderChar;
+ if(['none','background'].includes(saved.gapFill))state.gapFill=saved.gapFill;
+ if(/^(?!.*(.).*\1)[lcr]{3}$/.test(saved.precedence??''))state.precedence=saved.precedence;
+ if(tabLabelFormats.includes(saved.tabLabel))state.tabLabel=saved.tabLabel;
+ if(isObj(saved.indicators))['fullscreen','sync','floating'].forEach(k=>{const v=cleanText(saved.indicators[k],16);if(v!==null)state.indicators[k]=v});
+ if([0,3,4,5,6,8,10].includes(saved.displayCount))state.displayCount=saved.displayCount;
+ if(['full','short','icon','custom'].includes(saved.modeLabelStyle))state.modeLabelStyle=saved.modeLabelStyle;
+ if(isObj(saved.modeLabels))modeDefinitions.forEach(([key])=>{const v=cleanText(saved.modeLabels[key],24);if(v!==null)state.modeLabels[key]=v});
+ if(clockFormats.includes(saved.clockFormat))state.clockFormat=saved.clockFormat;
+ if(validTimezone(saved.clockTimezone))state.clockTimezone=new Intl.DateTimeFormat('en',{timeZone:saved.clockTimezone}).resolvedOptions().timeZone;
+ if(isObj(saved.widgetIcons))statusWidgets.forEach(id=>{const v=cleanText(saved.widgetIcons[id],16);if(v!==null)state.widgetIcons[id]=v});
+ [['clockIcon',16],['branchIcon',16],['tabIcon',8],['truncStart',24],['truncEnd',24],['rightText',200],['previewSession',200],['customCommand',300],['customPreview',80]].forEach(([key,max])=>{const v=cleanText(saved[key],max);if(v!==null)state[key]=v});
+ if(Number.isInteger(saved.customInterval)&&saved.customInterval>=0&&saved.customInterval<=86400)state.customInterval=saved.customInterval;
+ if(isObj(saved.shuffleLocks))['shapes','separators','colors','layout','modes'].forEach(k=>{if(typeof saved.shuffleLocks[k]==='boolean')state.shuffleLocks[k]=saved.shuffleLocks[k]});
+}
+function syncStaticControls(){$('#palette').value=state.palette;$('#color-mode').value=state.themeAgnostic?'agnostic':'specific';$('#glass').value=state.glass;$('#glass-value').value=state.glass+'%';$('#glass').setAttribute('aria-valuetext',state.glass+'% background opacity');document.documentElement.style.setProperty('--glass-opacity',state.glass+'%');$('#backdrop').value=state.backdrop;applyBackdrop(state.backdrop);$('#preview-mode').value=state.mode}
+function restoreSettings(){let saved;try{saved=JSON.parse(localStorage.getItem(settingsStorageKey)||'null')}catch{return}applySaved(saved)}
 const edge=s=>`<span class="edge" aria-hidden="true">${s}</span>`;
 const filled=(text,left='',right='')=>`${edge(left)}<span class="fill"> ${esc(text)} </span>${edge(right)}`;
 function tokenShape(id,text,active,mode=false){
@@ -608,38 +802,101 @@ function tokenShape(id,text,active,mode=false){
 const separatorGlyphs={none:'',space:'',braille:'⣿','braille-dot':'⠂',stitch:'┆','middle-dot':'·',diamond:'◆','outline-diamond':'◇','inset-diamond':'◈','diamond-suit':'♦','four-star':'✦',star:'✧','small-square':'▪','hollow-square':'▫',line:'│',cross:'×'};
 const tabSeparatorOptions=[['space','Space'],['none','None'],['stitch','Stitch · ┆'],['braille','Braille block · ⣿'],['braille-dot','Braille speck · ⠂'],['middle-dot','Middle dot · ·'],['diamond','Solid diamond · ◆'],['outline-diamond','Outline diamond · ◇'],['inset-diamond','Inset diamond · ◈'],['diamond-suit','Diamond suit · ♦'],['four-star','Four-point star · ✦'],['star','Outline star · ✧'],['small-square','Small square · ▪'],['hollow-square','Hollow square · ▫'],['line','Fine line · │'],['cross','Tiny cross · ×']];
 function separatorMarkup(value,kind){if(value==='none')return '';const glyph=separatorGlyphs[value];return `<span class="joiner joiner-${kind}" data-inspect="sep-${kind}" aria-hidden="true">${value==='space'?'\u00a0':` ${glyph} `}</span>`}
-function branchMarkup(){return `<span class="branch branch-${state.branchDesign}" data-inspect="branch">${tokenShape(state.branchDesign,'main',true)}</span>`}
-function branchNeedsTwoRows(){return state.showBranch&&state.branchDesign==='boxcar'}
-function needsTwoRows(){return state.modeDesign==='boxcar'||state.tabDesign==='boxcar'||branchNeedsTwoRows()}
-function branchOnLeft(){return state.showBranch&&state.rightContent!=='branch'}
-function makeBar(modeId,tabId=modeId,hero=false){
- const items=tabs.slice(0,state.crowded?8:4),modeText=state.mode;
- const modeShape=modeId==='plain'?esc(modeText):tokenShape(modeId,modeText,true,true),modeToken=`<span class="mode" data-inspect="mode">${modeShape}</span>`,modeJoin=separatorMarkup(state.modeSeparator,'mode');
- const branch=branchOnLeft()?`${branchMarkup()}${separatorMarkup(state.branchSeparator,'branch')}`:'';
- const between=separatorMarkup(state.tabSeparator,'tab');
- const joined=items.map((name,i)=>{const label=tabId==='baseline'?name:`${i+1} ${name}`,shape=tokenShape(tabId,label,i===state.active),item=`<button class="token ${i===state.active?'active':''}" data-tab="${i}" aria-pressed="${i===state.active}" aria-label="Focus tab ${i+1}: ${name}">${shape}</button>`;return i<items.length-1?item+between:item}).join('');
- const cls=[...new Set(['bar','mode-'+modeId,'tab-'+tabId,modeId===tabId?modeId:'',(modeId==='boxcar'||tabId==='boxcar'||branchNeedsTwoRows())?'row2':''])].filter(Boolean).join(' '),label=`${modeId==='plain'?'Plain mode':designs.find(d=>d.id===modeId)?.name||modeId} mode with ${designs.find(d=>d.id===tabId)?.name||tabId} tabs`;
- return `<div class="bar-scroll" tabindex="0" aria-label="${esc(label)}${hero?' full preview':''}; scroll horizontally if needed"><div class="${cls}"><div class="bar-left">${modeToken}${modeJoin}${branch}<div class="tabs" role="group" aria-label="Sample tabs">${joined}</div></div>${rightMarkup()}</div></div><div class="overflow-hint">↔ Scroll to see all tabs</div>`;
+function needsTwoRows(){const box=id=>placed(id)&&widgetDesign(id)==='boxcar';return (placed('mode')&&state.modeDesign==='boxcar')||(placed('tabs')&&(state.tabDesign==='boxcar'||state.inactiveDesign==='boxcar'))||['branch',...statusWidgets].some(box)}
+function placed(id){return zoneNames.some(z=>state.zones[z].includes(id))}
+function zoneOf(id){return zoneNames.find(z=>state.zones[z].includes(id))}
+function hasNext(id){const z=zoneOf(id);if(!z)return false;const list=state.zones[z];return list.indexOf(id)<list.length-1}
+function sepSpec(id){return id==='mode'?[state.modeSeparator,'mode']:id==='branch'?[state.branchSeparator,'branch']:[state.widgetSeparator,'widget']}
+function widgetDesign(id){return id==='branch'?state.branchDesign:state.widgetDesigns[id]||'plain'}
+function widgetIcon(id){return id==='clock'?state.clockIcon:id==='branch'?state.branchIcon:(state.widgetIcons[id]??widgetDefs[id].icon??'')}
+function withIcon(id,text){const icon=widgetIcon(id);return icon?icon+' '+text:text}
+function widgetSample(id){switch(id){case 'clock':return clockPreview();case 'session':return state.previewSession;case 'text':return state.rightText;case 'cmd':return state.customPreview;default:return widgetDefs[id].sample}}
+function branchSample(){return 'main'+(state.branchDirty?'*':'')+(state.branchAheadBehind?' ↑1':'')}
+function modeKeyOf(label){return modeDefinitions.find(([,l])=>l===label)[0]}
+function modeText(key){const label=modeDefinitions.find(([k])=>k===key)[1];if(state.modeLabelStyle==='custom')return state.modeLabels[key]??label;return modeLabelSets[state.modeLabelStyle]?.[key]??label}
+// Mirrors what zjstatus renders: hideable widgets vanish with their separator.
+function previewVisible(id){if(id==='branch')return state.inRepo;if(id==='notify')return state.previewNotify;if(id==='mode')return !(state.hideNormal&&state.mode==='NORMAL');if(id==='text')return !!state.rightText;if(id==='cmd')return !!state.customPreview;return true}
+function branchMarkup(){return `<span class="branch branch-${state.branchDesign}" data-inspect="branch">${tokenShape(state.branchDesign,withIcon('branch',branchSample()),true)}</span>`}
+function shapeMarkup(design,text){return design==='plain'?esc(text):tokenShape(design,text,true)}
+function widgetMarkup(id){
+ if(id==='mode'){const text=modeText(modeKeyOf(state.mode));return `<span class="mode" data-inspect="mode">${state.modeDesign==='plain'?esc(text):tokenShape(state.modeDesign,text,true,true)}</span>`}
+ if(id==='branch')return branchMarkup();
+ if(id==='tabs')return tabsMarkup();
+ const design=widgetDesign(id);
+ return `<span class="widget widget-${design}${widgetDefs[id].fill==='warning'?' widget-warn':''}" data-inspect="w-${id}">${shapeMarkup(design,withIcon(id,widgetSample(id)))}</span>`;
+}
+function tabLabelText(i,name){return (state.tabIcon?state.tabIcon+' ':'')+state.tabLabel.replace('{index}',String(i+(state.zeroIndex?0:1))).replace('{name}',name)}
+// Port of zjstatus get_tab_window: [hidden before, hidden after, visible indices].
+function tabWindow(n){const all=[...Array(n).keys()],max=state.displayCount;if(!max||n<=max)return [0,0,all];const a=state.active;if(a>n-max)return [n-max,0,all.slice(n-max)];const first=Math.max(0,a-1),last=Math.min(first+max,n);return [first,n-last,all.slice(first,last)]}
+function inactiveStyleIds(){return ['plain',...componentDesigns.map(d=>d.id).filter(id=>id!=='stencil')]}
+function tabsMarkup(){
+ const names=tabs.slice(0,state.tabCount),[before,after,shown]=tabWindow(names.length),between=separatorMarkup(state.tabSeparator,'tab');
+ const indicator=state.tabState==='normal'?'':state.indicators[state.tabState]||'',inactive=state.inactiveDesign;
+ const items=shown.map(i=>{
+  const active=i===state.active,label=tabLabelText(i,names[i])+(active?indicator:'');
+  const shape=active?tokenShape(state.tabDesign,label,true):inactive==='auto'?tokenShape(state.tabDesign,label,false):shapeMarkup(inactive,label);
+  const cls=active?'active':inactive!=='auto'&&inactive!=='plain'?'shaped shaped-'+inactive:'';
+  return `<button class="token ${cls}" data-tab="${i}" aria-pressed="${active}" aria-label="Focus tab ${i+1}: ${names[i]}">${shape}</button>`;
+ }).join(between);
+ const trunc=(count,format,side)=>count>0?`<span class="trunc trunc-${side}" data-inspect="tabs">${esc(format.replaceAll('{count}',count))}</span>`:'';
+ return `<div class="tabs" role="group" aria-label="Sample tabs">${trunc(before,state.truncStart,'start')}${items}${trunc(after,state.truncEnd,'end')}</div>`;
+}
+function zoneMarkup(zone){const list=state.zones[zone];return list.map((id,i)=>{if(!previewVisible(id))return '';const [sep,kind]=sepSpec(id);return widgetMarkup(id)+(i<list.length-1?separatorMarkup(sep,kind):'')}).join('')}
+function borderSide(){if(state.border==='off')return null;if(state.border==='auto')return state.barPosition==='bottom'?'top':'bottom';return state.border}
+function makeBar(){
+ const fixed=state.previewWidth!=='fit',row2=needsTwoRows();
+ const cls=['bar','zoned','mode-'+state.modeDesign,'tab-'+state.tabDesign,state.modeDesign===state.tabDesign?state.modeDesign:'',row2?'row2':'',state.gapFill==='background'?'gap-bg':''].filter(Boolean).join(' ');
+ const side=borderSide(),border=`<div class="border-row" aria-hidden="true">${esc(state.borderChar.repeat(300))}</div>`;
+ const bar=`<div class="${cls}">${zoneNames.map(z=>`<div class="zone zone-${z}" data-zone-preview="${z}">${zoneMarkup(z)}</div>`).join('')}</div>`;
+ return `<div class="bar-scroll" tabindex="0" aria-label="Bar preview; scroll horizontally if needed"><div class="bar-frame${fixed?' fixed':''}"${fixed?` style="--cols:${state.previewWidth}"`:''}>${side==='top'?border:''}${bar}${side==='bottom'?border:''}</div></div><div class="overflow-hint" id="overflow-hint"></div>`;
 }
 function currentPalette(){
  const p={...palettes[state.palette],...state.paletteOverrides};
- p.modeFill??=p.a;p.modeSeparatorColor??=p.a;p.branchSeparatorColor??=p.branch;p.tabSeparatorColor??=p.dim;
+ p.modeFill??=p.a;p.modeSeparatorColor??=p.a;p.branchSeparatorColor??=p.branch;p.tabSeparatorColor??=p.dim;p.widgetSeparatorColor??=p.sub;p.border??=p.dim;
  if(state.themeAgnostic){const slots=previewSlots();Object.entries(state.paletteSlots).forEach(([role,slot])=>p[role]=slots[slot])}return p;
 }
 function setPalette(){const p=currentPalette();Object.entries(p).filter(([k])=>Object.hasOwn(colorRoleNames,k)).forEach(([k,v])=>document.documentElement.style.setProperty(k==='modeText'?'--mode-text':k==='activeText'?'--active-text':'--'+k,v));document.documentElement.style.setProperty('--hot',modePreviewColor(modeDefinitions.find(([,label])=>label===state.mode)[0]))}
-function renderHero(){$('#stage').classList.remove('is-peeking');$('#hero-bar').innerHTML=makeBar(state.modeDesign,state.tabDesign,true);$('#hero-description').innerHTML=[['mode','Mode',styleName(state.modeDesign)],['branch','Branch',state.showBranch?styleName(state.branchDesign):'hidden'],['tab','Tab',styleName(state.tabDesign)]].map(([piece,label,value])=>`<button type="button" class="summary-chip" data-jump-piece="${piece}">${label} <b>${esc(value)}</b></button>`).join('');labelInspectables();$('#design').value=state.design;syncCompositionControls();$('#workbench-hint').textContent=state.crowded?'Scroll the bar to reach all eight tabs. Click a tab to focus it.':'Click a tab in the preview to focus it. Hover any option on the right to try it here.';updateOverflow()}
-function updateOverflow(){requestAnimationFrame(()=>$$('.bar-scroll').forEach(el=>el.parentElement.classList.toggle('has-overflow',el.scrollWidth>el.clientWidth+2)))}
-function render(){const key=focusKey(document.activeElement);setPalette();syncColorInputs();syncModeControls();syncRightControls();renderHero();renderBranchSwatches();renderGalleries();renderLayout();saveSettings();restoreFocus(key)}
+function renderHero(){
+ $('#stage').classList.remove('is-peeking');$('#hero-bar').innerHTML=makeBar();$('.terminal').classList.toggle('bar-top',state.barPosition==='top');
+ $('#hero-description').innerHTML=[['mode','Mode',placed('mode')?styleName(state.modeDesign):'off'],['branch','Branch',!placed('branch')?'off':state.inRepo?styleName(state.branchDesign):'outside repo'],['tab','Tab',styleName(state.tabDesign)],['inactive','Inactive',styleName(state.inactiveDesign)]].map(([piece,label,value])=>`<button type="button" class="summary-chip" data-jump-piece="${piece}">${label} <b>${esc(value)}</b></button>`).join('');
+ labelInspectables();$('#design').value=state.design;syncCompositionControls();
+ $('#workbench-hint').textContent='Click a tab to focus it, or any other piece to edit it. Hover an option on the right to try it here.';updateOverflow();
+}
+let cellWidthCache=0;
+function cellWidth(frame){if(cellWidthCache)return cellWidthCache;const probe=document.createElement('span');probe.textContent='0'.repeat(100);probe.style.cssText='position:absolute;visibility:hidden;white-space:pre;font:inherit';frame.append(probe);const w=probe.getBoundingClientRect().width/100;probe.remove();if(w)cellWidthCache=w;return w||8}
+// Port of zjstatus trim_output: the lowest-priority section is emptied when it would overlap.
+function trimSections(widths,cols,precedence){
+ const w={...widths},hidden=[],P={l:'left',c:'center',r:'right'},p=[...precedence].map(c=>P[c]),center=Math.floor(cols/2);
+ for(const [a,b] of [[p[2],p[1]],[p[1],p[0]],[p[2],p[0]]]){
+  const A=w[a],B=w[b];let overlap=false;
+  if(a!=='center'&&b!=='center')overlap=A+B>cols;else if(b==='center')overlap=A>center-Math.floor(B/2);else overlap=B>center-Math.floor(A/2);
+  if(overlap){w[a]=0;if(!hidden.includes(a))hidden.push(a)}
+ }
+ return hidden;
+}
+function simulateOverlength(){
+ const frame=$('#hero-bar .bar-frame'),bar=frame?.querySelector('.bar');if(!bar)return;
+ const zones=Object.fromEntries($$('#hero-bar [data-zone-preview]').map(el=>{el.hidden=false;return [el.dataset.zonePreview,el]}));
+ const ch=cellWidth(frame),cols=state.previewWidth==='fit'?Math.floor((frame.clientWidth-24)/ch):Number(state.previewWidth);
+ const widths=Object.fromEntries(Object.entries(zones).map(([k,el])=>[k,Math.round(el.scrollWidth/ch)]));
+ const hidden=(state.hideOnOverlength?trimSections(widths,cols,state.precedence):[]).filter(z=>widths[z]>0);hidden.forEach(z=>zones[z].hidden=true);
+ const used=Object.entries(widths).filter(([z])=>!hidden.includes(z)).reduce((n,[,w])=>n+w,0),hint=$('#overflow-hint');
+ $('#cols-readout').textContent=cols+' columns';
+ hint.textContent=hidden.length?`At ${cols} columns zjstatus hides the ${hidden.join(' and ')} section${hidden.length>1?'s':''}.`:used>cols?`The bar needs about ${used} columns; zjstatus cuts it off at ${cols}.`:'';
+ $('#hero-bar').classList.toggle('has-overflow',!!hint.textContent);
+}
+function updateOverflow(){requestAnimationFrame(simulateOverlength)}
+function render(){const key=focusKey(document.activeElement);setPalette();syncColorInputs();syncModeControls();syncWidgetControls();syncLayoutControls();syncTabControls();renderHero();renderBranchSwatches();renderGalleries();renderLayoutEditor();renderLayout();saveSettings();restoreFocus(key)}
 function presetPatch(id){return id==='slantbraille'?{design:id,modeDesign:'plain',tabDesign:'slant',modeSeparator:'braille',branchSeparator:'space',tabSeparator:'stitch'}:{design:id,modeDesign:id,tabDesign:id,modeSeparator:'space',branchSeparator:'space',tabSeparator:'space'}}
 function selectDesign(id){Object.assign(state,presetPatch(id));render()}
 function styleName(id){return id==='plain'?'Plain':designs.find(d=>d.id===id)?.name||id}
-function syncCompositionControls(){[['mode-style',state.modeDesign],['branch-style',state.branchDesign],['tab-style',state.tabDesign],['mode-separator',state.modeSeparator],['branch-separator',state.branchSeparator],['tab-separator',state.tabSeparator]].forEach(([id,value])=>{const el=$('#'+id);if(el)el.value=value})}
+function syncCompositionControls(){[['mode-style',state.modeDesign],['branch-style',state.branchDesign],['tab-style',state.tabDesign],['inactive-style',state.inactiveDesign],['widget-target',state.widgetTarget],['widget-style',widgetDesign(state.widgetTarget)],['mode-separator',state.modeSeparator],['branch-separator',state.branchSeparator],['tab-separator',state.tabSeparator],['widget-separator',state.widgetSeparator]].forEach(([id,value])=>{const el=$('#'+id);if(el)el.value=value})}
 function paletteColorOptions(){return Array.from({length:16},(_,slot)=>`<option value="${slot}">${esc(slotLabel(slot))}</option>`).join('')}
 const roleGroups=[
- ['Surface',[['bg','Terminal background','Open glass base'],['fg','Terminal foreground','Text and plain mode label']]],
+ ['Surface',[['bg','Terminal background','Open glass base'],['fg','Terminal foreground','Text and plain mode label'],['border','Border line','Characters in the bar border row']]],
  ['Fills',[['modeFill','Mode badge fill','NORMAL badge; other modes inherit it'],['modeText','Mode badge text','Text inside mode badges'],['a','Active tab fill','Active tab shape and accent'],['activeText','Active tab text','Text inside active tabs and branch badges']]],
- ['Labels',[['branch','Git branch','Branch text, caps, and fill'],['dim','Inactive tabs','Quiet labels'],['sub','Secondary text','Right-hand content'],['warning','Warning','Spare palette role']]],
- ['Separators',[['modeSeparatorColor','Mode → branch','Glyph after the mode'],['branchSeparatorColor','Branch → tabs','Glyph after the branch'],['tabSeparatorColor','Between tabs','Glyphs between tabs']]]];
+ ['Labels',[['branch','Git branch','Branch text, caps, and fill'],['dim','Inactive tabs','Quiet labels and inactive shapes'],['sub','Secondary text','Status widgets'],['warning','Warning','Notifications']]],
+ ['Separators',[['modeSeparatorColor','Mode → branch','Glyph after the mode'],['branchSeparatorColor','Branch → tabs','Glyph after the branch'],['tabSeparatorColor','Between tabs','Glyphs between tabs'],['widgetSeparatorColor','After tabs and widgets','Glyphs between status widgets']]]];
 function buildRoleRows(){
  $('#role-groups').innerHTML=roleGroups.map(([group,roles])=>`<div class="sub-head"><h3>${group}</h3></div><div class="role-group">${roles.map(([role,name,desc])=>`<div class="role" data-role="${role}"><div class="role-main"><i class="role-swatch" aria-hidden="true"></i><div class="role-text"><b>${name}</b><small>${desc}</small><code data-color-value="${role}"></code></div><div class="role-ctl"><select class="palette-color-select" data-theme-color-role="${role}" aria-label="${name} terminal palette slot"></select><input type="color" data-color-role="${role}" aria-label="${name} color"><input type="text" class="hex-input" data-hex-role="${role}" maxlength="7" spellcheck="false" aria-label="${name} hex value"></div></div><div class="slot-dots" role="group" aria-label="${name} palette slot">${Array.from({length:16},(_,i)=>`<button type="button" class="slot-dot" data-dot-role="${role}" data-slot="${i}"></button>`).join('')}</div></div>`).join('')}</div>`).join('');
 }
@@ -672,19 +929,20 @@ function modeExportColor(key){
 }
 function modePreviewColor(key){return state.themeAgnostic?previewSlots()[Number(modeExportColor(key))]:modeExportColor(key)}
 function syncModeControls(){
- $('#preview-mode').value=state.mode;
+ $('#preview-mode').value=state.mode;$('#hide-normal').checked=state.hideNormal;$$('[data-label-style]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.labelStyle===state.modeLabelStyle)));
  const field=state.themeAgnostic?'slot':'hex',root=$('#mode-colors');
- if(!root.children.length)root.innerHTML=modeDefinitions.map(([key,label])=>`<div class="mode-row" data-mode-row="${key}"><button type="button" class="mode-peek" data-preview-mode="${label}" aria-label="Preview ${label} mode"></button><div class="mode-ctl"><select data-mode-color="${key}" aria-label="${label} mode color"></select><input type="color" data-mode-hex="${key}" aria-label="${label} mode custom color"><small class="mode-color-value"></small></div></div>`).join('');
+ if(!root.children.length)root.innerHTML=modeDefinitions.map(([key,label])=>`<div class="mode-row" data-mode-row="${key}"><button type="button" class="mode-peek" data-preview-mode="${label}" aria-label="Preview ${label} mode"></button><div class="mode-ctl"><input type="text" class="mode-label-input" data-mode-label="${key}" maxlength="24" aria-label="${label} mode label"><select data-mode-color="${key}" aria-label="${label} mode color"></select><input type="color" data-mode-hex="${key}" aria-label="${label} mode custom color"><small class="mode-color-value"></small></div></div>`).join('');
  const slotOptions=state.themeAgnostic?paletteColorOptions():'<option value="custom">Custom color</option>';
  for(const [key,label] of modeDefinitions){
   const value=state.modeColorOverrides[key]?.[field],color=modePreviewColor(key),inherit=key==='normal'?'Use '+(state.modeDesign==='plain'?'foreground':'mode badge fill'):'Same as NORMAL';
-  const row=$(`[data-mode-row="${key}"]`),select=row.querySelector('select'),input=row.querySelector('input');
+  const row=$(`[data-mode-row="${key}"]`),select=row.querySelector('select'),input=row.querySelector('input[type=color]');
   const options='<option value="inherit">'+inherit+'</option>'+slotOptions;
   if(select.dataset.options!==options){select.innerHTML=options;select.dataset.options=options}
   select.value=value===undefined?'inherit':state.themeAgnostic?String(value):'custom';
   input.hidden=state.themeAgnostic||value===undefined;input.value=color;
   input.nextElementSibling.textContent=(state.themeAgnostic?'palette'+modeExportColor(key)+' · ':'')+color.toUpperCase();
-  row.querySelector('.mode-peek').innerHTML=`<span class="bar mode-${state.modeDesign}"><span class="mode" style="--hot:${color}">${state.modeDesign==='plain'?esc(label):tokenShape(state.modeDesign,label,true,true)}</span></span>`;
+  const text=modeText(key),labelInput=row.querySelector('[data-mode-label]');labelInput.hidden=state.modeLabelStyle!=='custom';setIfIdle(labelInput,text);
+  row.querySelector('.mode-peek').innerHTML=state.hideNormal&&key==='normal'?'<span class="empty-note" style="padding:0">hidden</span>':`<span class="bar mode-${state.modeDesign}"><span class="mode" style="--hot:${color}">${state.modeDesign==='plain'?esc(text):tokenShape(state.modeDesign,text,true,true)}</span></span>`;
   row.classList.toggle('is-current',label===state.mode);
  }
 }
@@ -719,34 +977,44 @@ $('#theme-file').addEventListener('change',async e=>{
  const file=e.target.files[0];if(!file)return;$('#theme-import-error').hidden=true;
  try{if(file.size>1024*1024)throw new Error('Choose a theme file smaller than 1 MB.');const imported=parseGhosttyTheme(await file.text(),file.name);state.importedTheme=imported;installImportedPalette();state.palette='imported';state.paletteOverrides={};$('#palette').value='imported';render();toast('Loaded Ghostty palette from '+file.name)}catch(error){$('#theme-import-error').textContent=error.message;$('#theme-import-error').hidden=false}finally{e.target.value=''}
 });
-const clockFormats=['%H:%M','%H:%M:%S','%I:%M %p','%Y-%m-%d','%Y-%m-%d %H:%M','%a %H:%M'];
 function validTimezone(value){if(typeof value!=='string'||!value.trim())return false;try{new Intl.DateTimeFormat('en',{timeZone:value});return true}catch{return false}}
 function clockPreview(){
  const date=new Date(),options={timeZone:state.clockTimezone,year:'numeric',month:'2-digit',day:'2-digit',weekday:'short',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'};
  const parts=Object.fromEntries(new Intl.DateTimeFormat('en-US',options).formatToParts(date).map(({type,value})=>[type,value]));
- const hour=Number(parts.hour),values={'%H':parts.hour,'%I':String(hour%12||12).padStart(2,'0'),'%M':parts.minute,'%S':parts.second,'%p':hour<12?'AM':'PM','%Y':parts.year,'%m':parts.month,'%d':parts.day,'%a':parts.weekday};
- return state.clockFormat.replace(/%[HIMSpYmda]/g,token=>values[token]);
+ const month=new Intl.DateTimeFormat('en-US',{timeZone:state.clockTimezone,month:'short'}).format(date);
+ const hour=Number(parts.hour),values={'%H':parts.hour,'%I':String(hour%12||12).padStart(2,'0'),'%M':parts.minute,'%S':parts.second,'%p':hour<12?'AM':'PM','%Y':parts.year,'%m':parts.month,'%d':parts.day,'%a':parts.weekday,'%b':month};
+ return state.clockFormat.replace(/%[HIMSpYmdab]/g,token=>values[token]);
 }
-function rightMarkup(){
- if(state.rightContent==='hidden')return '';
- if(state.rightContent==='branch')return state.showBranch?`<span class="clock branch-clock">${branchMarkup()}</span>`:'';
- const text=state.rightContent==='clock'?clockPreview():state.rightContent==='session'?state.previewSession:state.rightText;
- const icon=state.rightContent==='clock'&&state.clockIcon?`<span class="clock-glyph" aria-hidden="true">${esc(state.clockIcon)}</span>`:'';
- return `<span class="clock" data-inspect="right">${icon}<span>${esc(text)}</span></span>`;
+const setIfIdle=(el,value)=>{if(el&&document.activeElement!==el)el.value=value};
+function syncWidgetControls(){
+ $('#clock-format').value=state.clockFormat;setIfIdle($('#clock-timezone'),state.clockTimezone);setIfIdle($('#clock-icon'),state.clockIcon);
+ setIfIdle($('#branch-icon'),state.branchIcon);$('#branch-dirty').checked=state.branchDirty;$('#branch-ahead').checked=state.branchAheadBehind;
+ setIfIdle($('#session-name'),state.previewSession);setIfIdle($('#right-text'),state.rightText);
+ setIfIdle($('#custom-command'),state.customCommand);setIfIdle($('#custom-interval'),String(state.customInterval));setIfIdle($('#custom-preview'),state.customPreview);
+ $$('[data-off]').forEach(el=>{const ids=el.dataset.off.split(' ');el.textContent=ids.some(placed)?'':'· not in the bar'});
+ const icons=$('#widget-icons'),iconIds=statusWidgets.filter(id=>!['clock','text'].includes(id));
+ if(!icons.children.length)icons.innerHTML=iconIds.map(id=>`<label class="field"><span>${esc(widgetDefs[id].name)}</span><input type="text" data-widget-icon="${id}" maxlength="16" placeholder="none"></label>`).join('');
+ iconIds.forEach(id=>setIfIdle($(`[data-widget-icon="${id}"]`),widgetIcon(id)));
+ $('#in-repo').checked=state.inRepo;$('#preview-notify').checked=state.previewNotify;
+ $('#in-repo').closest('label').hidden=!placed('branch');$('#preview-notify').closest('label').hidden=!placed('notify');
 }
-function rightKdlFormat(){return state.rightContent==='hidden'?'':state.rightContent==='branch'?(state.showBranch?'{command_git_branch}':''):state.rightContent==='clock'?'{datetime}':state.rightContent==='session'?'#[fg=$muted]{session}':state.rightText?'#[fg=$muted]'+state.rightText:''}
-function syncRightControls(){
- $('#right-content').value=state.rightContent;$('#clock-format').value=state.clockFormat;
- $('#mode-separator-label').textContent=branchOnLeft()?'Mode → branch':'Mode → tabs';
- $('#branch-separator').disabled=!branchOnLeft();
- if(document.activeElement!==$('#clock-timezone'))$('#clock-timezone').value=state.clockTimezone;
- $('#clock-icon').value=state.clockIcon;
- $$('[data-right-clock]').forEach(el=>el.hidden=state.rightContent!=='clock');
- const showText=['custom','session'].includes(state.rightContent);$('#right-text-control').hidden=!showText;
- $('#right-text-label').textContent=state.rightContent==='session'?'Preview session name':'Custom text';
- $('#right-text').value=state.rightContent==='session'?state.previewSession:state.rightText;
- $('#right-note').textContent=state.rightContent==='branch'?(state.showBranch?'Git branch moves to the bottom right and uses $branch. The branch → tabs separator applies only on the left.':'Git branch is hidden. Turn on Git branch above the preview to show it here.'):state.rightContent==='clock'?'The preview samples the selected timezone when settings change. Use an IANA timezone such as America/Denver or UTC.':state.rightContent==='session'?'The preview uses this sample name. KDL displays the actual Zellij session name.':state.rightContent==='custom'?'Custom text appears at the bottom right.':'The right-hand status area is hidden.';
+function syncLayoutControls(){
+ $('#bar-position').value=state.barPosition;$('#border').value=state.border;$('#border-char').value=state.borderChar;$('#border-char').disabled=state.border==='off';$('#gap-fill').value=state.gapFill;
+ $('#precedence').value=state.precedence;$('#precedence').disabled=!state.hideOnOverlength;$('#hide-overlength').checked=state.hideOnOverlength;
+ $('#preview-width').value=state.previewWidth;$('#tab-count').value=String(state.tabCount);$('#tab-state').value=state.tabState;
+ $$('[data-lock]').forEach(el=>el.checked=!!state.shuffleLocks[el.dataset.lock]);
 }
+function syncTabControls(){
+ $('#tab-label').value=state.tabLabel;setIfIdle($('#tab-icon'),state.tabIcon);$('#zero-index').checked=state.zeroIndex;
+ $$('[data-indicator]').forEach(el=>setIfIdle(el,state.indicators[el.dataset.indicator]));
+ $('#display-count').value=String(state.displayCount);setIfIdle($('#trunc-start'),state.truncStart);setIfIdle($('#trunc-end'),state.truncEnd);
+ $('#trunc-start').disabled=$('#trunc-end').disabled=!state.displayCount;
+}
+function renderLayoutEditor(){
+ const unused=Object.keys(widgetDefs).filter(id=>!placed(id)),btn=(move,label,glyph,off)=>`<button type="button" data-move="${move}" aria-label="${label}" title="${label}"${off?' disabled':''}>${glyph}</button>`;
+ $('#zone-editor').innerHTML=zoneNames.map((z,zi)=>`<div class="zone-row" data-zone="${z}"><span class="small-label">${z}</span><div class="zone-body"><ul class="zone-list" aria-label="${z} section">${state.zones[z].map((id,i,list)=>{const name=esc(widgetDefs[id].name);return `<li class="zone-chip" draggable="true" data-widget="${id}"><span class="grip" aria-hidden="true">⠿</span>${name}${btn('prev','Move '+name+' earlier','‹',i===0)}${btn('next','Move '+name+' later','›',i===list.length-1)}${btn('up','Move '+name+' to the '+(zoneNames[zi-1]||'')+' section','˄',zi===0)}${btn('down','Move '+name+' to the '+(zoneNames[zi+1]||'')+' section','˅',zi===2)}<button type="button" data-remove aria-label="Remove ${name}" title="Remove">×</button></li>`}).join('')}</ul>${state.zones[z].length?'':'<span class="zone-empty">empty</span>'}<select data-add-zone="${z}" aria-label="Add a widget to the ${z} section"><option value="">+ Add…</option>${unused.map(id=>`<option value="${id}">${esc(widgetDefs[id].name)}</option>`).join('')}</select></div></div>`).join('');
+}
+function moveWidget(id,zone,index){zoneNames.forEach(z=>{state.zones[z]=state.zones[z].filter(x=>x!==id)});const list=state.zones[zone];list.splice(Math.max(0,Math.min(index??list.length,list.length)),0,id)}
 function kdlQuote(value){return JSON.stringify(value)}
 function kdlShape(id,label,fill,mode=false){
  const fg=`#[fg=$${fill}]`,centerRole=mode?'mode_text':'active_text',center=`#[fg=$${centerRole},bg=$${fill},bold]`,filledShape=(left,right)=>`${fg}${left}${center} ${label} ${fg}${right}`;
@@ -762,41 +1030,153 @@ function kdlShape(id,label,fill,mode=false){
   case 'hatch':return `#[fg=$${fill}]░▒▓${center} ${label} ${fg}▓▒░`;
   case 'hatchcompact':return `#[fg=$${fill}]░▓${center} ${label} ${fg}▓░`;
   case 'hatchhalf':return `#[fg=$dim]▐#[fg=$${fill}]▐${center} ${label} ${fg}▌#[fg=$dim]▌`;
-  case 'stencil':return mode||fill==='branch'?`#[fg=$${centerRole},bg=$${fill},bold] ${label} `:`#[fg=$active_text,bg=$background,bold] ${label} `;
+  case 'stencil':return mode||fill!=='accent'?`#[fg=$${centerRole},bg=$${fill},bold] ${label} `:`#[fg=$active_text,bg=$background,bold] ${label} `;
   case 'cursor':return mode?`#[fg=$${fill},bold]${label} #[fg=$dim]│`:`#[fg=$${fill},bold]> ${label}`;
   case 'stitch':return `#[fg=$${fill}]┆ ${label} ┆`;
   case 'circuit':return mode?`#[fg=$${fill}]╶─ ${label} ──`:`#[fg=$${fill}]──┤ ${label} ├──`;
   case 'braille':return `#[fg=$${fill},bold]⣿ ${label}`;
-  case 'boxcar':return `#[fg=$${fill},bold]┌${'─'.repeat(label==='{name}'?8:String(label).length+2)}┐\n│ ${label} │`;
+  case 'boxcar':return `#[fg=$${fill},bold]┌${'─'.repeat(/\{/.test(label)?8:String(label).length+2)}┐\n│ ${label} │`;
   case 'comb':return `#[fg=$${fill}]▏▎▍ ${label} ▍▎▏`;
   case 'scanline':return `#[fg=$${fill}]▤ ${label}${mode?'':' ▤'}`;
   default:return `#[fg=$${fill},bold]${label}`;
  }
 }
 function kdlSeparator(value,kind){if(value==='none')return '';if(value==='space')return ' ';const glyph=separatorGlyphs[value]||'',role=kind+'_separator';return `#[fg=$${role}] ${glyph} `}
+function shapeKdl(design,label,fill){return design==='plain'?`#[fg=$${fill}]${label}`:kdlShape(design,label,fill)}
+function sepKdl(id){const [value,kind]=sepSpec(id);return kdlSeparator(value,kind)}
+function widgetRef(id,next){
+ const sep=next?sepKdl(id):'';
+ switch(id){
+  case 'mode':return '{mode}'+(state.hideNormal?'':sep);
+  case 'tabs':return '{tabs}'+sep;
+  case 'clock':return '{datetime}'+sep;
+  case 'session':return shapeKdl(widgetDesign(id),withIcon(id,'{session}'),'muted')+sep;
+  case 'text':return state.rightText?shapeKdl(widgetDesign(id),withIcon(id,state.rightText),'muted')+sep:'';
+  case 'branch':return '{command_git_branch}';
+  case 'swap':return '{swap_layout}';
+  case 'notify':return '{notifications}';
+  default:return `{command_${id}}`;
+ }
+}
+function zoneKdl(zone){const list=state.zones[zone];return list.map((id,i)=>widgetRef(id,i<list.length-1)).join('')}
+function branchCommand(){
+ if(!state.branchDirty&&!state.branchAheadBehind)return 'git branch --show-current';
+ const dirty=state.branchDirty?' [ -n "$(git status --porcelain 2>/dev/null | head -n1)" ] && o="$o*";':'';
+ const ahead=state.branchAheadBehind?' set -- $(git rev-list --left-right --count HEAD...@{u} 2>/dev/null); [ "${1:-0}" -gt 0 ] && o="$o ↑$1"; [ "${2:-0}" -gt 0 ] && o="$o ↓$2";':'';
+ return `bash -c 'b=$(git branch --show-current 2>/dev/null); [ -n "$b" ] || exit 0; o="$b";${dirty}${ahead} echo "$o"'`;
+}
+function commandBlock(name,command,format,interval,cwd=false){return [`command_${name}_command ${kdlQuote(command)}`,...(cwd?[`command_${name}_cwd "{focused_pane_cwd}"`]:[]),`command_${name}_format ${kdlQuote(format)}`,`command_${name}_hideonemptystdout "true"`,`command_${name}_interval ${kdlQuote(String(interval))}`,`command_${name}_rendermode "static"`,'']}
+function widgetConfigLines(){
+ const lines=[],own=id=>hasNext(id)?sepKdl(id):'';
+ if(placed('branch'))lines.push(...commandBlock('git_branch',branchCommand(),(state.branchDesign==='plain'?`#[fg=$branch,italic]${withIcon('branch','{stdout}')}`:kdlShape(state.branchDesign,withIcon('branch','{stdout}'),'branch'))+own('branch'),5,true));
+ for(const id of ['battery','load','host','kube'])if(placed(id))lines.push(...commandBlock(id,widgetDefs[id].command,shapeKdl(widgetDesign(id),withIcon(id,'{stdout}'),'muted')+own(id),widgetDefs[id].interval));
+ if(placed('cmd'))lines.push(...commandBlock('cmd',state.customCommand||'true',shapeKdl(widgetDesign('cmd'),withIcon('cmd','{stdout}'),'muted')+own('cmd'),state.customInterval));
+ if(placed('swap'))lines.push(`swap_layout_format ${kdlQuote(shapeKdl(widgetDesign('swap'),withIcon('swap','{name}'),'muted')+own('swap'))}`,'swap_layout_hide_if_empty "true"','');
+ if(placed('notify'))lines.push(`notification_format_unread ${kdlQuote(shapeKdl(widgetDesign('notify'),withIcon('notify','{message}'),'warning')+own('notify'))}`,'notification_format_no_notifications ""','notification_show_interval "10"','');
+ if(placed('clock'))lines.push(`datetime ${kdlQuote(shapeKdl(widgetDesign('clock'),withIcon('clock','{format}'),'muted'))}`,`datetime_format ${kdlQuote(state.clockFormat)}`,`datetime_timezone ${kdlQuote(state.clockTimezone)}`,'');
+ return lines;
+}
+function tabLines(){
+ const label=(state.tabIcon?state.tabIcon+' ':'')+state.tabLabel+'{fullscreen_indicator}{sync_indicator}{floating_indicator}';
+ const active=kdlShape(state.tabDesign,label,'accent');let inactive;
+ if(state.inactiveDesign!=='auto')inactive=shapeKdl(state.inactiveDesign,label,'dim');
+ else{inactive='#[fg=$dim]'+label;if(state.tabDesign==='circuit')inactive='#[fg=$dim]── '+label;if(state.tabDesign==='stencil')inactive=`#[fg=$background,bg=$accent] ${label} `}
+ let tabSep=kdlSeparator(state.tabSeparator,'tab');if(state.tabDesign==='stencil')tabSep=state.tabSeparator==='none'?'':`#[fg=$tab_separator,bg=$accent] ${state.tabSeparator==='space'?'':separatorGlyphs[state.tabSeparator]||''} `;
+ const lines=[`tab_normal ${kdlQuote(inactive)}`,`tab_normal_fullscreen ${kdlQuote(inactive)}`,`tab_normal_sync ${kdlQuote(inactive)}`,`tab_active ${kdlQuote(active)}`,`tab_active_fullscreen ${kdlQuote(active)}`,`tab_active_sync ${kdlQuote(active)}`,`tab_separator ${kdlQuote(tabSep)}`,
+  `tab_fullscreen_indicator ${kdlQuote(state.indicators.fullscreen)}`,`tab_sync_indicator ${kdlQuote(state.indicators.sync)}`,`tab_floating_indicator ${kdlQuote(state.indicators.floating)}`];
+ if(state.zeroIndex)lines.push('tab_zero_based_index "true"');
+ if(state.displayCount)lines.push(`tab_display_count ${kdlQuote(String(state.displayCount))}`,`tab_truncate_start_format ${kdlQuote('#[fg=$dim]'+state.truncStart)}`,`tab_truncate_end_format ${kdlQuote('#[fg=$dim]'+state.truncEnd)}`);
+ return [...lines,''];
+}
+function modeLines(){
+ return modeDefinitions.map(([key])=>{
+  if(state.hideNormal&&key==='normal')return 'mode_normal ""';
+  let format=kdlShape(state.modeDesign,modeText(key),'mode_'+key,true);if(state.hideNormal&&hasNext('mode'))format+=sepKdl('mode');
+  return `mode_${key} ${kdlQuote(format)}`;
+ });
+}
+// Share links and exports carry only the settings that differ from the defaults.
+function stateDiff(){const out={};for(const [k,v] of Object.entries(state)){if(['shuffleLocks'].includes(k))continue;if(JSON.stringify(v)!==JSON.stringify(defaultState[k]))out[k]=v}return out}
+const sortKeys=v=>Array.isArray(v)?v.map(sortKeys):isObj(v)?Object.fromEntries(Object.keys(v).sort().map(k=>[k,sortKeys(v[k])])):v;
+function encodeState(obj){const bytes=new TextEncoder().encode(JSON.stringify(sortKeys(obj)));let bin='';bytes.forEach(b=>bin+=String.fromCharCode(b));return btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+function decodeState(text){const bin=atob(text.replace(/-/g,'+').replace(/_/g,'/'));return JSON.parse(new TextDecoder().decode(Uint8Array.from(bin,c=>c.charCodeAt(0))))}
 function layoutText(){
  const colors=state.themeAgnostic?Object.fromEntries(Object.entries(state.paletteSlots).map(([role,slot])=>[role,String(slot)])):currentPalette();
- const modeLines=modeDefinitions.map(([key,label])=>`mode_${key} ${kdlQuote(kdlShape(state.modeDesign,label,'mode_'+key,true))}`);
- const active=kdlShape(state.tabDesign,'{name}','accent',false);
- let inactive='#[fg=$dim]{name}';if(state.tabDesign==='circuit')inactive='#[fg=$dim]── {name}';if(state.tabDesign==='stencil')inactive='#[fg=$background,bg=$accent] {name} ';
- const formatLeft=`{mode}${kdlSeparator(state.modeSeparator,'mode')}${branchOnLeft()?'{command_git_branch}':''}{tabs}`;
- const branchFormat=(state.branchDesign==='plain'?'#[fg=$branch,italic]{stdout}':kdlShape(state.branchDesign,'{stdout}','branch'))+(branchOnLeft()?kdlSeparator(state.branchSeparator,'branch'):'');
- const branchCommand='git branch --show-current';
- let tabSep=kdlSeparator(state.tabSeparator,'tab');if(state.tabDesign==='stencil')tabSep=state.tabSeparator==='none'?'':`#[fg=$tab_separator,bg=$accent] ${state.tabSeparator==='space'?'':separatorGlyphs[state.tabSeparator]||''} `;
- const paneSize=needsTwoRows()?'3':'2';
+ const side=borderSide(),paneSize=(needsTwoRows()?2:1)+(side?1:0),I='                ';
  const paletteComment=state.themeAgnostic?'// Theme agnostic: color values are terminal palette indices (0–15).':`// ${palettes[state.palette].name} colors with ${styleName(state.modeDesign)} mode and ${styleName(state.tabDesign)} active-tab styles.`;
- const rows=[paletteComment,`// Generated by zjstatus Workbench. Preview branch: ${state.showBranch?'main':'hidden'}.`,'','pane_frames false','','layout {','    default_tab_template {','        children',`        pane size=${paneSize} borderless=true {`,'            plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {',`                color_background ${kdlQuote(colors.bg)}`,`                color_foreground ${kdlQuote(colors.fg)}`,`                color_mode_fill ${kdlQuote(colors.modeFill)}`,`                color_mode_text ${kdlQuote(colors.modeText)}`,`                color_active_text ${kdlQuote(colors.activeText)}`,`                color_accent ${kdlQuote(colors.a)}`,`                color_branch ${kdlQuote(colors.branch)}`,`                color_dim ${kdlQuote(colors.dim)}`,`                color_muted ${kdlQuote(colors.sub)}`,`                color_warning ${kdlQuote(colors.warning)}`,...['mode','branch','tab'].map(kind=>`                color_${kind}_separator ${kdlQuote(colors[kind+'SeparatorColor'])}`),'',`                format_left ${kdlQuote(formatLeft)}`,'                format_center ""',`                format_right ${kdlQuote(rightKdlFormat())}`,'                format_space ""','                format_hide_on_overlength "true"','                format_precedence "lcr"','','                border_enabled "true"','                border_char " "','                border_format "{char}"','                border_position "top"',...modeDefinitions.map(([key])=>`                color_mode_${key} ${kdlQuote(modeExportColor(key))}`),...modeLines.map(line=>'                '+line),'',...(state.showBranch?[`                command_git_branch_command ${kdlQuote(branchCommand)}`,'                command_git_branch_cwd "{focused_pane_cwd}"',`                command_git_branch_format ${kdlQuote(branchFormat)}`,'                command_git_branch_hideonemptystdout "true"','                command_git_branch_interval "5"','                command_git_branch_rendermode "static"','']:[]),`                tab_normal ${kdlQuote(inactive)}`,`                tab_normal_fullscreen ${kdlQuote(inactive+'{fullscreen_indicator}')}`,`                tab_normal_sync ${kdlQuote(inactive+'{sync_indicator}')}`,`                tab_active ${kdlQuote(active)}`,`                tab_active_fullscreen ${kdlQuote(active.replace('{name}','{name}{fullscreen_indicator}'))}`,`                tab_active_sync ${kdlQuote(active.replace('{name}','{name}{sync_indicator}'))}`,`                tab_separator ${kdlQuote(tabSep)}`,'',...(state.rightContent==='clock'?[`                datetime ${kdlQuote('#[fg=$muted,bold] '+(state.clockIcon?state.clockIcon+' ':'')+'{format} ')}`,`                datetime_format ${kdlQuote(state.clockFormat)}`,`                datetime_timezone ${kdlQuote(state.clockTimezone)}`]:[]),'            }','        }','    }','}',''];
+ const plugin=[
+  ...Object.keys(colorRoleNames).map(role=>`color_${colorRoleNames[role]} ${kdlQuote(colors[role])}`),'',
+  `format_left ${kdlQuote(zoneKdl('left'))}`,`format_center ${kdlQuote(zoneKdl('center'))}`,`format_right ${kdlQuote(zoneKdl('right'))}`,
+  `format_space ${kdlQuote(state.gapFill==='background'?'#[bg=$background]':'')}`,`format_hide_on_overlength ${kdlQuote(String(state.hideOnOverlength))}`,`format_precedence ${kdlQuote(state.precedence)}`,'',
+  ...(side?['border_enabled "true"',`border_char ${kdlQuote(state.borderChar)}`,'border_format "#[fg=$border]{char}"',`border_position ${kdlQuote(side)}`]:['border_enabled "false"']),'',
+  ...modeDefinitions.map(([key])=>`color_mode_${key} ${kdlQuote(modeExportColor(key))}`),...modeLines(),'',
+  ...widgetConfigLines(),...(placed('tabs')?tabLines():[])
+ ];
+ while(plugin.at(-1)==='')plugin.pop();
+ const pane=[`        pane size=${paneSize} borderless=true {`,'            plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {',...plugin.map(line=>line?I+line:''),'            }','        }'];
+ const rows=[paletteComment,'// Generated by zjstatus Workbench. The next line lets Import KDL restore these exact settings.',`// workbench-state: ${encodeState(stateDiff())}`,'','layout {','    default_tab_template {',...(state.barPosition==='top'?[...pane,'        children']:['        children',...pane]),'    }','}',''];
  return rows.join('\n');
 }
 function renderLayout(){
  const code=$('#layout-code'),title=$('#export-title'),note=$('#export-note'),paletteHint=$('#palette-hint');if(!code)return;
  const modeSlug=state.modeDesign==='plain'?'plain':state.modeDesign,tabSlug=state.tabDesign,custom=Object.keys(state.paletteOverrides).length?'custom-':'',hybrid=state.modeDesign==='plain'&&state.tabDesign==='slant'&&state.modeSeparator==='braille'&&state.tabSeparator==='stitch';
  const prefix=state.themeAgnostic?'theme-agnostic-':`${custom}${palettes[state.palette].slug}-`;
- const branchSlug=state.branchDesign==='plain'?'':`-${state.branchDesign}-branch`;
- const filename=hybrid&&state.branchDesign==='plain'?`${prefix}slant-braille.kdl`:`${prefix}${modeSlug}-mode-${tabSlug}-tabs${branchSlug}.kdl`;
- title.textContent=filename;$('#terminal-file').textContent=filename;$('#terminal-pane-size').textContent=needsTwoRows()?'3':'2';code.textContent=layoutText();
- note.textContent=needsTwoRows()?'Boxcar needs two content rows; this export increases the status pane to size=3. Confirm the line layout in your Zellij font before using it.':state.tabDesign==='hatchhalf'?'Half-cell Hatch is represented with its two edge cells; browser shading uses palette blends that zjstatus does not calculate automatically.':'The generated layout follows the selected mode, branch and active-tab styles, mode colors, separators, and theme.';
+ const branchSlug=state.branchDesign==='plain'||!placed('branch')?'':`-${state.branchDesign}-branch`;
+ const filename=hybrid&&!branchSlug?`${prefix}slant-braille.kdl`:`${prefix}${modeSlug}-mode-${tabSlug}-tabs${branchSlug}.kdl`;
+ title.textContent=filename;$('#terminal-file').textContent=filename;$('#terminal-pane-size').textContent=String((needsTwoRows()?2:1)+(borderSide()?1:0));code.textContent=layoutText();
+ note.textContent=needsTwoRows()?'Boxcar needs two content rows, so this export makes the status pane one row taller. Check the line layout in your Zellij font before using it.':state.tabDesign==='hatchhalf'?'Half-cell Hatch is represented with its two edge cells; browser shading uses palette blends that zjstatus does not calculate automatically.':'The generated layout follows the selected layout, shapes, mode labels and colors, separators, widgets, and theme.';
  paletteHint.textContent=state.themeAgnostic?'KDL follows your terminal palette using the slot assignments under Colors. '+palettes[state.palette].name+(terminalPalette().kind==='sample'?' is a Workbench sample palette.':terminalPalette().kind==='imported'?' previews the imported Ghostty colors.':' previews its bundled Ghostty palette snapshot.'):'KDL writes fixed colors from '+palettes[state.palette].name+'. Switch Colors to Terminal palette to follow any terminal theme.';
+}
+// Import: exact for Workbench exports (embedded state), best effort for other zjstatus layouts.
+function shapeSkeleton(format){return String(format).replace(/#\[[^\]]*\]/g,'').replace(/\{[a-z_]+\}|[\p{L}\p{N}_:.·]+/gu,'§').replace(/§(\s*§)+/g,'§').replace(/\s+/g,' ').trim()}
+function matchShape(format,fill,mode=false){
+ if(typeof format!=='string')return null;const target=shapeSkeleton(format);
+ const ids=componentDesigns.map(d=>d.id).filter(id=>shapeSkeleton(kdlShape(id,'X',fill,mode))!=='§').sort((a,b)=>shapeSkeleton(kdlShape(b,'X',fill,mode)).length-shapeSkeleton(kdlShape(a,'X',fill,mode)).length);
+ return ids.find(id=>shapeSkeleton(kdlShape(id,'X',fill,mode))===target)??(target==='§'?'plain':null);
+}
+function importKdl(text){
+ const embedded=text.match(/^\s*\/\/ workbench-state: ([A-Za-z0-9_-]*)\s*$/m);
+ if(embedded){const saved=decodeState(embedded[1]||'e30');resetState();applySaved(saved);return 'Restored the exact Workbench settings saved in this layout.'}
+ const kv={};for(const line of text.split(/\r?\n/)){const m=line.match(/^\s*([a-z][a-z0-9_]*)\s+"((?:[^"\\]|\\.)*)"\s*$/i);if(m){try{kv[m[1]]=JSON.parse('"'+m[2]+'"')}catch{kv[m[1]]=m[2]}}}
+ if(!['format_left','format_center','format_right'].some(k=>k in kv))throw new Error('No zjstatus format_left, format_center, or format_right was found in that file.');
+ resetState();const found=[];
+ const roleByName=Object.fromEntries(Object.entries(colorRoleNames).map(([role,name])=>[name,role]));
+ const colors=Object.entries(kv).filter(([k])=>k.startsWith('color_')&&roleByName[k.slice(6)]);
+ if(colors.length){
+  const numeric=colors.every(([,v])=>/^\d{1,2}$/.test(v)&&Number(v)<16);state.themeAgnostic=numeric;
+  colors.forEach(([k,v])=>{const role=roleByName[k.slice(6)];if(numeric)state.paletteSlots[role]=Number(v);else if(/^#[\da-f]{6}$/i.test(v))state.paletteOverrides[role]=v.toLowerCase()});
+  found.push(colors.length+' colors');
+ }
+ const refs={mode:'mode',tabs:'tabs',datetime:'clock',session:'session',swap_layout:'swap',notifications:'notify',command_git_branch:'branch'};
+ let customUsed=false;const seen=new Set();
+ for(const z of zoneNames){
+  state.zones[z]=[];
+  for(const [,ref] of String(kv['format_'+z]||'').matchAll(/\{([a-z0-9_]+)\}/g)){
+   let id=refs[ref];
+   if(!id&&ref.startsWith('command_')){const name=ref.slice(8);if(['battery','load','host','kube'].includes(name))id=name;else if(!customUsed&&kv[`command_${name}_command`]){id='cmd';customUsed=true;state.customCommand=kv[`command_${name}_command`].slice(0,300);const n=Number(kv[`command_${name}_interval`]);if(Number.isInteger(n)&&n>=0)state.customInterval=n}}
+   if(id&&!seen.has(id)){seen.add(id);state.zones[z].push(id)}
+  }
+ }
+ found.push(seen.size+' widgets');
+ if(clockFormats.includes(kv.datetime_format))state.clockFormat=kv.datetime_format;if(validTimezone(kv.datetime_timezone))state.clockTimezone=kv.datetime_timezone;
+ const mode=matchShape(kv.mode_normal,'mode_normal',true);if(mode){state.modeDesign=mode;found.push('mode '+styleName(mode))}
+ const tab=matchShape(kv.tab_active,'accent');if(tab){state.tabDesign=tab;found.push('tab '+styleName(tab))}
+ const branch=matchShape(kv.command_git_branch_format,'branch');if(branch)state.branchDesign=branch;
+ const label=[...tabLabelFormats].sort((a,b)=>b.length-a.length).find(f=>String(kv.tab_active||'').includes(f));if(label)state.tabLabel=label;
+ const short=Object.entries(modeLabelSets).find(([,set])=>String(kv.mode_locked||'').includes(set.locked));if(short)state.modeLabelStyle=short[0];
+ if(kv.mode_normal==='')state.hideNormal=true;
+ if(kv.tab_zero_based_index==='true')state.zeroIndex=true;
+ const count=Number(kv.tab_display_count);if([3,4,5,6,8,10].includes(count))state.displayCount=count;
+ for(const [k,key] of [['tab_truncate_start_format','truncStart'],['tab_truncate_end_format','truncEnd']])if(kv[k])state[key]=kv[k].replace(/#\[[^\]]*\]/g,'').slice(0,24);
+ for(const k of ['fullscreen','sync','floating'])if(typeof kv[`tab_${k}_indicator`]==='string')state.indicators[k]=kv[`tab_${k}_indicator`].slice(0,16);
+ if(kv.border_enabled==='false')state.border='off';else if(kv.border_position==='top'||kv.border_position==='bottom')state.border=kv.border_position;
+ if(borderChars.includes(kv.border_char))state.borderChar=kv.border_char;
+ if(/bg=/.test(kv.format_space||''))state.gapFill='background';
+ if(kv.format_hide_on_overlength==='false')state.hideOnOverlength=false;
+ if(/^(?!.*(.).*\1)[lcr]{3}$/.test(kv.format_precedence||''))state.precedence=kv.format_precedence;
+ if(/default_tab_template\s*\{\s*pane\s/.test(text))state.barPosition='top';
+ state.design='custom';
+ return 'Imported '+found.join(', ')+'. Separators and custom text are not detected in hand-written layouts.';
 }
 function fallbackCopy(value){const area=document.createElement('textarea');area.value=value;area.style.cssText='position:fixed;opacity:0';document.body.append(area);area.select();const ok=document.execCommand('copy');area.remove();toast(ok?'KDL layout copied':'Copy unavailable; select the visible KDL.')}
 function copyLayout(){const value=layoutText();if(navigator.clipboard?.writeText){navigator.clipboard.writeText(value).then(()=>toast('KDL layout copied')).catch(()=>fallbackCopy(value))}else fallbackCopy(value)}
@@ -804,88 +1184,179 @@ function copyLayout(){const value=layoutText();if(navigator.clipboard?.writeText
 $('#design').innerHTML=designs.map(d=>`<option value="${d.id}">${String(designs.indexOf(d)+1).padStart(2,'0')} / ${esc(d.name)}</option>`).join('')+'<option value="custom" disabled>Current mix</option>';
 const componentDesigns=designs.filter(d=>d.id!=='slantbraille');
 const componentOptionsMarkup='<option value="plain">Plain label</option>'+componentDesigns.map(d=>`<option value="${d.id}">${esc(d.name)}</option>`).join('');
-['mode','branch','tab'].forEach(kind=>$('#'+kind+'-style').innerHTML=componentOptionsMarkup);
+['mode','branch','tab','widget'].forEach(kind=>$('#'+kind+'-style').innerHTML=componentOptionsMarkup);
+$('#inactive-style').innerHTML='<option value="auto">Match active style</option>'+inactiveStyleIds().map(id=>`<option value="${id}">${esc(styleName(id))}</option>`).join('');
+$('#widget-target').innerHTML=statusWidgets.map(id=>`<option value="${id}">${esc(widgetDefs[id].name)}</option>`).join('');
 $('#preview-mode').innerHTML=modeDefinitions.map(([,label])=>`<option value="${label}">${label}</option>`).join('');
 const separatorOptionsMarkup=tabSeparatorOptions.map(([value,label])=>`<option value="${value}">${esc(label)}</option>`).join('');
-$('#mode-separator').innerHTML=separatorOptionsMarkup;
-$('#branch-separator').innerHTML=separatorOptionsMarkup;
-$('#tab-separator').innerHTML=separatorOptionsMarkup;
+['mode','branch','tab','widget'].forEach(kind=>$('#'+kind+'-separator').innerHTML=separatorOptionsMarkup);
 buildRoleRows();
 restoreSettings();
-$('#design').addEventListener('change',e=>selectDesign(e.target.value));
+function loadSharedHash(){if(!location.hash.startsWith('#s='))return false;let ok=false;try{const saved=decodeState(location.hash.slice(3));resetState();applySaved(saved);ok=true}catch{}history.replaceState(null,'',location.pathname+location.search);return ok}
+const sharedLoaded=loadSharedHash();
+syncStaticControls();
+const custom=fn=>e=>{fn(e);state.design='custom';render()};
+const onChange=(sel,fn)=>$(sel).addEventListener('change',fn),onInput=(sel,fn)=>$(sel).addEventListener('input',fn);
+onChange('#design',e=>selectDesign(e.target.value));
 function cycleDesign(delta){const selected=designs.findIndex(d=>d.id===state.design),fallback=designs.findIndex(d=>d.id===state.tabDesign),index=selected>=0?selected:Math.max(0,fallback);selectDesign(designs[(index+delta+designs.length)%designs.length].id)}
 $('#prev').addEventListener('click',()=>cycleDesign(-1));
 $('#next').addEventListener('click',()=>cycleDesign(1));
-$('#palette').addEventListener('change',e=>{state.palette=e.target.value;if(!state.themeAgnostic)state.paletteOverrides={};render()});
-$('#mode-style').addEventListener('change',e=>{state.modeDesign=e.target.value;state.design='custom';render()});
-$('#branch-style').addEventListener('change',e=>{state.branchDesign=e.target.value;state.design='custom';render()});
-$('#tab-style').addEventListener('change',e=>{state.tabDesign=e.target.value;state.design='custom';render()});
-$('#mode-separator').addEventListener('change',e=>{state.modeSeparator=e.target.value;state.design='custom';render()});
-$('#branch-separator').addEventListener('change',e=>{state.branchSeparator=e.target.value;state.design='custom';render()});
-$('#tab-separator').addEventListener('change',e=>{state.tabSeparator=e.target.value;state.design='custom';render()});
+onChange('#palette',e=>{state.palette=e.target.value;if(!state.themeAgnostic)state.paletteOverrides={};render()});
+onChange('#mode-style',custom(e=>state.modeDesign=e.target.value));
+onChange('#branch-style',custom(e=>state.branchDesign=e.target.value));
+onChange('#tab-style',custom(e=>state.tabDesign=e.target.value));
+onChange('#inactive-style',custom(e=>state.inactiveDesign=e.target.value));
+onChange('#widget-target',e=>{state.widgetTarget=e.target.value;activePiece='widget';render()});
+onChange('#widget-style',e=>{state.widgetDesigns[state.widgetTarget]=e.target.value;render()});
+['mode','branch','tab','widget'].forEach(kind=>onChange('#'+kind+'-separator',custom(e=>state[kind+'Separator']=e.target.value)));
 $$('[data-color-role]').forEach(input=>input.addEventListener('input',e=>{state.paletteOverrides[e.target.dataset.colorRole]=e.target.value;render()}));
 $('#inspector').addEventListener('change',e=>{const select=e.target.closest('[data-theme-color-role]');if(!select||!select.value)return;state.paletteSlots[select.dataset.themeColorRole]=Number(select.value);render()});
 $('#reset-colors').addEventListener('click',()=>{if(state.themeAgnostic)state.paletteSlots={...defaultPaletteSlots};else state.paletteOverrides={};render();toast(state.themeAgnostic?'Reset terminal palette assignments':'Reset colors to '+palettes[state.palette].name)});
 $('#branch-swatches-list').addEventListener('click',e=>{const button=e.target.closest('[data-branch-color]');if(!button)return;state.paletteOverrides.branch=button.dataset.branchColor;render();toast('Branch color set to '+button.dataset.branchColor)});
-$('#right-content').addEventListener('change',e=>{state.rightContent=e.target.value;if(state.rightContent==='branch'){state.showBranch=true;$('#show-branch').checked=true}render()});
-$('#clock-format').addEventListener('change',e=>{state.clockFormat=e.target.value;render()});
-$('#clock-timezone').addEventListener('input',e=>{
+// Layout
+onChange('#bar-position',e=>{state.barPosition=e.target.value;render()});
+onChange('#border',e=>{state.border=e.target.value;render()});
+onChange('#border-char',e=>{state.borderChar=e.target.value;render()});
+onChange('#gap-fill',e=>{state.gapFill=e.target.value;render()});
+onChange('#precedence',e=>{state.precedence=e.target.value;render()});
+onChange('#hide-overlength',e=>{state.hideOnOverlength=e.target.checked;render()});
+const zoneEditor=$('#zone-editor');
+zoneEditor.addEventListener('click',e=>{
+ const chip=e.target.closest('[data-widget]'),button=e.target.closest('button');if(!chip||!button)return;
+ const id=chip.dataset.widget,zone=zoneOf(id),zi=zoneNames.indexOf(zone),index=state.zones[zone].indexOf(id);
+ if(button.hasAttribute('data-remove')){moveWidget(id,zone);state.zones[zone]=state.zones[zone].filter(x=>x!==id);render();toast(widgetDefs[id].name+' removed. Add it back from any section.');return}
+ const move=button.dataset.move;if(move==='prev')moveWidget(id,zone,index-1);else if(move==='next')moveWidget(id,zone,index+1);else if(move==='up')moveWidget(id,zoneNames[zi-1]);else if(move==='down')moveWidget(id,zoneNames[zi+1]);
+ render();
+});
+zoneEditor.addEventListener('change',e=>{const select=e.target.closest('[data-add-zone]');if(!select?.value)return;moveWidget(select.value,select.dataset.addZone);render()});
+let dragId=null;
+zoneEditor.addEventListener('dragstart',e=>{const chip=e.target.closest('[data-widget]');if(!chip)return;dragId=chip.dataset.widget;e.dataTransfer.setData('text/plain',dragId);e.dataTransfer.effectAllowed='move';requestAnimationFrame(()=>chip.classList.add('dragging'))});
+zoneEditor.addEventListener('dragend',()=>{dragId=null;$$('.zone-row').forEach(r=>r.classList.remove('drag-over'));$$('.zone-chip.dragging').forEach(c=>c.classList.remove('dragging'))});
+zoneEditor.addEventListener('dragover',e=>{const row=e.target.closest('[data-zone]');if(!row||!dragId)return;e.preventDefault();e.dataTransfer.dropEffect='move';$$('.zone-row').forEach(r=>r.classList.toggle('drag-over',r===row))});
+zoneEditor.addEventListener('drop',e=>{
+ const row=e.target.closest('[data-zone]'),id=dragId||e.dataTransfer.getData('text/plain');if(!row||!Object.hasOwn(widgetDefs,id))return;e.preventDefault();
+ const chips=[...row.querySelectorAll('[data-widget]')].filter(c=>c.dataset.widget!==id);
+ const index=chips.findIndex(c=>{const r=c.getBoundingClientRect();return e.clientY<r.top||(e.clientY<=r.bottom&&e.clientX<r.left+r.width/2)});
+ moveWidget(id,row.dataset.zone,index<0?undefined:index);dragId=null;render();
+});
+// Preview toolbar
+onChange('#preview-width',e=>{state.previewWidth=e.target.value;render()});
+onChange('#tab-count',e=>{state.tabCount=Number(e.target.value);if(state.active>=state.tabCount)state.active=1;render()});
+onChange('#tab-state',e=>{state.tabState=e.target.value;render()});
+onChange('#in-repo',e=>{state.inRepo=e.target.checked;render()});
+onChange('#preview-notify',e=>{state.previewNotify=e.target.checked;render()});
+// Tabs
+onChange('#tab-label',e=>{state.tabLabel=e.target.value;render()});
+onInput('#tab-icon',e=>{state.tabIcon=e.target.value;render()});
+onChange('#zero-index',e=>{state.zeroIndex=e.target.checked;render()});
+$$('[data-indicator]').forEach(el=>el.addEventListener('input',e=>{state.indicators[e.target.dataset.indicator]=e.target.value;render()}));
+onChange('#display-count',e=>{state.displayCount=Number(e.target.value);render()});
+onInput('#trunc-start',e=>{state.truncStart=e.target.value;render()});
+onInput('#trunc-end',e=>{state.truncEnd=e.target.value;render()});
+// Modes
+$('#mode-label-style').addEventListener('click',e=>{const b=e.target.closest('[data-label-style]');if(!b)return;const next=b.dataset.labelStyle;if(next==='custom'&&!Object.keys(state.modeLabels).length)modeDefinitions.forEach(([key])=>state.modeLabels[key]=modeText(key));state.modeLabelStyle=next;render()});
+onChange('#hide-normal',e=>{state.hideNormal=e.target.checked;render()});
+$('#mode-colors').addEventListener('input',e=>{const key=e.target.dataset.modeLabel;if(!key)return;state.modeLabels[key]=e.target.value;render()});
+// Widgets
+onChange('#clock-format',e=>{state.clockFormat=e.target.value;render()});
+onInput('#clock-timezone',e=>{
  const value=e.target.value.trim(),valid=validTimezone(value);e.target.setCustomValidity(valid?'':'Enter a valid IANA timezone, such as America/Denver or UTC.');e.target.setAttribute('aria-invalid',String(!valid));
  if(valid){state.clockTimezone=new Intl.DateTimeFormat('en',{timeZone:value}).resolvedOptions().timeZone;render()}
 });
-$('#clock-timezone').addEventListener('change',e=>{if(!e.target.validity.valid)e.target.reportValidity()});
-$('#clock-icon').addEventListener('input',e=>{state.clockIcon=e.target.value;render()});
-$('#right-text').addEventListener('input',e=>{state[state.rightContent==='session'?'previewSession':'rightText']=e.target.value;render()});
+onChange('#clock-timezone',e=>{$('#clock-note').textContent=e.target.validity.valid?'The preview samples the selected timezone when settings change. Use an IANA timezone such as America/Denver or UTC.':`“${e.target.value}” is not a timezone this browser knows. The export keeps ${state.clockTimezone}.`});
+onInput('#clock-icon',e=>{state.clockIcon=e.target.value;render()});
+onInput('#branch-icon',e=>{state.branchIcon=e.target.value;render()});
+onChange('#branch-dirty',e=>{state.branchDirty=e.target.checked;render()});
+onChange('#branch-ahead',e=>{state.branchAheadBehind=e.target.checked;render()});
+onInput('#session-name',e=>{state.previewSession=e.target.value;render()});
+onInput('#right-text',e=>{state.rightText=e.target.value;render()});
+onInput('#custom-command',e=>{state.customCommand=e.target.value;render()});
+onInput('#custom-interval',e=>{const n=Number(e.target.value),ok=/^\d+$/.test(e.target.value)&&n<=86400;e.target.setAttribute('aria-invalid',String(!ok));if(ok){state.customInterval=n;render()}});
+onInput('#custom-preview',e=>{state.customPreview=e.target.value;render()});
+$('#widget-icons').addEventListener('input',e=>{const id=e.target.dataset.widgetIcon;if(!id)return;state.widgetIcons[id]=e.target.value;render()});
 $('#copy-layout').addEventListener('click',copyLayout);
-$('#color-mode').addEventListener('change',e=>{state.themeAgnostic=e.target.value==='agnostic';render()});
-$('#glass').addEventListener('input',e=>{state.glass=Number(e.target.value);const value=state.glass+'%';document.documentElement.style.setProperty('--glass-opacity',value);$('#glass-value').value=value;$('#glass').setAttribute('aria-valuetext',value+' background opacity');saveSettings()});
-$('#backdrop').addEventListener('change',e=>{state.backdrop=e.target.value;applyBackdrop(state.backdrop);saveSettings()});
-$('#preview-mode').addEventListener('change',e=>{state.mode=e.target.value;render()});
-$('#crowded').addEventListener('change',e=>{state.crowded=e.target.checked;if(!state.crowded&&state.active>3)state.active=1;render()});
-$('#show-branch').addEventListener('change',e=>{state.showBranch=e.target.checked;render()});
+onChange('#color-mode',e=>{state.themeAgnostic=e.target.value==='agnostic';render()});
+onInput('#glass',e=>{state.glass=Number(e.target.value);const value=state.glass+'%';document.documentElement.style.setProperty('--glass-opacity',value);$('#glass-value').value=value;$('#glass').setAttribute('aria-valuetext',value+' background opacity');saveSettings()});
+onChange('#backdrop',e=>{state.backdrop=e.target.value;applyBackdrop(state.backdrop);saveSettings()});
+onChange('#preview-mode',e=>{state.mode=e.target.value;render()});
 
 let toastTimer;
-function toast(s){clearTimeout(toastTimer);$('#toast').textContent=s;$('#toast').hidden=false;toastTimer=setTimeout(()=>{$('#toast').hidden=true},2400)}
-document.addEventListener('click',e=>{const tab=e.target.closest('[data-tab]');if(!tab)return;const host='hero-bar',scrolls=$$('.bar-scroll').map(el=>el.scrollLeft);state.active=Number(tab.dataset.tab);renderHero();$$('.bar-scroll').forEach((el,i)=>{el.scrollLeft=scrolls[i]||0});$('#'+host+' [data-tab="'+state.active+'"]').focus({preventScroll:true});saveSettings()});
+function toast(s){clearTimeout(toastTimer);$('#toast').textContent=s;$('#toast').hidden=false;toastTimer=setTimeout(()=>{$('#toast').hidden=true},s.length>60?4200:2400)}
+document.addEventListener('click',e=>{const tab=e.target.closest('[data-tab]');if(!tab)return;const scrolls=$$('.bar-scroll').map(el=>el.scrollLeft);state.active=Number(tab.dataset.tab);renderHero();$$('.bar-scroll').forEach((el,i)=>{el.scrollLeft=scrolls[i]||0});$('#hero-bar [data-tab="'+state.active+'"]')?.focus({preventScroll:true});saveSettings()});
 
-// ───────── v2: galleries, live peek, navigation ─────────
+// ───────── Shuffle, share, import ─────────
+function shuffle(){
+ const L=state.shuffleLocks,pick=a=>a[Math.floor(Math.random()*a.length)],chance=p=>Math.random()<p;
+ const shapes=['plain',...componentDesigns.map(d=>d.id).filter(id=>id!=='boxcar')];
+ if(!L.shapes){state.modeDesign=pick(shapes);state.tabDesign=pick(shapes);state.branchDesign=pick(shapes);state.inactiveDesign=chance(.55)?'auto':pick(['plain','brackets','stitch','braille','tickets','flag','scanline']);state.widgetDesigns={};statusWidgets.forEach(id=>{if(chance(.3))state.widgetDesigns[id]=pick(shapes)})}
+ if(!L.separators){const seps=tabSeparatorOptions.map(([v])=>v);['mode','branch','tab','widget'].forEach(k=>state[k+'Separator']=pick(seps))}
+ if(!L.colors){const bright=[1,2,3,4,5,6,9,10,11,12,13,14],slots=previewSlots();const roles={a:pick(bright),modeFill:pick(bright),branch:pick(bright)};roles.modeSeparatorColor=pick([roles.modeFill,roles.a,8]);roles.branchSeparatorColor=pick([roles.branch,8]);roles.tabSeparatorColor=pick([8,roles.a]);
+  if(state.themeAgnostic)Object.assign(state.paletteSlots,roles);else Object.entries(roles).forEach(([role,slot])=>state.paletteOverrides[role]=slots[slot])}
+ if(!L.layout){const extras=['clock','session','battery','load','host','swap'].filter(()=>chance(.35));const right=extras.length?extras:['clock'];const center=chance(.25);state.zones={left:['mode',...(chance(.8)?['branch']:[]),...(center?[]:['tabs'])],center:center?['tabs']:[],right};state.tabLabel=pick(tabLabelFormats);state.barPosition=chance(.25)?'top':'bottom'}
+ if(!L.modes){state.modeLabelStyle=pick(['full','full','short','icon']);state.hideNormal=chance(.15)}
+ state.design='custom';render();toast('Shuffled'+(Object.values(L).some(Boolean)?' (locked groups kept)':''));
+}
+$('#shuffle').addEventListener('click',shuffle);
+$('#locks').addEventListener('change',e=>{const key=e.target.dataset.lock;if(!key)return;state.shuffleLocks[key]=e.target.checked;saveSettings()});
+document.addEventListener('click',e=>{const locks=$('#locks');if(locks.open&&!e.target.closest('#locks'))locks.open=false});
+function shareUrl(){return location.href.split('#')[0]+'#s='+encodeState(stateDiff())}
+$('#share-link').addEventListener('click',()=>{const url=shareUrl();const done=()=>toast('Share link copied. Anyone who opens it gets this bar.');if(navigator.clipboard?.writeText)navigator.clipboard.writeText(url).then(done).catch(()=>prompt('Copy this link:',url));else prompt('Copy this link:',url)});
+$('#import-kdl').addEventListener('click',()=>$('#kdl-file').click());
+$('#kdl-file').addEventListener('change',async e=>{
+ const file=e.target.files[0];if(!file)return;
+ try{if(file.size>1024*1024)throw new Error('Choose a layout smaller than 1 MB.');const message=importKdl(await file.text());syncStaticControls();render();toast(message)}catch(error){toast(error.message||'That file could not be imported.')}finally{e.target.value=''}
+});
+
+// ───────── Galleries, live peek, navigation ─────────
 let activePiece='mode',styleFilter='all',peekEl=null;
-const pieceLabels={mode:'Mode badge',branch:'Git branch',tab:'Active tab'};
-function styleGroup(id){return id==='plain'?'quiet':designs.find(d=>d.id===id)?.group||'geometric'}
+const pieceLabels={mode:'Mode badge',branch:'Git branch',tab:'Active tab',inactive:'Inactive tabs',widget:'Widget'};
+function styleGroup(id){return id==='plain'||id==='auto'?'quiet':designs.find(d=>d.id===id)?.group||'geometric'}
 function withState(patch,fn){const saved={};for(const k in patch){saved[k]=state[k];state[k]=patch[k]}try{return fn()}finally{Object.assign(state,saved)}}
-function tabTileMarkup(id){const first=id==='baseline'?'git':'1 git',second=id==='baseline'?'vim':'2 vim';return `<div class="tabs"><span class="token">${tokenShape(id,first,false)}</span>${separatorMarkup(state.tabSeparator,'tab')||'<span class="tile-gap"></span>'}<span class="token active">${tokenShape(id,second,true)}</span></div>`}
+function getDesign(kind){return kind==='widget'?widgetDesign(state.widgetTarget):state[kind+'Design']}
+function designPatch(kind,value){return kind==='widget'?{widgetDesigns:{...state.widgetDesigns,[state.widgetTarget]:value}}:kind==='branch'?{branchDesign:value,inRepo:true}:{[kind+'Design']:value}}
+function tabTileMarkup(id,inactive=state.inactiveDesign){
+ const first=id==='baseline'?'git':'1 git',second=id==='baseline'?'vim':'2 vim',shaped=inactive!=='auto'&&inactive!=='plain';
+ const firstShape=inactive==='auto'?tokenShape(id,first,false):shapeMarkup(inactive,first);
+ return `<div class="tabs"><span class="token${shaped?' shaped shaped-'+inactive:''}">${firstShape}</span>${separatorMarkup(state.tabSeparator,'tab')||'<span class="tile-gap"></span>'}<span class="token active">${tokenShape(id,second,true)}</span></div>`;
+}
 function styleTile(kind,id){
- const selected=state[kind+'Design']===id,d=designs.find(x=>x.id===id),row2=id==='boxcar'?' row2':'';let inner;
- if(kind==='mode')inner=`<div class="bar mode-${id}${row2}"><span class="mode">${id==='plain'?esc(state.mode):tokenShape(id,state.mode,true,true)}</span></div>`;
- else if(kind==='branch')inner=`<div class="bar${row2}"><span class="branch branch-${id}">${tokenShape(id,'main',true)}</span></div>`;
+ const selected=getDesign(kind)===id,d=designs.find(x=>x.id===id),row2=id==='boxcar'?' row2':'',modeLabel=modeText(modeKeyOf(state.mode));let inner;
+ if(kind==='mode')inner=`<div class="bar mode-${id}${row2}"><span class="mode">${id==='plain'?esc(modeLabel):tokenShape(id,modeLabel,true,true)}</span></div>`;
+ else if(kind==='branch')inner=`<div class="bar${row2}"><span class="branch branch-${id}">${tokenShape(id,withIcon('branch',branchSample()),true)}</span></div>`;
+ else if(kind==='inactive')inner=`<div class="bar tab-${state.tabDesign}${row2}">${tabTileMarkup(state.tabDesign,id)}</div>`;
+ else if(kind==='widget'){const w=state.widgetTarget;inner=`<div class="bar${row2}"><span class="widget widget-${id}${widgetDefs[w].fill==='warning'?' widget-warn':''}">${shapeMarkup(id,withIcon(w,widgetSample(w)||widgetDefs[w].name))}</span></div>`}
  else inner=`<div class="bar tab-${id}${row2}">${tabTileMarkup(id)}</div>`;
  return `<button type="button" class="tile${selected?' is-selected':''}" data-pick="${kind}" data-value="${id}" aria-pressed="${selected}" aria-label="${esc(pieceLabels[kind]+': '+styleName(id))}"><span class="tile-stage">${inner}</span><span class="tile-name">${esc(styleName(id))}${d?.pick?'<i title="Favorite">★</i>':''}<small>${styleGroup(id)}</small></span></button>`;
 }
 function presetTile(d){
- return withState(presetPatch(d.id),()=>{const hot=modePreviewColor(modeDefinitions.find(([,l])=>l===state.mode)[0]),selected=d.id===state.design;
-  return `<button type="button" class="tile${selected?' is-selected':''}" data-preset="${d.id}" aria-pressed="${selected}" title="${esc(d.short)}"><span class="tile-stage"><div class="bar mode-${state.modeDesign} tab-${state.tabDesign}${d.id==='boxcar'?' row2':''}"><span class="mode" style="--hot:${hot}">${state.modeDesign==='plain'?esc(state.mode):tokenShape(state.modeDesign,state.mode,true,true)}</span>${separatorMarkup(state.modeSeparator,'mode')||'<span class="tile-gap"></span>'}${tabTileMarkup(state.tabDesign)}</div></span><span class="tile-name">${esc(d.name)}${d.pick?'<i>★</i>':''}<small>${esc(d.group)}</small></span></button>`})}
+ return withState(presetPatch(d.id),()=>{const hot=modePreviewColor(modeKeyOf(state.mode)),selected=d.id===state.design,label=modeText(modeKeyOf(state.mode));
+  return `<button type="button" class="tile${selected?' is-selected':''}" data-preset="${d.id}" aria-pressed="${selected}" title="${esc(d.short)}"><span class="tile-stage"><div class="bar mode-${state.modeDesign} tab-${state.tabDesign}${d.id==='boxcar'?' row2':''}"><span class="mode" style="--hot:${hot}">${state.modeDesign==='plain'?esc(label):tokenShape(state.modeDesign,label,true,true)}</span>${separatorMarkup(state.modeSeparator,'mode')||'<span class="tile-gap"></span>'}${tabTileMarkup(state.tabDesign)}</div></span><span class="tile-name">${esc(d.name)}${d.pick?'<i>★</i>':''}<small>${esc(d.group)}</small></span></button>`})}
 function renderGalleries(){
  $('#preset-grid').innerHTML=designs.map(presetTile).join('');$('#preset-count').textContent=designs.length+' looks';
- const ids=['plain',...componentDesigns.map(d=>d.id)].filter(id=>styleFilter==='all'||styleGroup(id)===styleFilter);
+ const base=activePiece==='inactive'?['auto',...inactiveStyleIds()]:['plain',...componentDesigns.map(d=>d.id)];
+ const ids=base.filter(id=>styleFilter==='all'||styleGroup(id)===styleFilter);
  $('#style-grid').innerHTML=ids.map(id=>styleTile(activePiece,id)).join('')||'<p class="empty-note">No styles in this group.</p>';
- $('#gallery-title').textContent=pieceLabels[activePiece]+' gallery';
+ $('#gallery-title').textContent=(activePiece==='widget'?widgetDefs[state.widgetTarget].name+' widget':pieceLabels[activePiece])+' gallery';
  $$('#piece-tabs [data-piece]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.piece===activePiece)));
  $$('[data-piece-field]').forEach(f=>f.classList.toggle('is-target',f.dataset.pieceField===activePiece));
  $$('#style-filters [data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter===styleFilter)));
- const current=designs.find(d=>d.id===state[activePiece+'Design']);
- $('#style-desc').textContent=current?current.name+': '+current.desc+' '+current.note:'Plain label: text only, no shape.';
- if(activePiece==='branch'&&!state.showBranch)$('#style-desc').textContent='The Git branch is hidden. Turn on “Git branch” under the preview to see it.';
- for(const kind of ['mode','branch','tab']){
-  const current=state[kind+'Separator'],disabled=kind==='branch'&&!branchOnLeft();
+ const chosen=getDesign(activePiece),current=designs.find(d=>d.id===chosen);
+ $('#style-desc').textContent=chosen==='auto'?'Match active style: inactive tabs get the active style’s own quiet treatment, usually plain text.':current?current.name+': '+current.desc+' '+current.note:'Plain label: text only, no shape.';
+ const piecePlaced={branch:'branch',mode:'mode',tab:'tabs',inactive:'tabs',widget:state.widgetTarget}[activePiece];
+ if(!placed(piecePlaced))$('#style-desc').textContent=`${activePiece==='widget'?widgetDefs[state.widgetTarget].name:pieceLabels[activePiece]} is not in the bar. Add it under Layout to see it in the preview.`;
+ else if(activePiece==='branch'&&!state.inRepo)$('#style-desc').textContent='The preview is outside a Git repository, so the branch is hidden. Turn on “In a Git repo” under the preview to see it.';
+ const sepDisabled={mode:!hasNext('mode'),branch:!hasNext('branch'),tab:!placed('tabs'),widget:false};
+ for(const kind of ['mode','branch','tab','widget']){
+  const current=state[kind+'Separator'],disabled=sepDisabled[kind];$('#'+kind+'-separator').disabled=disabled;
   $(`[data-sep-chips="${kind}"]`).innerHTML=tabSeparatorOptions.map(([value,label])=>`<button type="button" class="sep-chip${value===current?' is-selected':''}" data-sep="${kind}" data-value="${value}" aria-pressed="${value===current}" title="${esc(label)}"${disabled?' disabled':''}><span class="${value==='space'||value==='none'?'sep-meta':'joiner-'+kind}" aria-hidden="true">${value==='space'?'␣':value==='none'?'∅':separatorGlyphs[value]}</span><small>${esc(label.split(' · ')[0])}</small></button>`).join('');
  }
 }
-function focusKey(el){if(!el?.dataset)return null;const d=el.dataset;if(d.pick)return `[data-pick="${d.pick}"][data-value="${d.value}"]`;if(d.sep)return `[data-sep="${d.sep}"][data-value="${d.value}"]`;if(d.preset)return `[data-preset="${d.preset}"]`;if(d.dotRole)return `[data-dot-role="${d.dotRole}"][data-slot="${d.slot}"]`;if(d.previewMode)return `[data-preview-mode="${d.previewMode}"]`;return null}
-function restoreFocus(key){if(!key)return;const el=document.querySelector(key);if(el&&document.activeElement!==el)el.focus({preventScroll:true})}
-function patchFor(el){const d=el.dataset;if(d.pick)return [{[d.pick+'Design']:d.value,...(d.pick==='branch'?{showBranch:true}:{})},pieceLabels[d.pick]+' · '+styleName(d.value)];if(d.sep)return [{[d.sep+'Separator']:d.value},'separator · '+(tabSeparatorOptions.find(([v])=>v===d.value)?.[1]||d.value)];if(d.preset)return [presetPatch(d.preset),'preset · '+styleName(d.preset)];return null}
+function focusKey(el){if(!el?.dataset)return null;const d=el.dataset;if(d.pick)return `[data-pick="${d.pick}"][data-value="${d.value}"]`;if(d.sep)return `[data-sep="${d.sep}"][data-value="${d.value}"]`;if(d.preset)return `[data-preset="${d.preset}"]`;if(d.dotRole)return `[data-dot-role="${d.dotRole}"][data-slot="${d.slot}"]`;if(d.previewMode)return `[data-preview-mode="${d.previewMode}"]`;if(d.move){const chip=el.closest('[data-widget]');return chip?`[data-widget="${chip.dataset.widget}"] [data-move="${d.move}"]`:null}if(d.addZone)return `[data-add-zone="${d.addZone}"]`;if(d.labelStyle)return `[data-label-style="${d.labelStyle}"]`;return null}
+function restoreFocus(key){if(!key)return;const el=document.querySelector(key);if(el&&!el.disabled&&document.activeElement!==el)el.focus({preventScroll:true})}
+function patchFor(el){const d=el.dataset;if(d.pick)return [designPatch(d.pick,d.value),pieceLabels[d.pick]+' · '+styleName(d.value)];if(d.sep)return [{[d.sep+'Separator']:d.value},'separator · '+(tabSeparatorOptions.find(([v])=>v===d.value)?.[1]||d.value)];if(d.preset)return [presetPatch(d.preset),'preset · '+styleName(d.preset)];return null}
 function peek(el){
  const result=patchFor(el);if(!result)return;const [patch,label]=result;
- withState(patch,()=>{setPalette();$('#hero-bar').innerHTML=makeBar(state.modeDesign,state.tabDesign,true)});
+ withState(patch,()=>{setPalette();$('#hero-bar').innerHTML=makeBar()});
  $('#stage').classList.add('is-peeking');$('#peek-label').textContent='Previewing '+label+' · click to apply';updateOverflow();
 }
 function endPeek(){peekEl=null;if(!$('#stage').classList.contains('is-peeking'))return;setPalette();renderHero()}
@@ -893,7 +1364,7 @@ const peekable='[data-pick],[data-sep],[data-preset]';
 $('#inspector').addEventListener('pointerover',e=>{const el=e.target.closest(peekable);if(!el||el.disabled||el===peekEl)return;peekEl=el;peek(el)});
 $('#inspector').addEventListener('pointerout',e=>{const el=e.target.closest(peekable);if(el&&!e.relatedTarget?.closest?.(peekable))endPeek()});
 $('#inspector').addEventListener('click',e=>{
- const pick=e.target.closest('[data-pick]');if(pick){state[pick.dataset.pick+'Design']=pick.dataset.value;if(pick.dataset.pick==='branch'&&!state.showBranch){state.showBranch=true;$('#show-branch').checked=true}state.design='custom';peekEl=pick;render();return}
+ const pick=e.target.closest('[data-pick]');if(pick){Object.assign(state,designPatch(pick.dataset.pick,pick.dataset.value));if(pick.dataset.pick!=='widget')state.design='custom';peekEl=pick;render();return}
  const sep=e.target.closest('[data-sep]');if(sep){state[sep.dataset.sep+'Separator']=sep.dataset.value;state.design='custom';peekEl=sep;render();return}
  const preset=e.target.closest('[data-preset]');if(preset){peekEl=preset;selectDesign(preset.dataset.preset);return}
  const dot=e.target.closest('[data-dot-role]');if(dot){state.paletteSlots[dot.dataset.dotRole]=Number(dot.dataset.slot);render();return}
@@ -913,23 +1384,31 @@ document.addEventListener('keydown',e=>{
  if(e.key==='['){cycleDesign(-1);e.preventDefault()}else if(e.key===']'){cycleDesign(1);e.preventDefault()}
  else if(e.key==='m'||e.key==='M'){const i=modeDefinitions.findIndex(([,l])=>l===state.mode);state.mode=modeDefinitions[(i+(e.shiftKey?-1:1)+modeDefinitions.length)%modeDefinitions.length][1];render()}
  else if(e.key==='c'||e.key==='C'){copyLayout()}
+ else if(e.key==='r'||e.key==='R'){shuffle()}
 });
 // Highlight the section in view.
 const navLinks=$$('.inspector-nav a'),sectionObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting)navLinks.forEach(a=>a.classList.toggle('is-active',a.getAttribute('href')==='#'+entry.target.id))})},{rootMargin:'-35% 0px -60% 0px'});
 $$('.inspector .panel').forEach(sec=>sectionObserver.observe(sec));
 new ResizeObserver(()=>document.documentElement.style.setProperty('--appbar-h',$('#appbar').offsetHeight+'px')).observe($('#appbar'));
 
-function inspectLabel(kind){const sepName=v=>tabSeparatorOptions.find(([x])=>x===v)?.[1]||v;return {mode:'Mode badge · '+styleName(state.modeDesign),branch:'Git branch style · '+styleName(state.branchDesign),'sep-mode':(branchOnLeft()?'Mode → branch':'Mode → tabs')+' separator · '+sepName(state.modeSeparator),'sep-branch':'Branch → tabs separator · '+sepName(state.branchSeparator),'sep-tab':'Between-tabs separator · '+sepName(state.tabSeparator),right:'Right side · '+state.rightContent}[kind]+' — click to edit'}
+function inspectLabel(kind){
+ const sepName=v=>tabSeparatorOptions.find(([x])=>x===v)?.[1]||v;
+ if(kind.startsWith('w-'))return widgetDefs[kind.slice(2)].name+' · '+styleName(widgetDesign(kind.slice(2)))+' — click to edit';
+ return {mode:'Mode badge · '+styleName(state.modeDesign),branch:'Git branch style · '+styleName(state.branchDesign),'sep-mode':'After-mode separator · '+sepName(state.modeSeparator),'sep-branch':'After-branch separator · '+sepName(state.branchSeparator),'sep-tab':'Between-tabs separator · '+sepName(state.tabSeparator),'sep-widget':'Widget separator · '+sepName(state.widgetSeparator),tabs:'Hidden tabs · '+state.displayCount+' shown'}[kind]+' — click to edit';
+}
 function labelInspectables(){$$('#hero-bar [data-inspect]').forEach(el=>{el.title=inspectLabel(el.dataset.inspect);el.setAttribute('aria-label',el.title)})}
 function flash(el){if(!el)return;el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash')}
 $('#hero-bar').addEventListener('click',e=>{
  const el=e.target.closest('[data-inspect]');if(!el||e.target.closest('[data-tab]'))return;const kind=el.dataset.inspect;let target;
  if(kind==='mode'||kind==='branch'){activePiece=kind;renderGalleries();$('#sec-shapes').scrollIntoView({behavior:'smooth',block:'start'});target=$(`[data-piece-field="${kind}"]`)}
  else if(kind.startsWith('sep-')){target=$(`[data-sep-chips="${kind.slice(4)}"]`).closest('.sep-block');target.scrollIntoView({behavior:'smooth',block:'center'})}
- else{target=$('#sec-status');target.scrollIntoView({behavior:'smooth',block:'start'})}
+ else if(kind.startsWith('w-')){state.widgetTarget=kind.slice(2);activePiece='widget';render();target=$('[data-piece-field="widget"]');$('#sec-shapes').scrollIntoView({behavior:'smooth',block:'start'})}
+ else{target=$('#sec-tabs');target.scrollIntoView({behavior:'smooth',block:'start'})}
  flash(target);
 });
-window.addEventListener('resize',updateOverflow);document.fonts.ready.then(updateOverflow);render();
+window.addEventListener('resize',updateOverflow);document.fonts.ready.then(()=>{cellWidthCache=0;updateOverflow()});render();
+if(sharedLoaded)toast('Loaded a shared bar. Your previous settings were replaced.');
+window.addEventListener('hashchange',()=>{if(!location.hash.startsWith('#s='))return;const ok=loadSharedHash();syncStaticControls();render();toast(ok?'Loaded a shared bar. Your previous settings were replaced.':'That share link could not be read.')});
 </script>
 </body>
 </html>
